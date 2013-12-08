@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="HeaderView">
+        <attr name="text" format="string" />
+        <attr name="textDimension" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="drawable" format="color|reference" />
+    </declare-styleable>
+</resources>
