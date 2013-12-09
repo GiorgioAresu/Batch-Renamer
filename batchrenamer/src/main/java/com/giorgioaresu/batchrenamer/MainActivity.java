@@ -1,17 +1,11 @@
 package com.giorgioaresu.batchrenamer;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
-public class MainActivity extends Activity implements FileFragment.OnFragmentInteractionListener {
+public class MainActivity extends Activity implements FileFragment.OnFileSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +15,8 @@ public class MainActivity extends Activity implements FileFragment.OnFragmentInt
         if (savedInstanceState == null) {
 
         }
+        //FragmentManager mFragmentManager = getFragmentManager();
+        //FileFragment fileFragment = (FileFragment) mFragmentManager.findFragmentById(R.id.file_fragment);
     }
 
 
@@ -45,7 +41,7 @@ public class MainActivity extends Activity implements FileFragment.OnFragmentInt
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
-
+    public void onFileSelected(File file) {
+        // TODO: Implement interface
     }
 }

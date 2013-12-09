@@ -3,11 +3,11 @@ package com.giorgioaresu.batchrenamer;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import com.giorgioaresu.batchrenamer.dummy.DummyContent;
 
 import java.util.ArrayList;
 
@@ -15,25 +15,21 @@ import java.util.ArrayList;
  * A fragment representing a list of Items.
  * <p />
  * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
+ * Activities containing this fragment MUST implement the Callbacks
  * interface.
  */
 public class FileFragment extends ListFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_FILES = "files";
 
-    // TODO: Rename and change types of parameters
-    private String[] mFiles;
+    private ArrayList<File> mFiles;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFileSelectedListener mListener;
 
-    // TODO: Rename and change types of parameters
-    public static FileFragment newInstance(String[] files) {
+    public static FileFragment newInstance(ArrayList<File> files) {
         FileFragment fragment = new FileFragment();
         Bundle args = new Bundle();
-        args.putStringArray(ARG_FILES, files);
+        args.putParcelableArrayList(ARG_FILES, files);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,23 +46,94 @@ public class FileFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mFiles = getArguments().getStringArray(ARG_FILES);
+            mFiles = getArguments().getParcelableArrayList(ARG_FILES);
+        } else {
+            mFiles = new ArrayList<>();
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
+            mFiles.add(new File("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip"));
         }
 
-        // TODO: Change Adapter to display your content
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS));
+        setListAdapter(new FileAdapter(getActivity(), R.layout.file_list_row, mFiles));
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate layout
+        LinearLayout fragmentLayout = (LinearLayout) inflater.inflate(R.layout.file_list_content, container, false);
+
+        /*// Set header
+        ListView listView = (ListView) fragmentLayout.findViewById(android.R.id.list);
+        listView.addHeaderView(inflater.inflate(R.layout.file_list_header_row, null), null,	false);
+
+        // Set title
+        View header = fragmentLayout.findViewById(R.id.file_list_header);
+        if (header != null)
+            ((TextView) header.findViewById(R.id.section_title_label)).setText(R.string.section_title_filelist);*/
+
+        return fragmentLayout;
     }
 
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnFileSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                + " must implement OnFragmentInteractionListener");
+                    + " must implement OnFileSelectedListener");
         }
     }
 
@@ -84,7 +151,7 @@ public class FileFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFileSelected(mFiles.get(position - 1));
         }
     }
 
@@ -98,9 +165,8 @@ public class FileFragment extends ListFragment {
     * "http://developer.android.com/training/basics/fragments/communicating.html"
     * >Communicating with Other Fragments</a> for more information.
     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+    public interface OnFileSelectedListener {
+        public void onFileSelected(File file);
     }
 
 }

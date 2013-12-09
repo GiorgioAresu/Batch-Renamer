@@ -1,22 +1,41 @@
 <LinearLayout
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e5e5e5"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:showDividers="middle|beginning|end"
+        android:divider="@android:drawable/divider_horizontal_dark"
+        android:dividerPadding="100dp">
 
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            class="com.giorgioaresu.batchrenamer.HeaderView"
-            android:id="@+id/view"
-            textDimension="24sp"
-            textColor="#33b5e5"
-            text="Hello, HeaderView"
-            drawable="@android:drawable/ic_menu_add" />
+        <fragment
+            android:id="@+id/file_fragment"
+            android:name="com.giorgioaresu.batchrenamer.FileFragment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            tools:layout="@layout/file_list_content"
+            class="com.giorgioaresu.batchrenamer.FileFragment" />
+
+        <!--fragment
+            android:id="@+id/file_fragment"
+            android:name="com.giorgioaresu.batchrenamer.FileFragment"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            tools:layout="@layout/file_list_content"
+            class="com.giorgioaresu.batchrenamer.FileFragment" /-->
+
     </LinearLayout>
+
 </LinearLayout>
