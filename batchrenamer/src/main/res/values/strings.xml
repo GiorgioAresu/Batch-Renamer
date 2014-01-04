@@ -2,9 +2,31 @@
 <resources>
 
     <string name="app_name">Batch Renamer</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="file_list_current_name_textview">Current name</string>
-    <string name="file_list_preview_name_textview">Preview</string>
 
+    <!-- Action bar -->
+    <string name="action_start">Rename</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- File section -->
+    <string name="filelist_header_current">Current name</string>
+    <string name="filelist_header_preview">Preview</string>
+
+    <!-- Action strings -->
+    <string name="action_remove">Remove action</string>
+    <string name="action_confirmedit">Ok</string>
+    <string name="action_discardedit">Cancel</string>
+
+    <!-- Action titles -->
+    <string name="action_add_title">Add</string>
+
+    <!-- Action: Add -->
+    <string name="action_add_text">Add</string>
+    <string name="action_add_index">At position</string>
+    <string name="action_add_backwards">Backwards</string>
+    <string name="action_add_apply">Apply to</string>
+    <string-array name="action_add_apply_values">
+        <item>Name</item>
+        <item>Extension</item>
+        <item>Name and extension</item>
+    </string-array>
 </resources>

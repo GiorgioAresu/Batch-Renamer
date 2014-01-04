@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ActionCard_Layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/action_title"
+            android:text="@string/action_add_title"
+            style="@style/ActionCard_Title" />
+
+        <ImageView
+            android:id="@+id/action_remove"
+            style="@style/ActionCard_Remove" />
+
+    </LinearLayout>
+
+    <ImageView
+        tools:ignore="ContentDescription"
+        style="@style/ActionCard_HeaderSeparator" />
+
+    <TableLayout
+        android:id="@+id/action_global_content"
+        style="@style/ActionCard_ContentGrid">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/action_add_text_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_add_text"
+                android:layout_marginRight="@dimen/list_divider_height"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <!--<EditText
+                android:id="@+id/action_add_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine" />-->
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/action_add_index_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_add_index"
+                android:layout_marginRight="@dimen/list_divider_height"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <!--<EditText
+                android:id="@+id/action_add_index"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="right"
+                android:inputType="number"
+                android:maxLength="3" />-->
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
