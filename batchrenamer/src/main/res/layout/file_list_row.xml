@@ -20,4 +20,5 @@
         style="@style/ListItemRow"
         android:id="@+id/file_list_item_preview"
         android:paddingLeft="?android:attr/listPreferredItemPaddingLeft" />
+
 </LinearLayout>

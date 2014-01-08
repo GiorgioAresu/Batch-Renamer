@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/action_title"
+        style="@style/ActionCard_Title"
+        android:text="Action_Title"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        tools:ignore="ContentDescription"
+        style="@style/ActionCard_HeaderSeparator" />
+
+    <!-- Content -->
+    <ViewStub
+        android:id="@+id/action_edit_contentViewStub"
+        style="@style/ActionCards_ContentView" />
+
+</LinearLayout>

@@ -2,13 +2,14 @@ package com.giorgioaresu.batchrenamer;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements FileList_Fragment.FileFragmentInterface, ActionList_Fragment.OnActionSelectedListener {
+public class MainActivity extends Activity implements FileList_Fragment.FileFragmentInterface, ActionList_Fragment.OnActionSelectedListener, ActionEdit_Fragment.actionEditFragment_Callbacks {
 
     private ArrayList<File> mFiles;
 
@@ -20,10 +21,11 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         if (savedInstanceState == null) {
 
         }
-        //FragmentManager mFragmentManager = getFragmentManager();
-        //FileList_Fragment fileFragment = (FileList_Fragment) mFragmentManager.findFragmentById(R.id.file_fragment);
-    }
 
+
+        /*FragmentManager mFragmentManager = getFragmentManager();
+        ActionList_Fragment actionListFragment = (ActionList_Fragment) mFragmentManager.findFragmentById(R.id.action_fragment);*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,7 +124,15 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
     }
 
     public void showDialog(Action action) {
-        DialogFragment mDialogFragment = new ActionEdit_Fragment();
-        mDialogFragment.show(getFragmentManager(), action.getClass().getName());
+        DialogFragment mDialogFragment = ActionEdit_Fragment.newInstance(action);
+        mDialogFragment.show(getFragmentManager(), "editAction");
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        FragmentManager mFragmentManager = getFragmentManager();
+        ActionList_Fragment actionListFragment = (ActionList_Fragment) mFragmentManager.findFragmentById(R.id.action_fragment);
+        ActionAdapter actionAdapter = (ActionAdapter) actionListFragment.getListAdapter();
+        actionAdapter.notifyDataSetChanged();
     }
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1"
+    android:shrinkColumns="1">
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/action_add_text_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_add_text"
+            android:layout_marginRight="@dimen/cards_padding"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/action_add_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:layout_span="2" />
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/action_add_index_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_add_index"
+            android:layout_marginRight="@dimen/cards_padding"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/action_add_index"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="3" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_add_backward"
+            android:id="@+id/action_add_fromend" />
+
+    </TableRow>
+
+</TableLayout>

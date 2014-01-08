@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Batch Renamer</string>
+    <string name="true_">true</string>
+    <string name="false_">false</string>
+    <string name="empty_field_label">Empty Field</string>
 
     <!-- Action bar -->
     <string name="action_start">Rename</string>
@@ -15,14 +18,15 @@
     <string name="action_remove">Remove action</string>
     <string name="action_confirmedit">Ok</string>
     <string name="action_discardedit">Cancel</string>
+    <string name="action_list_row_contentdescription">Action Preview. Click to edit.</string>
 
     <!-- Action titles -->
     <string name="action_add_title">Add</string>
 
     <!-- Action: Add -->
-    <string name="action_add_text">Add</string>
-    <string name="action_add_index">At position</string>
-    <string name="action_add_backwards">Backwards</string>
+    <string name="action_add_text">Text</string>
+    <string name="action_add_index">Position</string>
+    <string name="action_add_backward">Backward</string>
     <string name="action_add_apply">Apply to</string>
     <string-array name="action_add_apply_values">
         <item>Name</item>

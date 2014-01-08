@@ -49,8 +49,13 @@ public class ActionList_Fragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
+            // Retrieve actions from arguments
             mActions = getArguments().getParcelableArrayList(ARG_ACTIONS);
+        } else if (savedInstanceState != null) {
+            // Retrieve actions from saved state (ie. after rotation)
+            mActions = savedInstanceState.getParcelableArrayList(ARG_ACTIONS);
         } else {
+            // Populate actions for the first time
             mActions = new ArrayList<>();
             Context mContext = getActivity();
             mActions.add(new Add(mContext));
@@ -58,9 +63,20 @@ public class ActionList_Fragment extends ListFragment {
             mActions.add(new Add(mContext));
             mActions.add(new Add(mContext));
             mActions.add(new Add(mContext));
+            mActions.add(new Add(mContext));
+            mActions.add(new Add(mContext));
+            mActions.add(new Add(mContext));
+            mActions.add(new Add(mContext));
+            mActions.add(new Add(mContext));
         }
 
-        setListAdapter(new ActionAdapter(getActivity(), mActions));
+        setListAdapter(new ActionAdapter(getActivity(), R.layout.action_list_row, mActions));
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(ARG_ACTIONS, mActions);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
