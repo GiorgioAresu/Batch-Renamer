@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,16 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
     private actionEditFragment_Callbacks mListener;
 
     private View dialogView;
+
+    private static boolean isShowing = false;
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        if (!isShowing) {
+            isShowing = true;
+            super.show(manager, tag);
+        }
+    }
 
     static ActionEdit_Fragment newInstance(Action action) {
         ActionEdit_Fragment f = new ActionEdit_Fragment();
@@ -94,6 +105,7 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
     public void onClick(DialogInterface dialogInterface, int i) {
         switch (i) {
             case DialogInterface.BUTTON_POSITIVE:
+                // TODO: Validate changes
                 Action mAction = getArguments().getParcelable(keyAction);
                 mAction.updateDataFromView(dialogView);
                 mListener.notifyDataSetChanged();
@@ -103,6 +115,13 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
                 ActionEdit_Fragment.this.getDialog().cancel();
                 break;
         }
+        isShowing = false;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        isShowing = false;
+        super.onDismiss(dialog);
     }
 
     public interface actionEditFragment_Callbacks {

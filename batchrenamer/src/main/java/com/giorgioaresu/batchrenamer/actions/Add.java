@@ -54,8 +54,8 @@ public class Add extends Action {
             text = mText.getText().toString();
             EditText mPosition = (EditText) view.findViewById(R.id.action_add_index);
             position = Integer.valueOf(mPosition.getText().toString());
-            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_add_fromend);
-            backward = mFromEnd.isChecked();
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_add_backward);
+            backward = mBackward.isChecked();
         } catch (Exception e) {
             Log.e("updateDataFromView", "NPE");
             return false;
@@ -79,7 +79,7 @@ public class Add extends Action {
             mPosition.setText(String.valueOf(position));
             mPosition.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
-            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_add_fromend);
+            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_add_backward);
             mFromEnd.setChecked(backward);
         } catch (Exception e) {
             Log.e("updateViewFromData", "NPE");

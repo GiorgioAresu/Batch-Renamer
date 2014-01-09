@@ -5,4 +5,5 @@
     <dimen name="cards_padding">16dp</dimen>
     <dimen name="cards_padding_half">8dp</dimen>
     <dimen name="list_divider_height">16dp</dimen>
+    <dimen name="cards_padding_between_elements">8dp</dimen>
 </resources>
