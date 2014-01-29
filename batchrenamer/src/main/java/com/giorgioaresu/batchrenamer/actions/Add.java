@@ -2,7 +2,6 @@ package com.giorgioaresu.batchrenamer.actions;
 
 import android.content.Context;
 import android.os.Parcel;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -74,10 +73,7 @@ public class Add extends Action {
             mText.setText(text);
 
             EditText mPosition = (EditText) view.findViewById(R.id.action_add_index);
-            // Need to change InputType otherwise setText has no effect
-            mPosition.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             mPosition.setText(String.valueOf(position));
-            mPosition.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
             CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_add_backward);
             mFromEnd.setChecked(backward);

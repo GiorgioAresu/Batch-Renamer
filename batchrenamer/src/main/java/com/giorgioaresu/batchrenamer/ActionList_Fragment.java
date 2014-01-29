@@ -5,6 +5,8 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 public class ActionList_Fragment extends ListFragment {
 
     private static final String ARG_ACTIONS = "actions";
+
+    private static final int ID_NEW_ACTION_ADD = 1;
 
     private ArrayList<Action> mActions;
 
@@ -127,6 +131,25 @@ public class ActionList_Fragment extends ListFragment {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             mListener.onActionSelected(mActions.get(position));
+        }
+    }
+
+    public void populateActionMenu(SubMenu subMenu) {
+        subMenu.add(0, ID_NEW_ACTION_ADD, 0, R.string.action_add_title);
+    }
+
+    public boolean onNewActionSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            case ID_NEW_ACTION_ADD:
+                mActions.add(new Add(getActivity()));
+                ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
+                actionAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return false;
         }
     }
 

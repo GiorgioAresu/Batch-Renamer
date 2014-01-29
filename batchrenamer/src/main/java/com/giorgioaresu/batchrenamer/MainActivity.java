@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements FileList_Fragment.FileFragmentInterface, ActionList_Fragment.OnActionSelectedListener, ActionEdit_Fragment.actionEditFragment_Callbacks {
 
     private ArrayList<File> mFiles;
+    private ActionList_Fragment actionList_fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,16 +24,31 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         }
 
 
-        /*FragmentManager mFragmentManager = getFragmentManager();
-        ActionList_Fragment actionListFragment = (ActionList_Fragment) mFragmentManager.findFragmentById(R.id.action_fragment);*/
+        FragmentManager mFragmentManager = getFragmentManager();
+        actionList_fragment = (ActionList_Fragment) mFragmentManager.findFragmentById(R.id.action_fragment);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        actionList_fragment.populateActionMenu(menu.findItem(R.id.action_newAction).getSubMenu());
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            default:
+                if (actionList_fragment.onNewActionSelected(item)) {
+                    return true;
+                } else {
+                    return super.onOptionsItemSelected(item);
+                }
+        }
     }
 
     @Override
@@ -43,21 +59,6 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         //menu.findItem(R.id.action_settings).setVisible(!ciao);
         //ciao=!ciao;
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override
