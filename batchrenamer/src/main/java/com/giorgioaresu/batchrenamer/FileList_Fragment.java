@@ -33,7 +33,7 @@ public class FileList_Fragment extends ListFragment {
         return mFiles;
     }
 
-    private ArrayList<File> mFiles;
+    private ArrayList<File> mFiles = new ArrayList<>();
 
     private FileFragmentInterface mInterface;
 
@@ -64,6 +64,7 @@ public class FileList_Fragment extends ListFragment {
             mFiles = savedInstanceState.getParcelableArrayList(ARG_FILES);
         } else {
             // Eventually populate actions for the first time
+            // TODO: remove this
             if (mFiles.isEmpty()) {
                 for (int i = 0; i < 50; i++) {
                     mFiles.add(new File(Uri.parse("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip")));
