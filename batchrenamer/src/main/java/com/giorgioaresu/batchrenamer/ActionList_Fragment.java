@@ -1,6 +1,5 @@
 package com.giorgioaresu.batchrenamer;
 
-import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,15 +23,13 @@ import java.util.ConcurrentModificationException;
  * Activities containing this fragment MUST implement the Callbacks
  * interface.
  */
-public class ActionList_Fragment extends ListFragment {
+public class ActionList_Fragment extends ListFragment implements ActionEdit_Fragment.actionEditFragment_Callbacks{
 
     private static final String ARG_ACTIONS = "actions";
 
     private static final int ID_NEW_ACTION_ADD = 1;
 
     private ArrayList<Action> mActions;
-
-    private OnActionSelectedListener mListener;
 
     public static ActionList_Fragment newInstance(ArrayList<Action> actions) {
         ActionList_Fragment fragment = new ActionList_Fragment();
@@ -95,37 +92,13 @@ public class ActionList_Fragment extends ListFragment {
         return fragmentLayout;
     }
 
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            mListener = (OnActionSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnActionSelectedListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onActionSelected(mActions.get(position));
-        }
+        ActionEdit_Fragment actionEdit_fragment = ActionEdit_Fragment.newInstance(mActions.get(position));
+        actionEdit_fragment.setListener(this);
+        actionEdit_fragment.show(getFragmentManager(), "editAction");
     }
 
     public void populateActionMenu(SubMenu subMenu) {
@@ -160,19 +133,10 @@ public class ActionList_Fragment extends ListFragment {
         return res;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnActionSelectedListener {
-        public void onActionSelected(Action action);
+    @Override
+    public void notifyActionDataSetChanged() {
+        ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
+        actionAdapter.notifyDataSetChanged();
     }
-
 }
 

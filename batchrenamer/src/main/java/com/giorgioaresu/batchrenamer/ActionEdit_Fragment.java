@@ -81,17 +81,23 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         return builder.create();
     }
 
+    public void setListener(actionEditFragment_Callbacks listener) {
+        mListener = listener;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            mListener = (actionEditFragment_Callbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnActionSelectedListener");
+        if (mListener == null) {
+            // If listener hasn't been set, make sure that the container activity has implemented
+            // the callback interface. If not, it throws an exception
+            try {
+                mListener = (actionEditFragment_Callbacks) activity;
+            } catch (ClassCastException e) {
+                throw new ClassCastException(activity.toString()
+                        + " must implement OnActionSelectedListener");
+            }
         }
     }
 
