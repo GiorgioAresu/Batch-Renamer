@@ -18,25 +18,19 @@ public class File implements Parcelable {
 
     public File(Uri uri) {
         fileUri = uri;
-        currentName = newName = fileUri.getLastPathSegment();
-    }
-
-    public File(String name) {
-        this(Uri.parse(name));
-    }
-
-    // TODO: This constructor should be removed when file-picking system is implemented
-    public File(String currentName, String newName) {
-        this(Uri.parse(currentName));
-        this.currentName = currentName;
-        this.newName = newName;
+        currentName = fileUri.getLastPathSegment();
+        // TODO: Double-check if it's safe or it's better to do something more complex (maybe there are actions already loaded that doesn't fire an update?)
+        newName = currentName;
     }
 
     public int Rename() {
+        // TODO: move to an asynctask
+
         // TODO: implement file rename
         try {
             java.io.File file = new java.io.File(fileUri.getPath());
             Log.d("file", "Name: " + file.getName() + ", Path: " + file.getAbsolutePath() + ", uriScheme: " + fileUri.getScheme() + ", canWrite: " + (file.canWrite() ? "true" : "false"));
+            Log.d("Rename", "Old name: " + currentName + ". New name: " + newName);
             return 0;
         } catch (Exception e) {
             return 1;

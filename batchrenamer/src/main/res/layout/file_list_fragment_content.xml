@@ -18,31 +18,17 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/filelist_header_current"
-                android:textAllCaps="true"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textStyle="bold"
-                android:gravity="bottom" />
+                style="@style/FileListHeaderText" />
 
             <Space
                 android:layout_width="16dp"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/file_list_header_preview"
                 android:text="@string/filelist_header_preview"
-                android:textAllCaps="true"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:textStyle="bold" />
+                style="@style/FileListHeaderText" />
         </TableRow>
 
         <TableRow
@@ -69,13 +55,59 @@
         </TableRow>
     </TableLayout>
 
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@android:id/list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fastScrollEnabled="true"
-        android:choiceMode="singleChoice"
-        tools:listitem="@layout/file_list_row" />
+        android:layout_height="match_parent">
+
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fastScrollEnabled="true"
+            android:choiceMode="singleChoice"
+            tools:listitem="@layout/file_list_row" />
+
+        <LinearLayout
+            android:id="@+id/file_list_loading"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/cards_padding_half"
+                android:background="@android:color/background_light">
+
+                <Space
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_weight="1" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/file_list_loading_progressbar"
+                    android:max="100" />
+
+                <Space
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

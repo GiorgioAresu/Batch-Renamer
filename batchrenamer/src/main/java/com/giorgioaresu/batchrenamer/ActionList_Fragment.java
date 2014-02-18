@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.giorgioaresu.batchrenamer.actions.Add;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  * A fragment representing a list of Items.
@@ -59,19 +60,12 @@ public class ActionList_Fragment extends ListFragment {
             // Retrieve actions from saved state (ie. after rotation)
             mActions = savedInstanceState.getParcelableArrayList(ARG_ACTIONS);
         } else {
-            // Populate actions for the first time
-            mActions = new ArrayList<>();
+            // Eventually populate actions for the first time
             Context mContext = getActivity();
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
-            mActions.add(new Add(mContext));
+            mActions = new ArrayList<>();
+            for (int i = 1; i<10; i++) {
+                mActions.add(new Add(mContext));
+            }
         }
 
         setListAdapter(new ActionAdapter(getActivity(), R.layout.action_list_row, mActions));
@@ -151,6 +145,19 @@ public class ActionList_Fragment extends ListFragment {
             default:
                 return false;
         }
+    }
+
+    public String getNewName(String fileName) {
+        String res = fileName;
+        try {
+            for (Action action : mActions) {
+                res = action.getNewName(res);
+            }
+        } catch (ConcurrentModificationException ex) {
+            // Actions are deleted while computing new name
+            ex.printStackTrace();
+        }
+        return res;
     }
 
     /**

@@ -38,21 +38,19 @@ public class ActionAdapter extends ArrayAdapter<Action> {
      * {@inheritDoc}
      */
     public View getView(int position, View convertView, ViewGroup parent) {
-        // First get the action from our data model
-        ViewHolder viewHolder = null;
+        View v = convertView;
+        ViewHolder viewHolder;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(layoutResource, null);
+            v = inflater.inflate(layoutResource, null);
 
             //using the ViewHolder pattern to reduce lookups
-            viewHolder = new ViewHolder();
-            viewHolder.title = (TextView) convertView.findViewById(R.id.action_title);
-            viewHolder.imageView = (ImageView) convertView.findViewById(R.id.action_imgContent);
+            viewHolder = new ViewHolder(v);
 
             // If user clicks on trash icon we remove that list item
-            convertView.findViewById(R.id.actionlistrow_button_remove).setOnClickListener(new View.OnClickListener() {
+            v.findViewById(R.id.actionlistrow_button_remove).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ViewHolder viewHolder = (ViewHolder) getRootTag(v, 5);
@@ -63,34 +61,32 @@ public class ActionAdapter extends ArrayAdapter<Action> {
                 }
             });
 
-            /*convertView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-                        case MotionEvent.ACTION_DOWN:
-                            view.setBackgroundColor(Color.BLACK);
-                            break;
-                        case MotionEvent.ACTION_MOVE:
+            /*
+             * v.setOnTouchListener(new View.OnTouchListener() {
+             *   @Override
+             *   public boolean onTouch(View view, MotionEvent motionEvent) {
+             *       switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+             *           case MotionEvent.ACTION_DOWN:
+             *               view.setBackgroundColor(Color.BLACK);
+             *               break;
+             *           case MotionEvent.ACTION_MOVE:
+             *
+             *               break;
+             *           case MotionEvent.ACTION_UP:
+             *               view.setBackgroundColor(Color.WHITE);
+             *
+             *               break;
+             *       }
+             *       return false;
+             *   }
+             * });
+             */
 
-                            break;
-                        case MotionEvent.ACTION_UP:
-                            view.setBackgroundColor(Color.WHITE);
-
-                            break;
-                    }
-                    return false;
-                }
-            });*/
-
-            convertView.setTag(viewHolder);
+            v.setTag(viewHolder);
         } else {
-            //we have a convertView so we're just going to use its content
-
             //we want to be sure it's not invisible in case of recycling view of dragged item
-            convertView.setVisibility(View.VISIBLE);
-
-            //get the holder so we can set the image
-            viewHolder = (ViewHolder) convertView.getTag();
+            v.setVisibility(View.VISIBLE);
+            viewHolder = (ViewHolder) v.getTag();
         }
 
         Action action = mObjects.get(position);
@@ -101,7 +97,7 @@ public class ActionAdapter extends ArrayAdapter<Action> {
         viewHolder.imageView.setContentDescription(action.getContentDescription());
         viewHolder.imageView.invalidate();
 
-        return convertView;
+        return v;
     }
 
     private class ViewHolder {
@@ -113,10 +109,15 @@ public class ActionAdapter extends ArrayAdapter<Action> {
 
         // Handle to content ImageView
         public ImageView imageView;
+
+        public ViewHolder(View base) {
+            title = (TextView) base.findViewById(R.id.action_title);
+            imageView = (ImageView) base.findViewById(R.id.action_imgContent);
+        }
     }
 
     /**
-     * Find the first element with a tag going up the view hyerarchy
+     * Find the first element with a tag going up the view hierarchy
      *
      * @param v     element from which to start
      * @param limit limit of interactions to avoid going up too much
@@ -148,5 +149,4 @@ public class ActionAdapter extends ArrayAdapter<Action> {
 
         notifyDataSetChanged();
     }
-
 }

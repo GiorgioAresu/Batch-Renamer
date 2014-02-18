@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:showDividers="middle"
     android:dividerPadding="5dp"
     android:divider="?android:attr/listDivider"
@@ -12,12 +12,12 @@
     tools:ignore="SelectableText">
 
     <TextView
-        style="@style/ListItemRow"
+        style="@style/FileListRow_Text"
         android:id="@+id/file_list_item_current"
         android:paddingRight="?android:attr/listPreferredItemPaddingRight" />
 
     <TextView
-        style="@style/ListItemRow"
+        style="@style/FileListRow_Text"
         android:id="@+id/file_list_item_preview"
         android:paddingLeft="?android:attr/listPreferredItemPaddingLeft" />
 

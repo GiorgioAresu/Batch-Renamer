@@ -14,6 +14,7 @@
     <!-- File section -->
     <string name="filelist_header_current">Current name</string>
     <string name="filelist_header_preview">Preview</string>
+    <string name="filelist_header_preview_updating">Preview (updating)</string>
 
     <!-- Action strings -->
     <string name="action_remove">Remove action</string>

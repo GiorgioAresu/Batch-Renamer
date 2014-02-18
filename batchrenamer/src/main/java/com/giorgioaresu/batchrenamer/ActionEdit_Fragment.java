@@ -108,7 +108,7 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
                 // TODO: Validate changes
                 Action mAction = getArguments().getParcelable(keyAction);
                 mAction.updateDataFromView(dialogView);
-                mListener.notifyDataSetChanged();
+                mListener.notifyActionDataSetChanged();
                 break;
 
             case DialogInterface.BUTTON_NEGATIVE:
@@ -125,6 +125,10 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
     }
 
     public interface actionEditFragment_Callbacks {
-        public void notifyDataSetChanged();
+        /**
+         * Notify that actions DataSet has changed, ie. after closing the
+         * dialog used to modify actions
+         */
+        public void notifyActionDataSetChanged();
     }
 }

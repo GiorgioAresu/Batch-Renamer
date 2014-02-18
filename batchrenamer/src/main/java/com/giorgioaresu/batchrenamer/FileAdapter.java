@@ -2,7 +2,6 @@ package com.giorgioaresu.batchrenamer;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,35 +24,33 @@ public class FileAdapter extends ArrayAdapter<File> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
+        View v = convertView;
         FileHolder holder;
 
-        if (row == null) {
+        if (v == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+            v = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new FileHolder();
-            try {
-                holder.currentName = (TextView) row.findViewById(R.id.file_list_item_current);
-                holder.newName = (TextView) row.findViewById(R.id.file_list_item_preview);
-                row.setTag(holder);
-            } catch (Exception e) {
-                Log.e(getClass().getCanonicalName(), "Exception: " + e.getMessage() + ". Printing stack trace...");
-                e.printStackTrace();
-            }
+            holder = new FileHolder(v);
+            v.setTag(holder);
         } else {
-            holder = (FileHolder) row.getTag();
+            holder = (FileHolder) v.getTag();
         }
 
         File file = files.get(position);
         holder.currentName.setText(file.currentName);
         holder.newName.setText(file.newName);
 
-        return row;
+        return v;
     }
 
     static class FileHolder {
         TextView currentName;
         TextView newName;
+
+        public FileHolder(View v) {
+            currentName = (TextView) v.findViewById(R.id.file_list_item_current);
+            newName = (TextView) v.findViewById(R.id.file_list_item_preview);
+        }
     }
 }
