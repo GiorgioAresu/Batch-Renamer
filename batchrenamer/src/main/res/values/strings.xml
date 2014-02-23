@@ -6,10 +6,20 @@
     <string name="false_">false</string>
     <string name="empty_field_label">Empty Field</string>
 
+    <!-- Notification -->
+    <string name="renaming_notification_title">File rename</string>
+    <string name="renaming_notification_text_completed">Operation completed</string>
+    <string name="renaming_notification_text_indeterminate">Preparing…</string>
+    <string name="renaming_notification_text_template">Renaming file %1$d of %2$d.</string>
+    <string name="renaming_notification_ticker_started">File rename started</string>
+    <string name="renaming_notification_ticker_completed">File rename completed</string>
+    <!--string name="renaming_notification_summary_big">Dummy summary text</string-->
+
     <!-- Action bar -->
     <string name="action_newAction">New action</string>
+    <string name="action_clearActions">Remove all actions</string>
     <string name="action_start">Rename</string>
-    <string name="action_settings">Settings</string>
+    <!--string name="action_settings">Settings</string-->
 
     <!-- File section -->
     <string name="filelist_header_current">Current name</string>
@@ -30,9 +40,11 @@
     <string name="action_add_index">Position</string>
     <string name="action_add_backward">Backward</string>
     <string name="action_add_apply">Apply to</string>
+
     <string-array name="action_add_apply_values">
         <item>Name</item>
         <item>Extension</item>
         <item>Name and extension</item>
     </string-array>
+
 </resources>

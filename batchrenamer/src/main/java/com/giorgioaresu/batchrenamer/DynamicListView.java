@@ -191,8 +191,18 @@ public class DynamicListView extends ListView {
     private void updateNeighborViews(Action item) {
         int position = getPosition(item);
         ActionAdapter adapter = (ActionAdapter) getAdapter();
-        mAboveItem = (Action) adapter.getItem(position - 1);
-        mBelowItem = (Action) adapter.getItem(position + 1);
+
+        // Get items if they are in bounds
+        try {
+            mAboveItem = adapter.getItem(position - 1);
+        } catch (IndexOutOfBoundsException e) {
+            mAboveItem = null;
+        }
+        try {
+            mBelowItem = adapter.getItem(position + 1);
+        } catch (IndexOutOfBoundsException e) {
+            mBelowItem = null;
+        }
     }
 
     /**

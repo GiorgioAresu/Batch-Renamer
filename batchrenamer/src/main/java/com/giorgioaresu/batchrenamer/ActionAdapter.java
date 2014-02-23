@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,31 +14,18 @@ import java.util.List;
 public class ActionAdapter extends ArrayAdapter<Action> {
     // Handle to layout resource
     int layoutResource;
+    actionAdapter_Callbacks mCallbacks;
 
-    List<Action> mObjects;
-
-    public ActionAdapter(Context context, int resource, List<Action> objects) {
+    public ActionAdapter(Context context, int resource, List<Action> objects, actionAdapter_Callbacks callbacks) {
         super(context, resource, objects);
         layoutResource = resource;
-        mObjects = objects;
+        mCallbacks = callbacks;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    public Action getItem(int position) {
-        if (position < 0 || position >= mObjects.size()) {
-            return null;
-        }
-
-        return mObjects.get(position);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View v = convertView;
         ViewHolder viewHolder;
 
@@ -53,34 +41,9 @@ public class ActionAdapter extends ArrayAdapter<Action> {
             v.findViewById(R.id.actionlistrow_button_remove).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ViewHolder viewHolder = (ViewHolder) getRootTag(v, 5);
-                    if (viewHolder != null) {
-                        remove(getItem(viewHolder.position));
-                        notifyDataSetChanged();
-                    }
+                    mCallbacks.animateItemDeletion(v);
                 }
             });
-
-            /*
-             * v.setOnTouchListener(new View.OnTouchListener() {
-             *   @Override
-             *   public boolean onTouch(View view, MotionEvent motionEvent) {
-             *       switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-             *           case MotionEvent.ACTION_DOWN:
-             *               view.setBackgroundColor(Color.BLACK);
-             *               break;
-             *           case MotionEvent.ACTION_MOVE:
-             *
-             *               break;
-             *           case MotionEvent.ACTION_UP:
-             *               view.setBackgroundColor(Color.WHITE);
-             *
-             *               break;
-             *       }
-             *       return false;
-             *   }
-             * });
-             */
 
             v.setTag(viewHolder);
         } else {
@@ -89,50 +52,45 @@ public class ActionAdapter extends ArrayAdapter<Action> {
             viewHolder = (ViewHolder) v.getTag();
         }
 
-        Action action = mObjects.get(position);
+        Action action = getItem(position);
 
-        viewHolder.position = position;
         viewHolder.title.setText(action.getTitle());
-        viewHolder.imageView.setImageBitmap(action.getBitmapOfView(parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight()));
+        // Compute wanted width for view
+        int width = parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
+        viewHolder.imageView.setImageBitmap(action.getBitmapOfView(width));
         viewHolder.imageView.setContentDescription(action.getContentDescription());
         viewHolder.imageView.invalidate();
 
         return v;
     }
 
-    private class ViewHolder {
-        // Position in the list
-        public int position;
-
+    public class ViewHolder {
         // Handle to title TextView
         public TextView title;
 
         // Handle to content ImageView
         public ImageView imageView;
 
+        private int horizontalPadding;
+        private int verticalPadding;
+
         public ViewHolder(View base) {
             title = (TextView) base.findViewById(R.id.action_title);
             imageView = (ImageView) base.findViewById(R.id.action_imgContent);
-        }
-    }
 
-    /**
-     * Find the first element with a tag going up the view hierarchy
-     *
-     * @param v     element from which to start
-     * @param limit limit of interactions to avoid going up too much
-     * @return the closest ancestor of {@code v} that has a tag, or {@code null} if not found in {@code limit} interactions
-     */
-    private static Object getRootTag(View v, int limit) {
-        for (int l = limit; l > 0; l--) {
-            if (v.getTag() == null) {
-                v = (View) v.getParent();
-            } else {
-                return v.getTag();
-            }
+            // Convert the dps to pixels, based on density scale
+            int iconOffsetPx = (int) getContext().getResources().getDimension(R.dimen.action_removedrawable_offset);
+
+            // Fix aligment
+            base.setPadding(base.getPaddingLeft(), base.getPaddingTop(), base.getPaddingRight() - iconOffsetPx, base.getPaddingBottom());
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+            lp.rightMargin = iconOffsetPx;
+            imageView.setLayoutParams(lp);
+            ImageView separator = (ImageView) base.findViewById(R.id.action_headerSeparator);
+            lp = (LinearLayout.LayoutParams) separator.getLayoutParams();
+            lp.rightMargin = iconOffsetPx;
+            separator.setLayoutParams(lp);
         }
-        // Root view not found
-        return null;
     }
 
     /**
@@ -142,11 +100,34 @@ public class ActionAdapter extends ArrayAdapter<Action> {
      * @param indexTwo index of the second element
      */
     public void swapElements(int indexOne, int indexTwo) {
-        Action temp = mObjects.get(indexOne);
+        setNotifyOnChange(false);
+        int indexLow;
+        int indexHigh;
 
-        mObjects.set(indexOne, mObjects.get(indexTwo));
-        mObjects.set(indexTwo, temp);
+        // We need to start with the highest index to be sure to not compromise
+        // the other index
+        if (indexTwo > indexOne) {
+            indexLow = indexOne;
+            indexHigh = indexTwo;
+        } else {
+            indexLow = indexTwo;
+            indexHigh = indexOne;
+        }
+        // Pick both actions to avoid interferences
+        Action actionLow = getItem(indexLow);
+        Action actionHigh = getItem(indexHigh);
 
+        remove(actionHigh);
+        insert(actionLow, indexHigh);
+
+        remove(actionLow);
+        insert(actionHigh, indexLow);
+
+        setNotifyOnChange(true);
         notifyDataSetChanged();
+    }
+
+    public interface actionAdapter_Callbacks {
+        public void animateItemDeletion(View view);
     }
 }

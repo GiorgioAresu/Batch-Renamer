@@ -16,15 +16,22 @@
     </item>
 
     <item
+        android:id="@+id/action_clearActions"
+        android:title="@string/action_clearActions"
+        android:showAsAction="ifRoom"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_action_remove_dark" />
+
+    <item
         android:id="@+id/action_start"
         android:title="@string/action_start"
         android:showAsAction="ifRoom|withText"
-        android:orderInCategory="2"
-        android:icon="@drawable/ic_start" />
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_action_start" />
 
-    <item
+    <!--item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:showAsAction="never" /-->
 </menu>

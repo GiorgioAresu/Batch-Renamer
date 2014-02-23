@@ -2,6 +2,7 @@ package com.giorgioaresu.batchrenamer;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -91,17 +92,18 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_start:
-                for (File f : fileList_fragment.getFiles()) {
+                startFileRename();
+                /*for (File f : fileList_fragment.getFiles()) {
                     //f.newName = actionList_fragment.getNewName(f.currentName);
                     f.Rename();
-                }
+                }*/
                 return true;
-            case R.id.action_settings:
-                /*Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);*/
-                return true;
+            /*case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;*/
             default:
-                if (actionList_fragment.onNewActionSelected(item)) {
+                if (actionList_fragment.onMenuItemSelected(item)) {
                     return true;
                 } else {
                     return super.onOptionsItemSelected(item);
@@ -121,7 +123,7 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
             Log.d(getLocalClassName(), "Cancelled old async task");
         }
 
-        Log.d(getLocalClassName(), "Firing async task");
+        Log.d(getLocalClassName(), "Firing async newnames task");
         // Fire off an AsyncTask to compute file names
         updateFileNames_asyncTask = new UpdateFileNames_AsyncTask(new UpdateFileNames_AsyncTask.updateFileNames_Callbacks() {
 
@@ -156,5 +158,33 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         });
 
         updateFileNames_asyncTask.execute(fileList_fragment.getFiles());
+    }
+
+    protected void startFileRename() {
+        // TODO: handle cancellation?
+        Log.d(getLocalClassName(), "Firing async rename task");
+        RenameFiles_AsyncTask renameFiles_asyncTask = new RenameFiles_AsyncTask(new RenameFiles_AsyncTask.renameFiles_Callbacks() {
+            @Override
+            public void updateProgressInUI(Integer progress) {
+                Log.d("Rename task", "Progress: " + progress);
+            }
+
+            @Override
+            public void setUiLoading() {
+                Log.d("Rename task", "Preparing UI");
+            }
+
+            @Override
+            public void setUiResult() {
+                Log.d("Rename task", "Resetting UI");
+            }
+
+            @Override
+            public Context getContext() {
+                return getApplicationContext();
+            }
+        });
+
+        renameFiles_asyncTask.execute(fileList_fragment.getFiles());
     }
 }

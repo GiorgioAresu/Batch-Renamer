@@ -1,0 +1,122 @@
+package com.giorgioaresu.batchrenamer;
+
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+
+/**
+ * Helper class for showing and canceling renaming
+ * notifications.
+ * <p/>
+ * This class makes heavy use of the {@link NotificationCompat.Builder} helper
+ * class to create notifications in a backward-compatible way.
+ */
+public class RenamingNotification {
+    /**
+     * The unique identifier for this type of notification.
+     */
+    private static final String NOTIFICATION_TAG = "Renaming";
+
+    /**
+     * Shows the notification, or updates a previously shown notification of
+     * this type, with the given parameters.
+     *
+     * @see #cancel(Context)
+     */
+    public static void notify(final Context context, final int progress, final int max) {
+        final Resources res = context.getResources();
+
+        final boolean indeterminate = max == 0;
+        final boolean completed = progress < 0;
+        final String ticker = res.getString(completed ? R.string.renaming_notification_ticker_completed : R.string.renaming_notification_ticker_started);
+        final String title = res.getString(R.string.renaming_notification_title);
+        final String text;
+        if (completed) {
+            text = res.getString(R.string.renaming_notification_text_completed);
+        } else if (indeterminate) {
+            text = res.getString(R.string.renaming_notification_text_indeterminate);
+        } else {
+            text = res.getString(R.string.renaming_notification_text_template, progress, max);
+        }
+
+
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(context, MainActivity.class);
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+
+
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_stat_renaming)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setTicker(ticker)
+                .setOngoing(!completed)
+                        // Use a default priority (recognized on devices running Android
+                        // 4.1 or later)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                        // Set the pending intent to be initiated when the user touches
+                        // the notification.
+                .setContentIntent(resultPendingIntent)
+                        // Show expanded text content on devices running Android 4.1 or
+                        // later.
+                /*.setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(text)
+                        .setBigContentTitle(title)
+                        .setSummaryText(res.getString(R.string.renaming_notification_summary_big)))
+                // Automatically dismiss the notification when it is touched.*/
+                .setAutoCancel(true);
+
+        if (!completed) {
+            // Add progressbar
+            builder.setProgress(max, progress, indeterminate);
+        }
+
+        notify(context, builder.build());
+    }
+
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
+    private static void notify(final Context context, final Notification notification) {
+        final NotificationManager nm = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            nm.notify(NOTIFICATION_TAG, 0, notification);
+        } else {
+            nm.notify(NOTIFICATION_TAG.hashCode(), notification);
+        }
+    }
+
+    /**
+     * Cancels any notifications of this type previously shown using
+     * {@link #notify(Context, String, int)}.
+     */
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
+    public static void cancel(final Context context) {
+        final NotificationManager nm = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+            nm.cancel(NOTIFICATION_TAG, 0);
+        } else {
+            nm.cancel(NOTIFICATION_TAG.hashCode());
+        }
+    }
+}

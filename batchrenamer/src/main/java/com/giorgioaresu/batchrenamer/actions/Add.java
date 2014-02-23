@@ -18,7 +18,6 @@ public class Add extends Action {
     static final String KEY_POSITION = "Position";
     static final String KEY_BACKWARD = "Backward";
 
-    Context context;
     String text = "";
     int position = 0;
     boolean backward = false;
@@ -26,10 +25,9 @@ public class Add extends Action {
 
     public Add(Context context) {
         super(context, context.getString(R.string.action_add_title), R.layout.action_card_add);
-        this.context = context;
     }
 
-    public String getNewName(String currentName) {
+    public String getNewName(String currentName, int positionInSet) {
         // Compute right index
         int pos;
         if (backward) {

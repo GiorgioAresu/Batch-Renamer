@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/space_between_fragments"
             tools:layout="@layout/file_list_fragment_content" />
 
         <fragment

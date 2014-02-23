@@ -4,13 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/card_background"
-    android:layout_marginTop="@dimen/cards_padding"
-    android:layout_marginBottom="@dimen/cards_padding">
+    android:background="@drawable/bg_card"
+    android:paddingTop="@dimen/card_padding_vertical"
+    android:paddingRight="@dimen/card_padding_horizontal"
+    android:paddingBottom="@dimen/card_padding_vertical"
+    android:paddingLeft="@dimen/card_padding_horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
@@ -23,16 +25,17 @@
 
         <ImageView
             android:id="@+id/actionlistrow_button_remove"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="8dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
             android:contentDescription="@string/action_remove"
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_action_remove_light"
             android:scaleType="fitCenter" />
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/action_headerSeparator"
         tools:ignore="ContentDescription"
         style="@style/ActionCard_HeaderSeparator" />
 
@@ -40,6 +43,7 @@
     <ImageView
         android:id="@+id/action_imgContent"
         style="@style/ActionCards_ContentView"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/action_list_row_contentdescription" />
 
 </LinearLayout>

@@ -204,7 +204,7 @@ public class FileList_Fragment extends ListFragment {
             cursor.moveToFirst();
             return Uri.parse("file:///" + cursor.getString(column_index));
         } else {
-            Log.w(getClass().getCanonicalName(), "failed to recognize Uri: " + uri.toString());
+            Log.w(getClass().getSimpleName(), "failed to recognize Uri: " + uri.toString());
             return null;
         }
     }

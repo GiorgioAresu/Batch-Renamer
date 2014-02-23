@@ -1,17 +1,11 @@
 package com.giorgioaresu.batchrenamer;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
 
 public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Integer, Void> {
     private updateFileNames_Callbacks mListener;
-
-    public UpdateFileNames_AsyncTask(Activity listener) {
-        super();
-        mListener = (updateFileNames_Callbacks) listener;
-    }
 
     public UpdateFileNames_AsyncTask(updateFileNames_Callbacks listener) {
         super();

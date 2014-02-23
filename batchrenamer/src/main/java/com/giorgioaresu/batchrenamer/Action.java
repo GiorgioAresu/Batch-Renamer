@@ -18,7 +18,7 @@ public abstract class Action implements Parcelable {
     static final String KEY_CONTENT = "Content";
     static final String KEY_TYPE = "Type";
 
-    private Context context;
+    protected Context context;
     private String title;
     private int viewId;
 
@@ -32,21 +32,19 @@ public abstract class Action implements Parcelable {
         return title;
     }
 
-    public String[] getNewNames(String[] currentNames) {
-        int length = currentNames.length;
-        String[] names = new String[length];
-
-        for (int i = 0; i < length; i++)
-            names[i] = getNewName(currentNames[i]);
-
-        return names;
-    }
-
     public int getViewId() {
         return viewId;
     }
 
-    public abstract String getNewName(String currentName);
+    /**
+     * Given a string and its position in the original set of strings,
+     * process it and returns the new one
+     *
+     * @param currentName   current string
+     * @param positionInSet position of the string in the original set (useful for counters)
+     * @return the new string
+     */
+    public abstract String getNewName(String currentName, int positionInSet);
 
     /**
      * Update underlying data from a view of the appropriate type
@@ -119,7 +117,7 @@ public abstract class Action implements Parcelable {
         JSONObject jObject = new JSONObject();
         try {
             jObject.put(KEY_CONTENT, serializeToJSON());
-            jObject.put(KEY_TYPE, getClass().getName());
+            jObject.put(KEY_TYPE, getClass().getSimpleName());
             return jObject;
         } catch (JSONException e) {
             Log.e("dumpToJSON", "Exception dumping item, skipping");
@@ -193,6 +191,7 @@ public abstract class Action implements Parcelable {
 
     /**
      * Restore action status from content described in a Parcel
+     *
      * @param in Parcel containing action description
      */
     protected abstract void createFromParcel(Parcel in);
