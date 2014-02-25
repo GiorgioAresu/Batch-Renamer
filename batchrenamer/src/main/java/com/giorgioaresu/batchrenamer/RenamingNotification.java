@@ -23,6 +23,14 @@ public class RenamingNotification {
      * The unique identifier for this type of notification.
      */
     private static final String NOTIFICATION_TAG = "Renaming";
+    /**
+     * Pass this as progress to set the notification to not ongoing
+     */
+    private static final int COMPLETED = -1;
+    /**
+     * Pass this as progress to set the progressbar to indeterminate
+     */
+    private static final int INDETERMINATE = -1;
 
     /**
      * Shows the notification, or updates a previously shown notification of
@@ -30,11 +38,11 @@ public class RenamingNotification {
      *
      * @see #cancel(Context)
      */
-    public static void notify(final Context context, final int progress, final int max) {
+    public static void notify(final Context context, final int progress, final int max, final int completedNumber, final int failedNumber) {
         final Resources res = context.getResources();
 
-        final boolean indeterminate = max == 0;
-        final boolean completed = progress < 0;
+        final boolean indeterminate = max == INDETERMINATE;
+        final boolean completed = progress == COMPLETED;
         final String ticker = res.getString(completed ? R.string.renaming_notification_ticker_completed : R.string.renaming_notification_ticker_started);
         final String title = res.getString(R.string.renaming_notification_title);
         final String text;
@@ -45,6 +53,7 @@ public class RenamingNotification {
         } else {
             text = res.getString(R.string.renaming_notification_text_template, progress, max);
         }
+        final String summary = res.getString(R.string.renaming_notification_summary_big, completedNumber, failedNumber);
 
 
         // Creates an explicit intent for an Activity in your app
@@ -79,12 +88,15 @@ public class RenamingNotification {
                 .setContentIntent(resultPendingIntent)
                         // Show expanded text content on devices running Android 4.1 or
                         // later.
-                /*.setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(text)
-                        .setBigContentTitle(title)
-                        .setSummaryText(res.getString(R.string.renaming_notification_summary_big)))
                 // Automatically dismiss the notification when it is touched.*/
                 .setAutoCancel(true);
+
+        if (!indeterminate) {
+            builder.setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(text)
+                    .setBigContentTitle(title)
+                    .setSummaryText(summary));
+        }
 
         if (!completed) {
             // Add progressbar
@@ -92,6 +104,14 @@ public class RenamingNotification {
         }
 
         notify(context, builder.build());
+    }
+
+    public static void notifyCompleted(Context context, int completedNumber, int failedNumber) {
+        notify(context, COMPLETED, 0, completedNumber, failedNumber);
+    }
+
+    public static void notifyIndeterminate(Context context) {
+        notify(context, 0, INDETERMINATE, 0, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.ECLAIR)

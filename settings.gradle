@@ -1,1 +1,1 @@
-include ':batchrenamer'
+include ':batchrenamer', ':libsuperuser'

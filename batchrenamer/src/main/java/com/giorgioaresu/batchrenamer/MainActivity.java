@@ -14,7 +14,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+
 public class MainActivity extends Activity implements FileList_Fragment.FileFragmentInterface {
+    public static java.io.File scriptFile;
     private ActionList_Fragment actionList_fragment;
     private FileList_Fragment fileList_fragment;
     private UpdateFileNames_AsyncTask updateFileNames_asyncTask;
@@ -26,6 +31,28 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        scriptFile = new java.io.File(getFilesDir(), "root_rename.sh");
+
+        // Copy script to internal storage
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FileOutputStream outputStream = new FileOutputStream(scriptFile);
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.root_rename)));
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        Log.d("Writing", line);
+                        outputStream.write((line + "\n").getBytes());
+                    }
+                    outputStream.close();
+                    scriptFile.setExecutable(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        runnable.run();
 
         if (savedInstanceState == null) {
             // Eventually do something
@@ -95,7 +122,7 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
                 startFileRename();
                 /*for (File f : fileList_fragment.getFiles()) {
                     //f.newName = actionList_fragment.getNewName(f.currentName);
-                    f.Rename();
+                    f.rename();
                 }*/
                 return true;
             /*case R.id.action_settings:
@@ -165,7 +192,7 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         Log.d(getLocalClassName(), "Firing async rename task");
         RenameFiles_AsyncTask renameFiles_asyncTask = new RenameFiles_AsyncTask(new RenameFiles_AsyncTask.renameFiles_Callbacks() {
             @Override
-            public void updateProgressInUI(Integer progress) {
+            public void updateProgressInUI(Integer progress, Integer elements, File.RENAME result) {
                 Log.d("Rename task", "Progress: " + progress);
             }
 

@@ -12,6 +12,14 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
     private Context context;
     private RenamingNotification notification = new RenamingNotification();
 
+    private int completed = 0;
+    private int failed = 0;
+
+    /**
+     * Syncronize failed writing on this object to guarantee consistence
+     */
+    private Object mLock = new Object();
+
     public RenameFiles_AsyncTask(renameFiles_Callbacks mListener) {
         super();
         this.mListener = mListener;
@@ -20,19 +28,56 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
 
     @Override
     protected void onPreExecute() {
-        notification.notify(context, 0, 0);
+        notification.notifyIndeterminate(context);
         mListener.setUiLoading();
     }
 
     @Override
     protected Void doInBackground(ArrayList<File>... arrayLists) {
         int size = arrayLists[0].size();
+        // Allow asking the user to give superuser permission even if
+        // the previous time it declined the request
+        SuHelper.resetSuStatus();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        publishProgress(0, size);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < size; i++) {
-            Log.v("Task", "Processing file " + (i + 1) + " of " + size);
-            publishProgress(i + 1, size);
+            File f = arrayLists[0].get(i);
+            File.RENAME result = f.rename();
+            switch (result) {
+                case SUCCESSFUL:
+                    // Correctly renamed file
+                    Log.d(getClass().getSimpleName(), "Rename successful for file: " + f.currentName + " to: " + f.newName);
+                    break;
+                case FAILED_GENERIC:
+                    // Failed with unknown cause
+                    Log.d(getClass().getSimpleName(), "Rename failed for file: " + f.currentName);
+                    break;
+                case FAILED_PERMISSION:
+                    // Insufficient permission on folder or file
+                    Log.d(getClass().getSimpleName(), "Rename failed (insufficient permissions) for file: " + f.currentName);
+                    break;
+                case FAILED_NOSOURCEFILE:
+                    // Source file doesn't exist
+                    Log.d(getClass().getSimpleName(), "Rename failed (file doesn't exist) for file: " + f.currentName);
+                    break;
+                case FAILED_DESTINATIONEXISTS:
+                    // Destination file already exists
+                    Log.d(getClass().getSimpleName(), "Rename failed (file already exists) for file: " + f.currentName);
+                    break;
+            }
+            publishProgress(i + 1, size, result.getID());
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -42,8 +87,22 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        notification.notify(context, values[0], values[1]);
-        mListener.updateProgressInUI(values[0]);
+        if (values.length > 2) {
+            synchronized (mLock) {
+                if (File.RENAME.SUCCESSFUL.compare(values[2])) {
+                    completed++;
+                } else {
+                    failed++;
+                }
+            }
+        }
+        notification.notify(context, values[0], values[1], completed, failed);
+
+        if (values.length > 2) {
+            mListener.updateProgressInUI(values[0], values[1], File.RENAME.getValue(values[2]));
+        } else {
+            mListener.updateProgressInUI(values[0], values[1], null);
+        }
     }
 
     @Override
@@ -54,13 +113,13 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
     @Override
     protected void onPostExecute(Void aVoid) {
         Log.d("Rename task", "Hiding notification");
-        notification.notify(context, -1, 0);
+        notification.notifyCompleted(context, completed, failed);
         mListener.setUiResult();
         // TODO : Update current file names with new ones
     }
 
     public interface renameFiles_Callbacks {
-        public void updateProgressInUI(Integer progress);
+        public void updateProgressInUI(Integer progress, Integer elements, File.RENAME result);
 
         public void setUiLoading();
 

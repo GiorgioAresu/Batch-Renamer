@@ -19,6 +19,8 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
 
     private actionEditFragment_Callbacks mListener;
 
+    private View dialogView;
+
     private static boolean isShowing = false;
 
     @Override
@@ -58,7 +60,7 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
 
         // Inflate layout
         // Pass null as the parent view because its going in the dialog layout
-        View dialogView = inflater.inflate(R.layout.action_edit, null);
+        dialogView = inflater.inflate(R.layout.action_edit, null);
 
         // Set title
         ((TextView) dialogView.findViewById(R.id.action_title)).setText(mAction.getTitle());
@@ -111,7 +113,7 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
             case DialogInterface.BUTTON_POSITIVE:
                 // TODO: Validate changes
                 Action mAction = getArguments().getParcelable(keyAction);
-                mAction.updateDataFromView(getView());
+                mAction.updateDataFromView(dialogView);
                 mListener.notifyActionDataSetChanged();
                 break;
 

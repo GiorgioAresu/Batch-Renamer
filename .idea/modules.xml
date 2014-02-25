@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Batch-Renamer.iml" filepath="$PROJECT_DIR$/Batch-Renamer.iml" />
       <module fileurl="file://$PROJECT_DIR$/BatchRenamer.iml" filepath="$PROJECT_DIR$/BatchRenamer.iml" />
       <module fileurl="file://$PROJECT_DIR$/batchrenamer/batchrenamer.iml" filepath="$PROJECT_DIR$/batchrenamer/batchrenamer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libsuperuser/libsuperuser.iml" filepath="$PROJECT_DIR$/libsuperuser/libsuperuser.iml" />
     </modules>
   </component>
 </project>

@@ -65,11 +65,11 @@ public class FileList_Fragment extends ListFragment {
         } else {
             // Eventually populate actions for the first time
             // TODO: remove this
-            if (mFiles.isEmpty()) {
+            /*if (mFiles.isEmpty()) {
                 for (int i = 0; i < 50; i++) {
                     mFiles.add(new File(Uri.parse("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip")));
                 }
-            }
+            }*/
         }
 
         setListAdapter(new FileAdapter(getActivity(), R.layout.file_list_row, mFiles));
@@ -138,6 +138,7 @@ public class FileList_Fragment extends ListFragment {
 
     /**
      * Extracts file Uri from an intent and adds it to mFiles
+     *
      * @param intent intent to be processed
      * @return true if file has been handled successfully, false otherwise
      */
@@ -160,6 +161,7 @@ public class FileList_Fragment extends ListFragment {
 
     /**
      * Extracts multiple file Uris from an intent and adds them to mFiles
+     *
      * @param intent intent to be processed
      * @return true if files have been handled successfully, false otherwise
      */

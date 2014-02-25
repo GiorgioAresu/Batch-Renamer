@@ -354,6 +354,11 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
                         }
                     }
                 }
+                if (firstAnimation) {
+                    // If we are here it means that for has not run, so there were no child to
+                    // animate, so we need to re-enable listView
+                    setViewEnabled(getListView(), true);
+                }
                 mItemIdTopMap.clear();
                 return true;
             }

@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/batchrenamer" />
+            <option value="$PROJECT_DIR$/libsuperuser" />
           </set>
         </option>
       </GradleProjectSettings>
