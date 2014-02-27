@@ -19,6 +19,8 @@
     <string name="action_newAction">New action</string>
     <string name="action_clearActions">Remove all actions</string>
     <string name="action_start">Rename</string>
+    <string name="empty_filelist">Empty file list. Add some files first</string>
+    <string name="empty_actionlist">Empty action list. Add some actions first</string>
     <!--string name="action_settings">Settings</string-->
 
     <!-- File section -->
