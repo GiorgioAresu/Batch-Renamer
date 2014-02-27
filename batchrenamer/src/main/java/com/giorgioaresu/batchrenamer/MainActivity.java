@@ -46,7 +46,6 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
                         outputStream.write((line + "\n").getBytes());
                     }
                     outputStream.close();
-                    scriptFile.setExecutable(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -120,10 +119,13 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         switch (item.getItemId()) {
             case R.id.action_start:
                 startFileRename();
-                /*for (File f : fileList_fragment.getFiles()) {
-                    //f.newName = actionList_fragment.getNewName(f.currentName);
-                    f.rename();
-                }*/
+                if (fileList_fragment.getListAdapter().getCount() == 0) {
+                    Toast.makeText(this, getString(R.string.empty_filelist), Toast.LENGTH_LONG).show();
+                } else if (actionList_fragment.getListAdapter().getCount() == 0) {
+                    Toast.makeText(this, getString(R.string.empty_actionlist), Toast.LENGTH_LONG).show();
+                } else {
+                    startFileRename();
+                }
                 return true;
             /*case R.id.action_settings:
                 Intent intent = new Intent(this, SettingsActivity.class);

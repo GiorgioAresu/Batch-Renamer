@@ -1,13 +1,11 @@
 package com.giorgioaresu.batchrenamer;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -88,7 +86,7 @@ public class RenamingNotification {
                 .setContentIntent(resultPendingIntent)
                         // Show expanded text content on devices running Android 4.1 or
                         // later.
-                // Automatically dismiss the notification when it is touched.*/
+                        // Automatically dismiss the notification when it is touched.*/
                 .setAutoCancel(true);
 
         if (!indeterminate) {
@@ -114,29 +112,16 @@ public class RenamingNotification {
         notify(context, 0, INDETERMINATE, 0, 0);
     }
 
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private static void notify(final Context context, final Notification notification) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            nm.notify(NOTIFICATION_TAG, 0, notification);
-        } else {
-            nm.notify(NOTIFICATION_TAG.hashCode(), notification);
-        }
+        nm.notify(NOTIFICATION_TAG, 0, notification);
     }
 
-    /**
-     * Cancels any notifications of this type previously shown using
-     * {@link #notify(Context, String, int)}.
-     */
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     public static void cancel(final Context context) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-            nm.cancel(NOTIFICATION_TAG, 0);
-        } else {
-            nm.cancel(NOTIFICATION_TAG.hashCode());
-        }
+
+        nm.cancel(NOTIFICATION_TAG, 0);
     }
 }

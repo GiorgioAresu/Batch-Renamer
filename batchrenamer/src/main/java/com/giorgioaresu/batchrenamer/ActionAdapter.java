@@ -53,8 +53,7 @@ public class ActionAdapter extends ArrayAdapter<Action> {
         }
 
         Action action = getItem(position);
-
-        viewHolder.title.setText(action.getTitle());
+        viewHolder.title.setText((position + 1) + ". " + action.getTitle());
         // Compute wanted width for view
         int width = parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
         viewHolder.imageView.setImageBitmap(action.getBitmapOfView(width));

@@ -34,6 +34,10 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
 
     private static final int ID_NEW_ACTION_ADD = 1;
 
+    public ArrayList<Action> getActions() {
+        return mActions;
+    }
+
     private ArrayList<Action> mActions;
 
     private final HashMap<Integer, Integer> mItemIdTopMap = new HashMap<>();
