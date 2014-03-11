@@ -2,24 +2,32 @@ package com.giorgioaresu.batchrenamer;
 
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.giorgioaresu.batchrenamer.actions.Add;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.HashMap;
 
 /**
  * A fragment representing a list of Items.
@@ -28,25 +36,31 @@ import java.util.HashMap;
  * Activities containing this fragment MUST implement the Callbacks
  * interface.
  */
-public class ActionList_Fragment extends ListFragment implements ActionAdapter.actionAdapter_Callbacks, ActionEdit_Fragment.actionEditFragment_Callbacks {
+public class Action_ListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener, ActionAdapter.actionAdapter_Callbacks, ActionEdit_Fragment.actionEditFragment_Callbacks {
 
     private static final String ARG_ACTIONS = "actions";
+    private static final String ARG_ACTION = "action";
+    private static final String ARG_INDEX = "index";
 
     private static final int ID_NEW_ACTION_ADD = 1;
 
     public ArrayList<Action> getActions() {
-        return mActions;
+        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
+        ArrayList<Action> actions = new ArrayList<>();
+
+        for (int i = 0; i < adapter.getCount(); ++i) {
+            actions.add((Action) adapter.getItem(i));
+        }
+        return actions;
     }
 
-    private ArrayList<Action> mActions;
-
-    private final HashMap<Integer, Integer> mItemIdTopMap = new HashMap<>();
+    private final SparseIntArray mItemIdTopMap = new SparseIntArray();
 
     private static final long MOVE_DURATION = 250;
     private static final long FADE_DURATION = 250;
 
-    public static ActionList_Fragment newInstance(ArrayList<Action> actions) {
-        ActionList_Fragment fragment = new ActionList_Fragment();
+    public static Action_ListFragment newInstance(ArrayList<Action> actions) {
+        Action_ListFragment fragment = new Action_ListFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_ACTIONS, actions);
         fragment.setArguments(args);
@@ -57,12 +71,15 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ActionList_Fragment() {
+    public Action_ListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+
+        ArrayList<Action> mActions;
 
         if (getArguments() != null) {
             // Retrieve actions from arguments
@@ -83,7 +100,7 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(ARG_ACTIONS, mActions);
+        outState.putParcelableArrayList(ARG_ACTIONS, getActions());
         super.onSaveInstanceState(outState);
     }
 
@@ -104,29 +121,68 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        ActionEdit_Fragment actionEdit_fragment = ActionEdit_Fragment.newInstance(mActions.get(position));
+        ActionEdit_Fragment actionEdit_fragment = ActionEdit_Fragment.newInstance((Action) getListAdapter().getItem(position));
         actionEdit_fragment.setListener(this);
         actionEdit_fragment.show(getFragmentManager(), "editAction");
     }
 
-    public void populateActionMenu(SubMenu subMenu) {
-        subMenu.add(0, ID_NEW_ACTION_ADD, 0, R.string.action_add_title);
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.actionlist_fragment, menu);
+        SubMenu subMenu = menu.findItem(R.id.action_newAction).getSubMenu();
+
+        if (subMenu != null) {
+            for (int i = 0; i < subMenu.size(); i++) {
+                subMenu.getItem(i).setOnMenuItemClickListener(this);
+            }
+        }
     }
 
-    public boolean onMenuItemSelected(MenuItem item) {
-        // Handle item selection
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case ID_NEW_ACTION_ADD:
-                mActions.add(new Add(getActivity()));
-                ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
-                actionAdapter.notifyDataSetChanged();
-                return true;
             case R.id.action_clearActions:
-                // TODO: Show toast
-                ((ActionAdapter) getListAdapter()).clear();
+                if (getListAdapter().getCount() != 0) {
+                    ActionAdapter adapter = (ActionAdapter) getListAdapter();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList(ARG_ACTIONS, getActions());
+
+                    new UndoBarController(getActivity().findViewById(R.id.undobar), new UndoBarController.UndoListener() {
+                        @Override
+                        public void onUndo(Parcelable token) {
+                            Bundle b = (Bundle) token;
+                            ArrayList<Action> actions = b.getParcelableArrayList(ARG_ACTIONS);
+                            ActionAdapter adapter = (ActionAdapter) getListAdapter();
+                            adapter.clear();
+                            adapter.addAll(actions);
+                        }
+                    }).showUndoBar(false, getString(R.string.action_clearActions_message), bundle);
+
+                    ((ActionAdapter) getListAdapter()).clear();
+                } else {
+                    Toast.makeText(getActivity(), R.string.action_clearActions_emptymessage, Toast.LENGTH_SHORT).show();
+                }
                 return true;
             default:
-                return false;
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        // Inflate appropriate class based on item title and add it to the list
+        try {
+            Activity activity = getActivity();
+            String className = activity.getPackageName() + ".actions." + item.getTitle().toString();
+            Class<?> c = Class.forName(className);
+            Constructor<?> cons = c.getConstructors()[0];
+            Action action = (Action) cons.newInstance(activity);
+            ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
+            actionAdapter.add(action);
+            return true;
+        } catch (Exception b) {
+            Log.e(getClass().getSimpleName(), "Exception handling item click, skipping");
+            return false;
         }
     }
 
@@ -140,8 +196,9 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
     public String getNewName(String fileName) {
         String res = fileName;
         try {
-            for (int i = 0; i < mActions.size(); i++) {
-                res = mActions.get(i).getNewName(res, i);
+            ActionAdapter adapter = (ActionAdapter) getListAdapter();
+            for (int i = 0; i < adapter.getCount(); i++) {
+                res = adapter.getItem(i).getNewName(res, i);
             }
         } catch (ConcurrentModificationException ex) {
             // Actions are deleted while computing new name
@@ -263,8 +320,25 @@ public class ActionList_Fragment extends ListFragment implements ActionAdapter.a
             }
         }
 
+        Action removedAction = mAdapter.getItem(position);
+
+        // Prepare and show undobar
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_INDEX, position);
+        bundle.putParcelable(ARG_ACTION, removedAction);
+        new UndoBarController(getActivity().findViewById(R.id.undobar), new UndoBarController.UndoListener() {
+            @Override
+            public void onUndo(Parcelable token) {
+                Bundle b = (Bundle) token;
+                int index = b.getInt(ARG_INDEX);
+                Action action = b.getParcelable(ARG_ACTION);
+                ActionAdapter adapter = (ActionAdapter) getListAdapter();
+                adapter.insert(action, index);
+            }
+        }).showUndoBar(false, getString(R.string.action_remove_message), bundle);
+
         // Delete the item from the adapter
-        mAdapter.remove(mAdapter.getItem(position));
+        mAdapter.remove(removedAction);
 
         final ViewTreeObserver observer = listview.getViewTreeObserver();
         observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

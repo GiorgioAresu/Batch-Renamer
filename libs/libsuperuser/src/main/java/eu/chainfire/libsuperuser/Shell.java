@@ -306,7 +306,7 @@ public class Shell {
 
             for (String line : ret) {
                 if (!internal) {
-                    if (line.contains(".")) return line;
+                    if (line.contains("")) return line;
                 } else {
                     try {
                         if (Integer.parseInt(line) > 0) return line;

@@ -117,7 +117,7 @@ public abstract class Action implements Parcelable {
         JSONObject jObject = new JSONObject();
         try {
             jObject.put(KEY_CONTENT, serializeToJSON());
-            jObject.put(KEY_TYPE, getClass().getSimpleName());
+            jObject.put(KEY_TYPE, getClass().getName());
             return jObject;
         } catch (JSONException e) {
             Log.e("dumpToJSON", "Exception dumping item, skipping");
@@ -167,7 +167,7 @@ public abstract class Action implements Parcelable {
             try {
                 Class<?> c = Class.forName(in.readString());
                 Constructor<?> cons = c.getConstructors()[0];
-                Action action = (Action) cons.newInstance();
+                Action action = (Action) cons.newInstance(Application.getContext());
                 action.createFromParcel(in);
                 return action;
             } catch (Exception b) {
@@ -182,12 +182,23 @@ public abstract class Action implements Parcelable {
     };
 
     /**
+     * Dump action to a Parcel
+     *
+     * @param parcel Parcel to dump action to
+     * @param i
+     */
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(getClass().getName());
+        dumpToParcel(parcel, i);
+    }
+
+    /**
      * Dump action fields to a Parcel
      *
      * @param parcel Parcel to dump action to
      * @param i
      */
-    public abstract void writeToParcel(Parcel parcel, int i);
+    public abstract void dumpToParcel(Parcel parcel, int i);
 
     /**
      * Restore action status from content described in a Parcel

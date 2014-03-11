@@ -50,6 +50,7 @@ public class ActionAdapter extends ArrayAdapter<Action> {
             //we want to be sure it's not invisible in case of recycling view of dragged item
             v.setVisibility(View.VISIBLE);
             viewHolder = (ViewHolder) v.getTag();
+            setViewEnabled(v, true);
         }
 
         Action action = getItem(position);
@@ -61,6 +62,24 @@ public class ActionAdapter extends ArrayAdapter<Action> {
         viewHolder.imageView.invalidate();
 
         return v;
+    }
+
+    /**
+     * Set the enabled state of this view and all of its children
+     *
+     * @param view
+     * @param enabled true to enable, false to disable
+     */
+    private void setViewEnabled(View view, boolean enabled) {
+        view.setEnabled(enabled);
+
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int idx = 0; idx < group.getChildCount(); idx++) {
+                setViewEnabled(group.getChildAt(idx), enabled);
+            }
+        }
     }
 
     public class ViewHolder {

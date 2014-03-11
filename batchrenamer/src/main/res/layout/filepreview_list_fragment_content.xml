@@ -61,14 +61,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+        <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fastScrollEnabled="true"
             android:choiceMode="singleChoice"
-            tools:listitem="@layout/file_list_row" />
+            tools:listitem="@layout/filepreview_list" />
 
         <LinearLayout
             android:id="@+id/file_list_loading"

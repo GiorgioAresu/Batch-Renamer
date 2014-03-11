@@ -19,14 +19,14 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
 
     @Override
     protected Void doInBackground(ArrayList<File>... arrayLists) {
-        ActionList_Fragment actionList_fragment = mListener.getActionListFragment();
+        Action_ListFragment actionList_fragment = mListener.getActionListFragment();
         int counter = 0;
         int oldPerc = 0;
         int newPerc = 0;
 
         if (arrayLists.length > 0) {
             for (File file : arrayLists[0]) {
-                file.newName = actionList_fragment.getNewName(file.currentName);
+                file.newName = actionList_fragment.getNewName(file.oldName);
 
                 // Check progress
                 newPerc = (int) (++counter * 100f / arrayLists[0].size());
@@ -50,14 +50,11 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        mListener.updateFileNamesInUI();
         mListener.setUiResult();
     }
 
     public interface updateFileNames_Callbacks {
-        public ActionList_Fragment getActionListFragment();
-
-        public void updateFileNamesInUI();
+        public Action_ListFragment getActionListFragment();
 
         public void updateProgressInUI(Integer progress);
 

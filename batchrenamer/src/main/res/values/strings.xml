@@ -5,6 +5,9 @@
     <string name="true_">true</string>
     <string name="false_">false</string>
     <string name="empty_field_label">Empty Field</string>
+    <string name="undo">Undo</string>
+
+    <string name="title_activity_rename_status">RenameStatusActivity</string>
 
     <!-- Notification -->
     <string name="renaming_notification_title">File rename</string>
@@ -18,7 +21,13 @@
     <!-- Action bar -->
     <string name="action_newAction">New action</string>
     <string name="action_clearActions">Remove all actions</string>
+    <string name="action_clearActions_message">All actions removed</string>
+    <string name="action_clearActions_emptymessage">No actions</string>
     <string name="action_start">Rename</string>
+    <string name="action_start_alert_title">Rename files?</string>
+    <string name="action_start_alert_message">This can\'t be undone.</string>
+    <string name="action_start_alert_positive">Rename</string>
+    <string name="action_start_alert_negative">Cancel</string>
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <string name="empty_actionlist">Empty action list. Add some actions first</string>
     <!--string name="action_settings">Settings</string-->
@@ -30,8 +39,9 @@
 
     <!-- Action strings -->
     <string name="action_remove">Remove action</string>
-    <string name="action_confirmedit">Ok</string>
-    <string name="action_discardedit">Cancel</string>
+    <string name="action_remove_message">Action removed</string>
+    <string name="action_edit_positive">Ok</string>
+    <string name="action_edit_negative">Cancel</string>
     <string name="action_list_row_contentdescription">Action Preview. Click to edit.</string>
 
     <!-- Action titles -->
@@ -42,11 +52,8 @@
     <string name="action_add_index">Position</string>
     <string name="action_add_backward">Backward</string>
     <string name="action_add_apply">Apply to</string>
-
-    <string-array name="action_add_apply_values">
-        <item>Name</item>
-        <item>Extension</item>
-        <item>Name and extension</item>
-    </string-array>
+    <string name="action_add_applyToName">Name</string>
+    <string name="action_add_applyToExtension">Extension</string>
+    <string name="action_add_applyToBoth">Name+Ext</string>
 
 </resources>

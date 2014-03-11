@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/file_list_item_status"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="horizontal">
+    <!-- LAYOUT PADDING
+    android:paddingTop="@dimen/card_padding_vertical"
+    android:paddingRight="@dimen/card_padding_horizontal"
+    android:paddingBottom="@dimen/card_padding_vertical"
+    android:paddingLeft="@dimen/card_padding_horizontal" -->
+
+    <!--ImageView
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:id="@+id/file_list_item_color"
+        android:src="@drawable/file_status"
+        android:layout_marginEnd="8dp"/-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_padding_vertical"
+        android:layout_marginRight="@dimen/card_padding_horizontal"
+        android:layout_marginBottom="@dimen/card_padding_vertical"
+        android:layout_marginLeft="@dimen/card_padding_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/file_list_item_old"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="24dp" />
+
+        <TextView
+            android:id="@+id/file_list_item_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="24dp" />
+    </LinearLayout>
+
+</LinearLayout>

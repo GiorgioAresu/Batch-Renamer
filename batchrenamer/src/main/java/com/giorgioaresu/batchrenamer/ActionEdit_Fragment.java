@@ -75,8 +75,8 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         // Set dialog layout
         builder.setView(dialogView)
                 // Add action buttons
-                .setPositiveButton(R.string.action_confirmedit, this)
-                .setNegativeButton(R.string.action_discardedit, this);
+                .setPositiveButton(R.string.action_edit_positive, this)
+                .setNegativeButton(R.string.action_edit_negative, this);
 
         return builder.create();
     }

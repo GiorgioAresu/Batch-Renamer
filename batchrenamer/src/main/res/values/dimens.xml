@@ -7,6 +7,6 @@
     <dimen name="card_padding_vertical">16dp</dimen>
     <dimen name="card_padding_between_elements">8dp</dimen>
     <dimen name="space_between_fragments">16dp</dimen>
-    <dimen name="actionlist_divider_height">16dp</dimen>
+    <dimen name="cardlist_divider_height">16dp</dimen>
     <dimen name="action_removedrawable_offset">7dp</dimen>
 </resources>

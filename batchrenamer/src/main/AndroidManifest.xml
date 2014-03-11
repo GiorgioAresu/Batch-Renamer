@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:allowBackup="true"
+        android:name=".Application"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
@@ -41,6 +41,10 @@
                 <data android:mimeType="application/*" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.giorgioaresu.batchrenamer.RenameStatusActivity"
+            android:label="@string/title_activity_rename_status" />
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:orientation="horizontal"
+    android:background="#e5e5e5"
+    tools:context="com.giorgioaresu.batchrenamer.RenameStatusActivity">
+
+    <TextView
+        android:text="djkahfk"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="@dimen/space_between_fragments"
+        android:layout_height="match_parent" />
+
+    <fragment
+        android:id="@+id/file_fragment"
+        android:name="com.giorgioaresu.batchrenamer.FileStatus_ListFragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        tools:layout="@layout/filestatus_list_row" />
+
+</LinearLayout>

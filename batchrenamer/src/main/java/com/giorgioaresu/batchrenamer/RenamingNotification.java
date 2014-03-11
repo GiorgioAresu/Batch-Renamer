@@ -36,7 +36,7 @@ public class RenamingNotification {
      *
      * @see #cancel(Context)
      */
-    public static void notify(final Context context, final int progress, final int max, final int completedNumber, final int failedNumber) {
+    public static void notify(final Context context, final int progress, final int max, final int completedNumber, final int failedNumber, long when) {
         final Resources res = context.getResources();
 
         final boolean indeterminate = max == INDETERMINATE;
@@ -87,7 +87,9 @@ public class RenamingNotification {
                         // Show expanded text content on devices running Android 4.1 or
                         // later.
                         // Automatically dismiss the notification when it is touched.*/
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                        // Set a time to avoid blinking notification
+                .setWhen((when > 0) ? when : System.currentTimeMillis());
 
         if (!indeterminate) {
             builder.setStyle(new NotificationCompat.BigTextStyle()
@@ -105,11 +107,11 @@ public class RenamingNotification {
     }
 
     public static void notifyCompleted(Context context, int completedNumber, int failedNumber) {
-        notify(context, COMPLETED, 0, completedNumber, failedNumber);
+        notify(context, COMPLETED, 0, completedNumber, failedNumber, 0);
     }
 
     public static void notifyIndeterminate(Context context) {
-        notify(context, 0, INDETERMINATE, 0, 0);
+        notify(context, 0, INDETERMINATE, 0, 0, 0);
     }
 
     private static void notify(final Context context, final Notification notification) {

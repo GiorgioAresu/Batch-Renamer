@@ -1,8 +1,9 @@
 package com.giorgioaresu.batchrenamer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -18,50 +19,47 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 
-public class MainActivity extends Activity implements FileList_Fragment.FileFragmentInterface {
+public class MainActivity extends Activity implements File_ListFragment.FileFragmentInterface {
     public static java.io.File scriptFile;
-    private ActionList_Fragment actionList_fragment;
-    private FileList_Fragment fileList_fragment;
+    private Action_ListFragment actionList_fragment;
+    private FilePreview_ListFragment filePreviewList_fragment;
     private UpdateFileNames_AsyncTask updateFileNames_asyncTask;
 
-    private TextView fileUpdatingLabel;
-    private ProgressBar fileUpdatingProgress;
-    private View fileUpdatingGUI;
+    private UpdatingFilenamesGuiHolder guiHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        scriptFile = new java.io.File(getFilesDir(), "root_rename.sh");
+        setContentView(R.layout.activity_main);
 
-        // Copy script to internal storage
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    FileOutputStream outputStream = new FileOutputStream(scriptFile);
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.root_rename)));
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        Log.d("Writing", line);
-                        outputStream.write((line + "\n").getBytes());
-                    }
-                    outputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        runnable.run();
+        scriptFile = new java.io.File(getFilesDir(), "root_rename.sh");
 
         if (savedInstanceState == null) {
             // Eventually do something
+            // Copy script to internal storage
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FileOutputStream outputStream = new FileOutputStream(scriptFile);
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.root_rename)));
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            Log.d("Writing", line);
+                            outputStream.write((line + "\n").getBytes());
+                        }
+                        outputStream.close();
+                    } catch (Exception e) {
+                        Log.e(getLocalClassName(), "Failed to copy script");
+                    }
+                }
+            };
+            runnable.run();
         }
 
-        setContentView(R.layout.activity_main);
-
         FragmentManager mFragmentManager = getFragmentManager();
-        fileList_fragment = (FileList_Fragment) mFragmentManager.findFragmentById(R.id.file_fragment);
-        actionList_fragment = (ActionList_Fragment) mFragmentManager.findFragmentById(R.id.action_fragment);
+        filePreviewList_fragment = (FilePreview_ListFragment) mFragmentManager.findFragmentById(R.id.file_fragment);
+        actionList_fragment = (Action_ListFragment) mFragmentManager.findFragmentById(R.id.action_fragment);
         actionList_fragment.getListAdapter().registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -71,9 +69,7 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
 
         elaborateIntent(getIntent());
 
-        fileUpdatingLabel = (TextView) findViewById(R.id.file_list_header_preview);
-        fileUpdatingProgress = (ProgressBar) findViewById(R.id.file_list_loading_progressbar);
-        fileUpdatingGUI = findViewById(R.id.file_list_loading);
+        guiHolder = new UpdatingFilenamesGuiHolder();
     }
 
     /**
@@ -87,12 +83,12 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         String type = intent.getType();
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             // Single file shared
-            if (!fileList_fragment.handleSendIntent(intent)) {
+            if (!filePreviewList_fragment.handleSendIntent(intent)) {
                 handleUnsupportedObject(intent);
             }
         } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
             // Multiple files shared
-            if (!fileList_fragment.handleSendMultipleIntent(intent)) {
+            if (!filePreviewList_fragment.handleSendMultipleIntent(intent)) {
                 handleUnsupportedObject(intent);
             }
         } else {
@@ -109,7 +105,6 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        actionList_fragment.populateActionMenu(menu.findItem(R.id.action_newAction).getSubMenu());
         return true;
     }
 
@@ -118,13 +113,30 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_start:
-                startFileRename();
-                if (fileList_fragment.getListAdapter().getCount() == 0) {
+                if (filePreviewList_fragment.getListAdapter().getCount() == 0) {
                     Toast.makeText(this, getString(R.string.empty_filelist), Toast.LENGTH_LONG).show();
                 } else if (actionList_fragment.getListAdapter().getCount() == 0) {
                     Toast.makeText(this, getString(R.string.empty_actionlist), Toast.LENGTH_LONG).show();
                 } else {
-                    startFileRename();
+                    // Show alert to confirm rename
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.action_start_alert_message)
+                            .setTitle(R.string.action_start_alert_title)
+                            .setPositiveButton(R.string.action_start_alert_positive, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Rename files
+                                    startFileRename();
+                                }
+                            })
+                            .setNegativeButton(R.string.action_start_alert_negative, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .create()
+                            .show();
                 }
                 return true;
             /*case R.id.action_settings:
@@ -132,11 +144,7 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
                 startActivity(intent);
                 return true;*/
             default:
-                if (actionList_fragment.onMenuItemSelected(item)) {
-                    return true;
-                } else {
-                    return super.onOptionsItemSelected(item);
-                }
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -157,41 +165,43 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
         updateFileNames_asyncTask = new UpdateFileNames_AsyncTask(new UpdateFileNames_AsyncTask.updateFileNames_Callbacks() {
 
             @Override
-            public ActionList_Fragment getActionListFragment() {
+            public Action_ListFragment getActionListFragment() {
                 return actionList_fragment;
             }
 
             @Override
-            public void updateFileNamesInUI() {
-                // Back in the UI thread -- update our UI elements based on the data in mResults
-                ((FileAdapter) fileList_fragment.getListAdapter()).notifyDataSetChanged();
+            public void setUiLoading() {
+                guiHolder.setLoading();
             }
 
             @Override
             public void updateProgressInUI(Integer progress) {
-                fileUpdatingProgress.setProgress(progress);
-            }
-
-            @Override
-            public void setUiLoading() {
-                fileUpdatingLabel.setText(getString(R.string.filelist_header_preview_updating));
-                fileUpdatingProgress.setProgress(0);
-                fileUpdatingGUI.setVisibility(View.VISIBLE);
+                guiHolder.updateProgress(progress);
             }
 
             @Override
             public void setUiResult() {
-                fileUpdatingLabel.setText(getString(R.string.filelist_header_preview));
-                fileUpdatingGUI.setVisibility(View.GONE);
+                // Update our UI elements based on the data in mResults
+                ((FileAdapter) filePreviewList_fragment.getListAdapter()).notifyDataSetChanged();
+
+                guiHolder.setResult();
             }
         });
 
-        updateFileNames_asyncTask.execute(fileList_fragment.getFiles());
+        updateFileNames_asyncTask.execute(filePreviewList_fragment.getFiles());
     }
 
     protected void startFileRename() {
-        // TODO: handle cancellation?
+        // Start activity
+        Intent intent = new Intent(this, RenameStatusActivity.class);
+        startActivity(intent);
+
+        // Prevent user going back to this
+        finish();
+
+        /*// TODO: handle cancellation?
         Log.d(getLocalClassName(), "Firing async rename task");
+
         RenameFiles_AsyncTask renameFiles_asyncTask = new RenameFiles_AsyncTask(new RenameFiles_AsyncTask.renameFiles_Callbacks() {
             @Override
             public void updateProgressInUI(Integer progress, Integer elements, File.RENAME result) {
@@ -214,6 +224,33 @@ public class MainActivity extends Activity implements FileList_Fragment.FileFrag
             }
         });
 
-        renameFiles_asyncTask.execute(fileList_fragment.getFiles());
+        renameFiles_asyncTask.execute(filePreviewList_fragment.getFiles());*/
+    }
+
+    private class UpdatingFilenamesGuiHolder {
+        private TextView fileUpdatingLabel;
+        private ProgressBar fileUpdatingProgress;
+        private View fileUpdatingGUI;
+
+        public UpdatingFilenamesGuiHolder() {
+            fileUpdatingLabel = (TextView) findViewById(R.id.file_list_header_preview);
+            fileUpdatingProgress = (ProgressBar) findViewById(R.id.file_list_loading_progressbar);
+            fileUpdatingGUI = findViewById(R.id.file_list_loading);
+        }
+
+        public void setLoading() {
+            fileUpdatingLabel.setText(getString(R.string.filelist_header_preview_updating));
+            fileUpdatingProgress.setProgress(0);
+            fileUpdatingGUI.setVisibility(View.VISIBLE);
+        }
+
+        public void updateProgress(Integer progress) {
+            fileUpdatingProgress.setProgress(progress);
+        }
+
+        public void setResult() {
+            fileUpdatingLabel.setText(getString(R.string.filelist_header_preview));
+            fileUpdatingGUI.setVisibility(View.GONE);
+        }
     }
 }

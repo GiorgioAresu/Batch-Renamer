@@ -3,31 +3,11 @@
     tools:context="com.giorgioaresu.batchrenamer.MainActivity">
 
     <item
-        android:id="@+id/action_newAction"
-        android:title="@string/action_newAction"
-        android:showAsAction="ifRoom"
-        android:orderInCategory="1"
-        android:icon="@drawable/ic_action_new">
-
-        <menu>
-            <!-- Populated with actions at runtime -->
-        </menu>
-
-    </item>
-
-    <item
-        android:id="@+id/action_clearActions"
-        android:title="@string/action_clearActions"
-        android:showAsAction="ifRoom"
-        android:orderInCategory="2"
-        android:icon="@drawable/ic_action_remove_dark" />
-
-    <item
         android:id="@+id/action_start"
         android:title="@string/action_start"
         android:showAsAction="ifRoom|withText"
         android:orderInCategory="3"
-        android:icon="@drawable/ic_action_start" />
+        android:icon="@drawable/ic_action_start_light" />
 
     <!--item
         android:id="@+id/action_settings"
