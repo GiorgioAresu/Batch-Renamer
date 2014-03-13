@@ -25,12 +25,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
     buildTypes {
+        debug {
+            packageNameSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
         release {
-            runProguard false
+            runProguard true
             proguardFile getDefaultProguardFile('proguard-android.txt')
         }
     }
+
     productFlavors {
         defaultFlavor {
             proguardFile 'proguard-rules.txt'
