@@ -68,12 +68,6 @@ public abstract class File_ListFragment extends ListFragment {
             mFiles = savedInstanceState.getParcelableArrayList(ARG_FILES);
         } else {
             // Eventually populate files for the first time
-            // TODO: remove this
-            /*if (mFiles.isEmpty()) {
-                for (int i = 0; i < 50; i++) {
-                    mFiles.add(new File(Uri.parse("Lost.3x01.Storia.Di.Due.Citta.ITA.DVDRip.XviD-NovaRip")));
-                }
-            }*/
         }
         int layout = defaultItemLayout;
         if (itemLayout != -1) {

@@ -7,11 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p/>
- * Activities containing this fragment MUST implement the {@link FileStatus_ListFragment.OnFragmentInteractionListener}
- * interface.
+ * A fragment representing a list of file statuses.
  */
 public class FileStatus_ListFragment extends File_ListFragment {
 
@@ -45,11 +41,7 @@ public class FileStatus_ListFragment extends File_ListFragment {
         /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        // TODO: Change Adapter to display your content
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS));*/
+        }*/
     }
 
     @Override
