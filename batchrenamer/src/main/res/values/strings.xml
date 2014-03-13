@@ -7,7 +7,6 @@
     <string name="false_">false</string>
     <string name="empty_field_label">Empty Field</string>
     <string name="undo">Undo</string>
-
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
     <!-- Notification -->
@@ -35,7 +34,8 @@
     <string name="action_start_alert_negative">Cancel</string>
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <string name="empty_actionlist">Empty action list. Add some actions first</string>
-    <!--string name="action_settings">Settings</string-->
+    <string name="action_about">About</string>
+
 
     <!-- File section -->
     <string name="filelist_header_current">Current name</string>
