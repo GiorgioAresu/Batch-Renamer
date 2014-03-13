@@ -139,10 +139,10 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                             .show();
                 }
                 return true;
-            /*case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
+            case R.id.action_about:
+                Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
-                return true;*/
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
