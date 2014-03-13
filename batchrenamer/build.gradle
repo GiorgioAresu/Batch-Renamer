@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 buildscript {
     repositories {
         mavenCentral()
@@ -28,18 +30,12 @@ android {
 
     buildTypes {
         debug {
-            packageNameSuffix ".debug"
-            versionNameSuffix "-debug"
+            packageNameSuffix '.debug'
+            versionNameSuffix '-debug'
         }
         release {
             runProguard true
             proguardFile getDefaultProguardFile('proguard-android.txt')
-        }
-    }
-
-    productFlavors {
-        defaultFlavor {
-            proguardFile 'proguard-rules.txt'
         }
     }
 }
@@ -48,3 +44,70 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     compile project(':libs:libsuperuser')
 }
+
+/**
+ * Takes the existing versionCode in AndroidManifest.xml and increments it for the next release
+ * Example:
+ *   1) Before the build the AndroidManfist.xml has versionCode=7
+ *   2) The AndroidManifest.xml will be modified so that versionCode=8
+ */
+
+task incrementVersionCode << {
+    println(":incrementVersionCode - Incrementing Version Code...")
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def patternVersionCode = Pattern.compile("versionCode=\"(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcherVersionCode = patternVersionCode.matcher(manifestText)
+    matcherVersionCode.find()
+    def mVersionCode = Integer.parseInt(matcherVersionCode.group(1))
+    def mNextVersionCode = mVersionCode + 1
+    def manifestContent = matcherVersionCode.replaceAll("versionCode=\"" + mNextVersionCode + "\"")
+    println(":incrementVersionCode - current versionCode=" + mVersionCode);
+    println(":incrementVersionCode - next versionCode=" + mNextVersionCode);
+    manifestFile.write(manifestContent)
+}
+
+/**
+ * Takes the existing versionName in AndroidManifest.xml and increments the point number for the next release
+ * The AndroidManifest.xml file's versionName needs to be in the format [major].[minor].[point]
+ * Example:
+ *   1) Before the build the AndroidManfist.xml has versionName=1.3.6
+ *   2) TheAndroidManifest.xml will be modified so that versionName=1.3.7
+ */
+
+task incrementVersionName << {
+    println(":incrementVersionName - Incrementing Version Name...")
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\\.(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
+    matcherVersionNumber.find()
+    def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
+    def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
+    def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
+    def mVersionName = majorVersion + "." + minorVersion + "." + pointVersion
+    def mNextVersionName = majorVersion + "." + minorVersion + "." + (pointVersion + 1)
+    def manifestContent = matcherVersionNumber.replaceAll("versionName=\"" + mNextVersionName + "\"")
+    println(":incrementVersionName - current versionName=" + mVersionName);
+    println(":incrementVersionName - new versionName=" + mNextVersionName);
+    manifestFile.write(manifestContent)
+}
+
+task release << {
+    println(":release - Build and Version Increment")
+}
+
+task debug << {
+    println(":debug - Build")
+}
+
+incrementVersionName.mustRunAfter build
+incrementVersionCode.mustRunAfter build
+
+assembleDebug.dependsOn debug
+//debug.dependsOn incrementVersionCode
+debug.dependsOn incrementVersionName
+
+assembleRelease.dependsOn release
+release.dependsOn incrementVersionCode
+release.dependsOn incrementVersionName
