@@ -30,12 +30,14 @@ android {
 
     buildTypes {
         debug {
-            packageNameSuffix '.debug'
+            //packageNameSuffix '.debug'
             versionNameSuffix '-debug'
         }
         release {
             runProguard true
             proguardFile getDefaultProguardFile('proguard-android.txt')
+            debuggable false
+            zipAlign true
         }
     }
 }
