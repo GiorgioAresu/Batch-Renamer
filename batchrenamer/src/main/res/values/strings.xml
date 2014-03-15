@@ -6,6 +6,8 @@
     <string name="false_">false</string>
     <string name="empty_field_label">Empty Field</string>
     <string name="undo">Undo</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
     <!-- Notification -->
@@ -23,6 +25,10 @@
     <string name="about_author_title">Author</string>
     <string name="about_author_summary">Giorgio Aresu\nCopyright \u00A9 2013-%1$d</string>
     <string name="about_version_title">Version</string>
+    <string name="about_header_legal">Legal</string>
+    <string name="about_eula_title">EULA</string>
+    <string name="about_eula_summary">Show License Agreement</string>
+    <string name="about_eula_dialog_title">END USER LICENSE AGREEMENT</string>
     
     <!-- Action bar -->
     <string name="action_newAction">New action</string>
