@@ -6,4 +6,10 @@
         android:title="@string/about_version_title"
         android:persistent="false"
         android:selectable="false"/>
+    <PreferenceCategory android:title="@string/about_header_legal" />
+		<Preference
+			android:key="about_eula"
+			android:title="@string/about_eula_title"
+			android:summary="@string/about_eula_summary"
+			android:persistent="false" />
 </PreferenceScreen>
