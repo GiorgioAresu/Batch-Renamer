@@ -30,6 +30,11 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!Eula.hasAcceptedEula(this)) {
+            Eula.show(false, this);
+        }
+
         setContentView(R.layout.activity_main);
 
         scriptFile = new java.io.File(getFilesDir(), "root_rename.sh");
