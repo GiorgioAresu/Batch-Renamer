@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+
+import java.util.Calendar;
 
 public class AboutActivity extends Activity {
 
@@ -25,16 +28,21 @@ public class AboutActivity extends Activity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            final Activity activity = getActivity();
 
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences_about);
 
+            // Set author summary
+            String author = String.format(activity.getString(R.string.about_author_summary), Calendar.getInstance().get(Calendar.YEAR));
+            findPreference("about_author").setSummary(author);
+
             // Set app version summary
             String versionName;
-            final PackageManager packageManager = getActivity().getPackageManager();
+            final PackageManager packageManager = activity.getPackageManager();
             if (packageManager != null) {
                 try {
-                    PackageInfo packageInfo = packageManager.getPackageInfo(getActivity().getPackageName(), 0);
+                    PackageInfo packageInfo = packageManager.getPackageInfo(activity.getPackageName(), 0);
                     versionName = packageInfo.versionName;
                 } catch (PackageManager.NameNotFoundException e) {
                     versionName = null;

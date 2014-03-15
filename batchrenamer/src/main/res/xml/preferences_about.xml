@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <EditTextPreference
-        android:key="about_version"
-        android:title="@string/about_version_title"
-        android:persistent="false"
-        android:selectable="false"/>
+    <PreferenceCategory android:title="@string/about_header_info" />
+		<Preference
+			android:key="about_author"
+			android:title="@string/about_author_title"
+			android:summary="@string/about_author_summary"
+			android:persistent="false"
+			android:selectable="false" />
+		<Preference
+			android:key="about_version"
+			android:title="@string/about_version_title"
+			android:persistent="false"
+        android:selectable="false" />
 </PreferenceScreen>
