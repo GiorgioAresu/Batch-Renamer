@@ -2,7 +2,6 @@
 <resources>
 
     <!-- Application -->
-    <string name="app_name">Batch Renamer</string>
     <string name="true_">true</string>
     <string name="false_">false</string>
     <string name="empty_field_label">Empty Field</string>
