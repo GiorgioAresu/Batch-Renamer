@@ -50,7 +50,6 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.root_rename)));
                         String line;
                         while ((line = bufferedReader.readLine()) != null) {
-                            Log.d("Writing", line);
                             outputStream.write((line + "\n").getBytes());
                         }
                         outputStream.close();
