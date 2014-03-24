@@ -29,7 +29,10 @@
     <string name="about_eula_title">EULA</string>
     <string name="about_eula_summary">Show License Agreement</string>
     <string name="about_eula_dialog_title">END USER LICENSE AGREEMENT</string>
-    
+
+    <!-- Status activity -->
+    <string name="renaming">Renaming</string>
+
     <!-- Action bar -->
     <string name="action_newAction">New action</string>
     <string name="action_clearActions">Remove all actions</string>
@@ -43,7 +46,6 @@
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <string name="empty_actionlist">Empty action list. Add some actions first</string>
     <string name="action_about">About</string>
-
 
     <!-- File section -->
     <string name="filelist_header_current">Current name</string>
