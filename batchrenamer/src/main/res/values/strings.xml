@@ -56,6 +56,8 @@
     <string name="action_edit_positive">Ok</string>
     <string name="action_edit_negative">Cancel</string>
     <string name="action_list_row_contentdescription">Action Preview. Click to edit.</string>
+    <string name="action_position_index">Position</string>
+    <string name="action_position_backward">Backward</string>
     <string name="action_apply">Apply to</string>
     <string name="action_applyToName">Name</string>
     <string name="action_applyToExtension">Extension</string>
@@ -63,10 +65,17 @@
 
     <!-- Action titles -->
     <string name="action_add_title">Add</string>
+    <string name="action_counter_title">Counter</string>
 
     <!-- Action: Add -->
     <string name="action_add_text">Text</string>
-    <string name="action_add_index">Position</string>
-    <string name="action_add_backward">Backward</string>
+
+    <!-- Action: Counter -->
+    <string name="action_counter_start">Start</string>
+    <string name="action_counter_step">Step</string>
+    <string name="action_counter_padCharacter">Pad with</string>
+    <string name="action_counter_padModeAuto">Automatic</string>
+    <string name="action_counter_padModeManual">Manual</string>
+    <string name="action_counter_padModeOff">Off</string>
 	
 </resources>

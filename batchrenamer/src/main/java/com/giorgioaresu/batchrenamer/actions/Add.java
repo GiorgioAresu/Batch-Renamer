@@ -103,8 +103,8 @@ public class Add extends Action {
     protected String getContentDescription() {
         String str;
         str = context.getString(R.string.action_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.action_add_index) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.action_add_backward) + ": "
+                + context.getString(R.string.action_position_index) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.action_position_backward) + ": "
                 + context.getString(backward ? R.string.true_ : R.string.false_) + ". "
                 + context.getString(R.string.action_apply) + ": " + context.getString(ApplyTo.getStringResource(applyTo));
         return str;

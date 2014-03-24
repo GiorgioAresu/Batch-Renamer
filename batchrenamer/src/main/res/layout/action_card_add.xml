@@ -36,7 +36,7 @@
             android:id="@+id/action_add_index_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_add_index"
+            android:text="@string/action_position_index"
             android:layout_marginRight="@dimen/card_padding_between_elements"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_gravity="center_vertical" />
@@ -53,7 +53,7 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_add_backward"
+            android:text="@string/action_position_backward"
             android:id="@+id/action_add_backward"
             android:layout_column="3" />
 
