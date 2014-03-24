@@ -72,24 +72,41 @@ public class Add extends Action {
     }
 
     public String getNewName(String currentName, int positionInSet) {
-        String res;
+        String result;
         if (ApplyTo.BOTH == applyTo) {
-            res = getPatchedString(currentName);
+            // We want to work on the whole string, so we just process it
+            result = getPatchedString(currentName);
         } else {
+            // We want to work only on a part of the string, we need more work
+
+            // Find the last dot in the name
             int lastIndexOfDot = currentName.lastIndexOf('.');
-            String name = currentName.substring(0, Math.max(lastIndexOfDot, currentName.length()));
-            String ext = currentName.substring(Math.max(lastIndexOfDot + 1, currentName.length()));
-            if (ApplyTo.NAME == applyTo) {
-                res = getPatchedString(name) + ((lastIndexOfDot == -1) ? "" : ".") + ext;
-            } else {
-                if (lastIndexOfDot == -1) {
-                    res = name;
+
+            if (lastIndexOfDot == -1) {
+                // Doesn't contain an extension
+                if (ApplyTo.NAME == applyTo) {
+                    // The whole string is the name, no extension to consider
+                    result = getPatchedString(currentName);
                 } else {
-                    res = name + ((lastIndexOfDot == -1) ? "" : ".") + getPatchedString(ext);
+                    // No extension to modify, return untouched name
+                    result = currentName;
+                }
+            } else {
+                // We have a filename composed of name + extension, so we need
+                // to discern them to modify appropriately
+                String name = currentName.substring(0, lastIndexOfDot);
+                String ext = currentName.substring(lastIndexOfDot + 1);
+                Log.d("Newname", "Name: " + name);
+                Log.d("Newname", "Ext: " + ext);
+
+                if (ApplyTo.NAME == applyTo) {
+                    result = getPatchedString(name) + "." + ext;
+                } else {
+                    result = name + "." + getPatchedString(ext);
                 }
             }
         }
-        return res;
+        return result;
     }
 
     /**
