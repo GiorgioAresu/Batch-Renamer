@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.giorgioaresu.batchrenamer"
     android:versionCode="1"
-    android:versionName="0.1.54" >
+    android:versionName="0.1.55" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -41,13 +41,18 @@
                 <data android:mimeType="application/*" />
             </intent-filter>
         </activity>
-		
+
         <activity
             android:name="com.giorgioaresu.batchrenamer.RenameStatusActivity"
             android:label="@string/title_activity_rename_status" >
-		</activity>
-        
-		<activity
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
         </activity>
