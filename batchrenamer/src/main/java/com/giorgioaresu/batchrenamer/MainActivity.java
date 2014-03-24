@@ -3,6 +3,7 @@ package com.giorgioaresu.batchrenamer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
@@ -200,10 +201,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         Intent intent = new Intent(this, RenameStatusActivity.class);
         startActivity(intent);
 
-        // Prevent user going back to this
-        finish();
-
-        /*// TODO: handle cancellation?
+        // TODO: handle cancellation?
         Log.d(getLocalClassName(), "Firing async rename task");
 
         RenameFiles_AsyncTask renameFiles_asyncTask = new RenameFiles_AsyncTask(new RenameFiles_AsyncTask.renameFiles_Callbacks() {
@@ -228,7 +226,10 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             }
         });
 
-        renameFiles_asyncTask.execute(filePreviewList_fragment.getFiles());*/
+        renameFiles_asyncTask.execute(filePreviewList_fragment.getFiles());
+
+        // Prevent user going back to this
+        finish();
     }
 
     private class UpdatingFilenamesGuiHolder {
