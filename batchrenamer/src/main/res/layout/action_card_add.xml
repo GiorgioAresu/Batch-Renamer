@@ -59,46 +59,7 @@
 
     </TableRow>
 
-    <TableRow
-        android:id="@+id/tableRow3"
-        android:layout_width="match_parent">
-
-        <TextView
-            android:id="@+id/action_add_apply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minHeight="30dp"
-            android:gravity="center"
-            android:text="@string/action_add_apply"
-            android:layout_marginRight="@dimen/card_padding_between_elements"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <RadioGroup
-            android:id="@+id/action_add_radiogroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_span="3"
-            android:orientation="vertical">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/action_add_applyToName"
-                android:id="@+id/action_add_radio_name" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/action_add_applyToExtension"
-                android:id="@+id/action_add_radio_extension" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/action_add_applyToBoth"
-                android:id="@+id/action_add_radio_both" />
-        </RadioGroup>
-
-    </TableRow>
+    <include layout="@layout/action_applyto"
+        android:id="@+id/tableRow3" />
 
 </TableLayout>
