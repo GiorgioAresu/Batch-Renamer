@@ -191,14 +191,16 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
      * the resulting new name
      *
      * @param fileName filename to be processed
+     * @param position position of the file in the list
+     * @param fileCount number of files in the list
      * @return resulting name
      */
-    public String getNewName(String fileName) {
+    public String getNewName(String fileName, int position, int fileCount) {
         String res = fileName;
         try {
             ActionAdapter adapter = (ActionAdapter) getListAdapter();
             for (int i = 0; i < adapter.getCount(); i++) {
-                res = adapter.getItem(i).getNewName(res, i, adapter.getCount());
+                res = adapter.getItem(i).getNewName(res, position, fileCount);
             }
         } catch (ConcurrentModificationException ex) {
             // Actions are deleted while computing new name

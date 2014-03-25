@@ -175,6 +175,9 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             }
 
             @Override
+            public File_ListFragment getFileListFragment() { return filePreviewList_fragment; }
+
+            @Override
             public void setUiLoading() {
                 guiHolder.setLoading();
             }
