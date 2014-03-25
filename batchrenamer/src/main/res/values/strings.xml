@@ -73,9 +73,9 @@
     <!-- Action: Counter -->
     <string name="action_counter_start">Start</string>
     <string name="action_counter_step">Step</string>
-    <string name="action_counter_padCharacter">Pad with</string>
+    <string name="action_counter_padMode">Padding</string>
     <string name="action_counter_padModeAuto">Automatic</string>
     <string name="action_counter_padModeManual">Manual</string>
     <string name="action_counter_padModeOff">Off</string>
-	
+
 </resources>

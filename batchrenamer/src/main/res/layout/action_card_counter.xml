@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="2,4"
+    android:shrinkColumns="2,4" >
+
+    <TableRow
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/action_counter_start_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_counter_start"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/action_counter_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:layout_span="3"
+            android:layout_column="2" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/action_counter_start_label2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_counter_start"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/action_counter_start2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:layout_column="2" />
+
+        <TextView
+            android:id="@+id/action_counter_step_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_counter_step"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_vertical"
+            android:layout_column="3"/>
+
+        <EditText
+            android:id="@+id/action_counter_step"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:selectAllOnFocus="true"
+            android:layout_column="4"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/action_counter_padMode_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="30dp"
+            android:gravity="center"
+            android:text="@string/action_counter_padMode"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RadioGroup android:id="@+id/action_counter_padMode_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:orientation="vertical"
+            android:layout_column="2" >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_counter_padModeAuto"
+                android:id="@+id/action_counter_padModeAuto" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_counter_padModeManual"
+                android:id="@+id/action_counter_padModeManual" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_counter_padModeOff"
+                android:id="@+id/action_counter_padModeOff" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/action_counter_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="2"
+            android:selectAllOnFocus="true"
+            android:layout_column="3"
+            android:layout_span="2"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/action_counter_index_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_position_index"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_gravity="center_vertical" />
+
+        <EditText
+            android:id="@+id/action_counter_index"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginRight="@dimen/card_padding_between_elements"
+            android:maxLength="3"
+            android:selectAllOnFocus="true"
+            android:layout_column="2" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_position_backward"
+            android:id="@+id/action_counter_backward"
+            android:layout_column="3"
+            android:layout_span="2" />
+
+    </TableRow>
+
+    <include layout="@layout/action_applyto" />
+
+</TableLayout>
