@@ -58,8 +58,11 @@ public class Counter extends Action {
         String paddedNumber;
         switch (padMode) {
             case AUTO:
-                int lenght = 0;
-                for (int size = setSize; size >= 0; size/=10) lenght++;
+                // Compute maximum number of digits
+                int lenght = 1;
+                int max = start + step * setSize;
+                while((max/=10) != 0) ++lenght;
+                
                 paddedNumber = String.format("%0" + lenght + "d", number);
                 break;
             case MANUAL:
@@ -167,13 +170,14 @@ public class Counter extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        /*str = context.getString(R.string.action_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.action_position_index) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+        str = context.getString(R.string.action_counter_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
+                + context.getString(R.string.action_counter_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
+                + context.getString(R.string.action_counter_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
+                + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
                 + context.getString(R.string.action_position_backward) + ": "
                 + context.getString(backward ? R.string.true_ : R.string.false_) + ". "
                 + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
-        return str;*/
-        return "";
+        return str;
     }
 
     /**
