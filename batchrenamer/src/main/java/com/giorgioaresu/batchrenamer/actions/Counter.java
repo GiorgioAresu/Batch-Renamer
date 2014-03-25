@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.giorgioaresu.batchrenamer.Action;
 import com.giorgioaresu.batchrenamer.R;
@@ -82,20 +84,20 @@ public class Counter extends Action {
             EditText mStep = (EditText) view.findViewById(R.id.action_counter_step);
             step = Integer.parseInt(mStep.getText().toString());
 
-            RadioGroup mPadMode = (RadioGroup) view.findViewById(R.id.action_counter_padMode_radiogroup);
-            padMode = PadMode.getValue(mPadMode.getCheckedRadioButtonId());
+            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_counter_padding_spinner);
+            padMode = PadMode.getValue(mPadMode.getSelectedItemPosition());
 
-            EditText mPadding = (EditText) view.findViewById(R.id.action_counter_padding);
+            EditText mPadding = (EditText) view.findViewById(R.id.action_counter_padding_amount);
             padding = Integer.parseInt(mPadding.getText().toString());
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_add_index);
-            position = Integer.valueOf(mPosition.getText().toString());
+            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
+            position = Integer.parseInt(mPosition.getText().toString());
 
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_add_backward);
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
             backward = mBackward.isChecked();
 
-            RadioGroup mApplyTo = (RadioGroup) view.findViewById(R.id.action_radiogroup);
-            applyTo = ApplyTo.getValue(mApplyTo.getCheckedRadioButtonId());
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
         } catch (Exception e) {
             Log.e("updateDataFromView", "NPE");
             return false;
@@ -114,22 +116,43 @@ public class Counter extends Action {
             mStart.setText(String.valueOf(start));
 
             EditText mStep = (EditText) view.findViewById(R.id.action_counter_step);
-            mStart.setText(String.valueOf(step));
+            mStep.setText(String.valueOf(step));
 
-            RadioGroup mPadMode = (RadioGroup) view.findViewById(R.id.action_counter_padMode_radiogroup);
-            mPadMode.check(padMode.getID());
-
-            EditText mPadding = (EditText) view.findViewById(R.id.action_counter_padding);
+            final EditText mPadding = (EditText) view.findViewById(R.id.action_counter_padding_amount);
             mPadding.setText(String.valueOf(padding));
+            if (PadMode.MANUAL.equals(padMode)) {
+                mPadding.setVisibility(View.VISIBLE);
+            } else {
+                mPadding.setVisibility(View.GONE);
+            }
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_counter_index);
+            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_counter_padding_spinner);
+            mPadMode.setSelection(padMode.getID());
+            mPadMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (PadMode.MANUAL.getID() == position) {
+                        mPadding.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        mPadding.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
+            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
             mPosition.setText(String.valueOf(position));
 
-            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_counter_backward);
+            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_position_backward);
             mFromEnd.setChecked(backward);
 
-            RadioGroup mApplyTo = (RadioGroup) view.findViewById(R.id.action_radiogroup);
-            mApplyTo.check(applyTo.getID());
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            mApplyTo.setSelection(applyTo.getID());
         } catch (Exception e) {
             Log.e("updateViewFromData", "NPE");
             return false;
@@ -148,7 +171,7 @@ public class Counter extends Action {
                 + context.getString(R.string.action_position_index) + ": " + checkForEmpty(String.valueOf(position)) + ". "
                 + context.getString(R.string.action_position_backward) + ": "
                 + context.getString(backward ? R.string.true_ : R.string.false_) + ". "
-                + context.getString(R.string.action_apply) + ": " + context.getString(ApplyTo.getStringResource(applyTo));
+                + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;*/
         return "";
     }
@@ -212,9 +235,9 @@ public class Counter extends Action {
     }
 
     protected enum PadMode {
-        AUTO(R.id.action_counter_padModeAuto),
-        MANUAL(R.id.action_counter_padModeManual),
-        OFF(R.id.action_counter_padModeOff);
+        AUTO(0),
+        MANUAL(1),
+        OFF(2);
 
         private final int id;
 
@@ -237,18 +260,13 @@ public class Counter extends Action {
                     return As[i];
             }
             // Value not recognized. Just return default value.
-            return OFF;
+            return AUTO;
         }
 
-        public static int getStringResource(PadMode padMode) {
-            switch (padMode) {
-                case AUTO:
-                    return R.string.action_counter_padModeAuto;
-                case MANUAL:
-                    return R.string.action_counter_padModeManual;
-                default:
-                    return R.string.action_counter_padModeOff;
-            }
+        public static String getLabel(Context context, PadMode padMode) {
+            String[] paddingString = context.getResources().getStringArray(R.array.action_counter_padding_array);
+            int index = Math.min(padMode.id, paddingString.length - 1);
+            return paddingString[index];
         }
     }
 }

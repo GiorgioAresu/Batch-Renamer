@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.giorgioaresu.batchrenamer.Action;
 import com.giorgioaresu.batchrenamer.R;
@@ -57,12 +57,15 @@ public class Add extends Action {
         try {
             EditText mText = (EditText) view.findViewById(R.id.action_add_text);
             text = mText.getText().toString();
-            EditText mPosition = (EditText) view.findViewById(R.id.action_add_index);
+
+            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
             position = Integer.valueOf(mPosition.getText().toString());
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_add_backward);
+
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
             backward = mBackward.isChecked();
-            RadioGroup mApplyTo = (RadioGroup) view.findViewById(R.id.action_radiogroup);
-            applyTo = ApplyTo.getValue(mApplyTo.getCheckedRadioButtonId());
+
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
         } catch (Exception e) {
             Log.e("updateDataFromView", "NPE");
             return false;
@@ -80,14 +83,14 @@ public class Add extends Action {
             EditText mText = (EditText) view.findViewById(R.id.action_add_text);
             mText.setText(text);
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_add_index);
+            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
             mPosition.setText(String.valueOf(position));
 
-            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_add_backward);
-            mFromEnd.setChecked(backward);
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
+            mBackward.setChecked(backward);
 
-            RadioGroup mApplyTo = (RadioGroup) view.findViewById(R.id.action_radiogroup);
-            mApplyTo.check(applyTo.getID());
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            mApplyTo.setSelection(applyTo.getID());
         } catch (Exception e) {
             Log.e("updateViewFromData", "NPE");
             return false;
@@ -103,10 +106,10 @@ public class Add extends Action {
     protected String getContentDescription() {
         String str;
         str = context.getString(R.string.action_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.action_position_index) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
                 + context.getString(R.string.action_position_backward) + ": "
                 + context.getString(backward ? R.string.true_ : R.string.false_) + ". "
-                + context.getString(R.string.action_apply) + ": " + context.getString(ApplyTo.getStringResource(applyTo));
+                + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 

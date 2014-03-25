@@ -279,9 +279,9 @@ public abstract class Action implements Parcelable {
     }
 
     protected enum ApplyTo {
-        NAME(R.id.action_radio_name),
-        EXTENSION(R.id.action_radio_extension),
-        BOTH(R.id.action_radio_both);
+        NAME(0),
+        EXTENSION(1),
+        BOTH(2);
 
         private final int id;
 
@@ -307,15 +307,10 @@ public abstract class Action implements Parcelable {
             return BOTH;
         }
 
-        public static int getStringResource(ApplyTo applyTo) {
-            switch (applyTo) {
-                case NAME:
-                    return R.string.action_applyToName;
-                case EXTENSION:
-                    return R.string.action_applyToExtension;
-                default:
-                    return R.string.action_applyToBoth;
-            }
+        public static String getLabel(Context context, ApplyTo applyTo) {
+            String[] applyString = context.getResources().getStringArray(R.array.action_apply_array);
+            int index = Math.min(applyTo.id, applyString.length - 1);
+            return applyString[index];
         }
     }
 }
