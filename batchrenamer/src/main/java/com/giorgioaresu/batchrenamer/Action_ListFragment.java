@@ -198,7 +198,7 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         try {
             ActionAdapter adapter = (ActionAdapter) getListAdapter();
             for (int i = 0; i < adapter.getCount(); i++) {
-                res = adapter.getItem(i).getNewName(res, i);
+                res = adapter.getItem(i).getNewName(res, i, adapter.getCount());
             }
         } catch (ConcurrentModificationException ex) {
             // Actions are deleted while computing new name

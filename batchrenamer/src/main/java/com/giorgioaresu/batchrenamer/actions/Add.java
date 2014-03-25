@@ -30,12 +30,12 @@ public class Add extends Action {
         super(context, context.getString(R.string.action_add_title), R.layout.action_card_add);
     }
 
-    public String getNewName(String currentName, int positionInSet) {
-        return getNewName(currentName, positionInSet, applyTo);
+    public String getNewName(String currentName, int positionInSet, int setSize) {
+        return getNewName(currentName, positionInSet, setSize, applyTo);
     }
 
     @Override
-    protected String getPatchedString(String string, int positionInSet) {
+    protected String getPatchedString(String string, int positionInSet, int setSize) {
         // Compute right index
         int pos;
         if (backward) {
