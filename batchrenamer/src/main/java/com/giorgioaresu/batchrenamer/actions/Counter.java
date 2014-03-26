@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.giorgioaresu.batchrenamer.Action;
@@ -269,7 +268,7 @@ public class Counter extends Action {
 
         public static String getLabel(Context context, PadMode padMode) {
             String[] paddingString = context.getResources().getStringArray(R.array.action_counter_padding_array);
-            int index = Math.min(padMode.id, paddingString.length - 1);
+            int index = Math.min(padMode.getID(), paddingString.length - 1);
             return paddingString[index];
         }
     }
