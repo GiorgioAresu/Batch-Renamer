@@ -169,10 +169,20 @@ public abstract class Action implements Parcelable {
      * Check if a string is empty
      *
      * @param string String to check
-     * @return R.String.empty_field_label if string is empty, the string itself otherwise
+     * @return R.string.empty_field_label if string is empty, the string itself otherwise
      */
     protected String checkForEmpty(String string) {
         return string.isEmpty() ? context.getString(R.string.empty_field_label) : string;
+    }
+
+    /**
+     * Returns the string for a boolean value
+     *
+     * @param v boolean value
+     * @return android.R.string.yes if v is true, android.R.string.no otherwise
+     */
+    protected String getValueToString(boolean v) {
+        return context.getString(v ? android.R.string.yes : android.R.string.no);
     }
 
     /**

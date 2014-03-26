@@ -174,8 +174,7 @@ public class Counter extends Action {
                 + context.getString(R.string.action_counter_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
                 + context.getString(R.string.action_counter_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
                 + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.action_position_backward) + ": "
-                + context.getString(backward ? R.string.true_ : R.string.false_) + ". "
+                + context.getString(R.string.action_position_backward) + ": " + getValueToString(backward) + ". "
                 + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
