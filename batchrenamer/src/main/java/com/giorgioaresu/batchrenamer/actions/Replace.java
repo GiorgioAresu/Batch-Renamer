@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.giorgioaresu.batchrenamer.Action;
 import com.giorgioaresu.batchrenamer.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.PatternSyntaxException;
 
 public class Replace extends Action {
     static final String KEY_TARGET = "Target";
@@ -36,7 +39,24 @@ public class Replace extends Action {
 
     @Override
     protected String getPatchedString(String string, int positionInSet, int setSize) {
-        return string.replaceAll(target, replacement);
+        String res;
+        if (regex) {
+            try {
+                res = string.replaceAll(target, replacement);
+            } catch (PatternSyntaxException e) {
+                Log.e(getClass().getName(), "Wrong pattern syntax: " + target);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, context.getString(R.string.action_regex_wrong), Toast.LENGTH_LONG).show();
+                    }
+                });
+                return string;
+            }
+        } else {
+            res = string.replace(target, replacement);
+        }
+        return res;
     }
 
     /**
