@@ -10,17 +10,17 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/action_replace_text"
+            android:id="@+id/action_replace_target"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="@string/action_replace_text"
+            android:hint="@string/action_replace_target"
             android:inputType="textMultiLine" />
 
         <EditText
-            android:id="@+id/action_replace_with"
+            android:id="@+id/action_replace_replacement"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="@string/action_replace_with"
+            android:hint="@string/action_replace_replacement"
             android:inputType="textMultiLine" />
 
         <include layout="@layout/action_section_applyto" />

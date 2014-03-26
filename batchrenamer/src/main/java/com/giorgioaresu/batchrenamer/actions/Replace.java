@@ -14,12 +14,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Replace extends Action {
-    static final String KEY_TEXT = "Text";
-    static final String KEY_WITH = "With";
+    static final String KEY_TARGET = "Target";
+    static final String KEY_REPLACEMENT = "Replacement";
     static final String KEY_APPLYTO = "ApplyTo";
 
-    String text = "";
-    String with = "";
+    String target = "";
+    String replacement = "";
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
@@ -33,7 +33,7 @@ public class Replace extends Action {
 
     @Override
     protected String getPatchedString(String string, int positionInSet, int setSize) {
-        return string.replaceAll(text, with);
+        return string.replaceAll(target, replacement);
     }
 
     /**
@@ -42,11 +42,11 @@ public class Replace extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mText = (EditText) view.findViewById(R.id.action_replace_text);
-            text = mText.getText().toString();
+            EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
+            target = mTarget.getText().toString();
 
-            EditText mWith = (EditText) view.findViewById(R.id.action_replace_with);
-            with = mWith.getText().toString();
+            EditText mReplacement = (EditText) view.findViewById(R.id.action_replace_replacement);
+            replacement = mReplacement.getText().toString();
 
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
             applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
@@ -64,11 +64,11 @@ public class Replace extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mText = (EditText) view.findViewById(R.id.action_replace_text);
-            mText.setText(text);
+            EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
+            mTarget.setText(target);
 
-            EditText mWith = (EditText) view.findViewById(R.id.action_replace_with);
-            mWith.setText(with);
+            EditText mReplacement = (EditText) view.findViewById(R.id.action_replace_replacement);
+            mReplacement.setText(replacement);
 
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
@@ -86,8 +86,8 @@ public class Replace extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.action_replace_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.action_replace_with) + ": " + checkForEmpty(with) + ". "
+        str = context.getString(R.string.action_replace_target) + ": " + checkForEmpty(target) + ". "
+                + context.getString(R.string.action_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
                 + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
@@ -98,8 +98,8 @@ public class Replace extends Action {
     @Override
     protected JSONObject serializeToJSON() throws JSONException {
         JSONObject jObject = new JSONObject();
-        jObject.put(KEY_TEXT, text);
-        jObject.put(KEY_WITH, with);
+        jObject.put(KEY_TARGET, target);
+        jObject.put(KEY_REPLACEMENT, replacement);
         jObject.put(KEY_APPLYTO, applyTo);
         return jObject;
     }
@@ -109,8 +109,8 @@ public class Replace extends Action {
      */
     @Override
     protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
-        text = jObject.getString(KEY_TEXT);
-        with = jObject.getString(KEY_WITH);
+        target = jObject.getString(KEY_TARGET);
+        replacement = jObject.getString(KEY_REPLACEMENT);
         applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
     }
 
@@ -119,8 +119,8 @@ public class Replace extends Action {
      */
     @Override
     protected void createFromParcel(Parcel in) {
-        text = in.readString();
-        with = in.readString();
+        target = in.readString();
+        replacement = in.readString();
         applyTo = ApplyTo.getValue(in.readInt());
     }
 
@@ -129,8 +129,8 @@ public class Replace extends Action {
      */
     @Override
     public void dumpToParcel(Parcel parcel, int i) {
-        parcel.writeString(text);
-        parcel.writeString(with);
+        parcel.writeString(target);
+        parcel.writeString(replacement);
         parcel.writeInt(applyTo.getID());
     }
 }

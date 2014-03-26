@@ -86,7 +86,7 @@
     <string name="action_remove_characters">No. of characters</string>
 
     <!-- Action: Replace -->
-    <string name="action_replace_text">Replace</string>
-    <string name="action_replace_with">With</string>
+    <string name="action_replace_target">Target</string>
+    <string name="action_replace_replacement">Replacement</string>
 
 </resources>
