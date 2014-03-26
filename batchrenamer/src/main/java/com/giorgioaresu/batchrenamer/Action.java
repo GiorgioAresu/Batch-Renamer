@@ -309,6 +309,12 @@ public abstract class Action implements Parcelable {
         return 0;
     }
 
+    /**
+     * Call when inflating layout to let the action prepare the UI (ie. attach listeners)
+     * @param view the inflated view for the action
+     */
+    public void onInflate(View view) { }
+
     protected enum ApplyTo {
         NAME(0),
         EXTENSION(1),

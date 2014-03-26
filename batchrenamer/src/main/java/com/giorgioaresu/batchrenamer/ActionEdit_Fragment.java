@@ -69,6 +69,8 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         ViewStub viewStub = (ViewStub) dialogView.findViewById(R.id.action_edit_contentViewStub);
         viewStub.setLayoutResource(mAction.getViewId());
         View cardLayout = viewStub.inflate();
+        // Let the action do its stuff
+        mAction.onInflate(cardLayout);
         // Fill card with data
         mAction.updateViewFromData(cardLayout);
 
