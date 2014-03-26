@@ -56,17 +56,39 @@
     <string name="action_edit_positive">Ok</string>
     <string name="action_edit_negative">Cancel</string>
     <string name="action_list_row_contentdescription">Action Preview. Click to edit.</string>
+    <string name="action_position">Position</string>
+    <string name="action_position_backward">Backward</string>
     <string name="action_apply">Apply to</string>
-    <string name="action_applyToName">Name</string>
-    <string name="action_applyToExtension">Extension</string>
-    <string name="action_applyToBoth">Name+Ext</string>
+    <string-array name="action_apply_array">
+        <item>Name</item>
+        <item>Extension</item>
+        <item>Name + Extension</item>
+    </string-array>
 
     <!-- Action titles -->
     <string name="action_add_title">Add</string>
+    <string name="action_counter_title">Counter</string>
+    <string name="action_remove_title">Remove</string>
+    <string name="action_replace_title">Replace</string>
 
     <!-- Action: Add -->
     <string name="action_add_text">Text</string>
-    <string name="action_add_index">Position</string>
-    <string name="action_add_backward">Backward</string>
-	
+
+    <!-- Action: Counter -->
+    <string name="action_counter_start">Start</string>
+    <string name="action_counter_step">Step</string>
+    <string name="action_counter_padding">Padding</string>
+    <string-array name="action_counter_padding_array">
+        <item>Automatic</item>
+        <item>Manual</item>
+        <item>Off</item>
+    </string-array>
+
+    <!-- Action: Remove -->
+    <string name="action_remove_characters">No. of characters</string>
+
+    <!-- Action: Replace -->
+    <string name="action_replace_text">Replace</string>
+    <string name="action_replace_with">With</string>
+
 </resources>

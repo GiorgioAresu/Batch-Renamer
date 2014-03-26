@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -14,20 +13,18 @@ import com.giorgioaresu.batchrenamer.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Add extends Action {
+public class Replace extends Action {
     static final String KEY_TEXT = "Text";
-    static final String KEY_POSITION = "Position";
-    static final String KEY_BACKWARD = "Backward";
+    static final String KEY_WITH = "With";
     static final String KEY_APPLYTO = "ApplyTo";
 
     String text = "";
-    int position = 0;
-    boolean backward = false;
+    String with = "";
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Add(Context context) {
-        super(context, context.getString(R.string.action_add_title), R.layout.action_card_add);
+    public Replace(Context context) {
+        super(context, context.getString(R.string.action_replace_title), R.layout.action_card_replace);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -36,17 +33,7 @@ public class Add extends Action {
 
     @Override
     protected String getPatchedString(String string, int positionInSet, int setSize) {
-        // Compute right index
-        int pos;
-        if (backward) {
-            // Right index or 0 if out of bounds
-            pos = Math.max(string.length() - position, 0);
-        } else {
-            // Right index or last one if out of bounds
-            pos = Math.min(string.length(), position);
-        }
-
-        return string.substring(0, pos).concat(text).concat(string.substring(pos));
+        return string.replaceAll(text, with);
     }
 
     /**
@@ -55,14 +42,11 @@ public class Add extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mText = (EditText) view.findViewById(R.id.action_add_text);
+            EditText mText = (EditText) view.findViewById(R.id.action_replace_text);
             text = mText.getText().toString();
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
-            position = Integer.valueOf(mPosition.getText().toString());
-
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
-            backward = mBackward.isChecked();
+            EditText mWith = (EditText) view.findViewById(R.id.action_replace_with);
+            with = mWith.getText().toString();
 
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
             applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
@@ -80,14 +64,11 @@ public class Add extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mText = (EditText) view.findViewById(R.id.action_add_text);
+            EditText mText = (EditText) view.findViewById(R.id.action_replace_text);
             mText.setText(text);
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
-            mPosition.setText(String.valueOf(position));
-
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
-            mBackward.setChecked(backward);
+            EditText mWith = (EditText) view.findViewById(R.id.action_replace_with);
+            mWith.setText(with);
 
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
@@ -105,10 +86,8 @@ public class Add extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.action_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.action_position_backward) + ": "
-                + context.getString(backward ? R.string.true_ : R.string.false_) + ". "
+        str = context.getString(R.string.action_replace_text) + ": " + checkForEmpty(text) + ". "
+                + context.getString(R.string.action_replace_with) + ": " + checkForEmpty(with) + ". "
                 + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
@@ -120,8 +99,7 @@ public class Add extends Action {
     protected JSONObject serializeToJSON() throws JSONException {
         JSONObject jObject = new JSONObject();
         jObject.put(KEY_TEXT, text);
-        jObject.put(KEY_POSITION, position);
-        jObject.put(KEY_BACKWARD, backward);
+        jObject.put(KEY_WITH, with);
         jObject.put(KEY_APPLYTO, applyTo);
         return jObject;
     }
@@ -132,8 +110,7 @@ public class Add extends Action {
     @Override
     protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
         text = jObject.getString(KEY_TEXT);
-        position = jObject.getInt(KEY_POSITION);
-        backward = jObject.getBoolean(KEY_BACKWARD);
+        with = jObject.getString(KEY_WITH);
         applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
     }
 
@@ -143,8 +120,7 @@ public class Add extends Action {
     @Override
     protected void createFromParcel(Parcel in) {
         text = in.readString();
-        position = in.readInt();
-        backward = in.readByte() != 0 ? true : false;
+        with = in.readString();
         applyTo = ApplyTo.getValue(in.readInt());
     }
 
@@ -154,8 +130,7 @@ public class Add extends Action {
     @Override
     public void dumpToParcel(Parcel parcel, int i) {
         parcel.writeString(text);
-        parcel.writeInt(position);
-        parcel.writeByte((byte) (backward ? 1 : 0));
+        parcel.writeString(with);
         parcel.writeInt(applyTo.getID());
     }
 }

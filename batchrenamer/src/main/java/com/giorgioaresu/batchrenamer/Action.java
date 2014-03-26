@@ -47,9 +47,10 @@ public abstract class Action implements Parcelable {
      *
      * @param currentName   current string
      * @param positionInSet position of the string in the original set (useful for counters)
+     * @param setSize number of items in the set
      * @return the new string
      */
-    public abstract String getNewName(String currentName, int positionInSet);
+    public abstract String getNewName(String currentName, int positionInSet, int setSize);
 
     /**
      * IF YOU USE THIS METHOD, OVERRIDE getPatchedString
@@ -58,14 +59,14 @@ public abstract class Action implements Parcelable {
      * and the selected ApplyTo value, process it and returns the new one
      * @param currentName current string
      * @param positionInSet position of the string in the original set (useful for counters)
-     * @param applyTo enum value representing what part of the filename we should process
-     * @return the new string
+     * @param setSize number of items in the set
+     *@param applyTo enum value representing what part of the filename we should process  @return the new string
      */
-    protected String getNewName(String currentName, int positionInSet, ApplyTo applyTo) {
+    protected String getNewName(String currentName, int positionInSet, int setSize, ApplyTo applyTo) {
         String result;
         if (ApplyTo.BOTH == applyTo) {
             // We want to work on the whole string, so we just process it
-            result = getPatchedString(currentName, positionInSet);
+            result = getPatchedString(currentName, positionInSet, setSize);
         } else {
             // We want to work only on a part of the string, we need more work
 
@@ -76,7 +77,7 @@ public abstract class Action implements Parcelable {
                 // Doesn't contain an extension
                 if (ApplyTo.NAME == applyTo) {
                     // The whole string is the name, no extension to consider
-                    result = getPatchedString(currentName, positionInSet);
+                    result = getPatchedString(currentName, positionInSet, setSize);
                 } else {
                     // No extension to modify, return untouched name
                     result = currentName;
@@ -88,9 +89,9 @@ public abstract class Action implements Parcelable {
                 String ext = currentName.substring(lastIndexOfDot + 1);
 
                 if (ApplyTo.NAME == applyTo) {
-                    result = getPatchedString(name, positionInSet) + "." + ext;
+                    result = getPatchedString(name, positionInSet, setSize) + "." + ext;
                 } else {
-                    result = name + "." + getPatchedString(ext, positionInSet);
+                    result = name + "." + getPatchedString(ext, positionInSet, setSize);
                 }
             }
         }
@@ -103,9 +104,10 @@ public abstract class Action implements Parcelable {
      * Apply action to a string
      * @param string string to be computed
      * @param positionInSet position of the string in the original set (useful for counters
+     * @param setSize number of items in the set
      * @return the new string
      */
-    protected String getPatchedString(String string, int positionInSet) {
+    protected String getPatchedString(String string, int positionInSet, int setSize) {
         Exception exception = new NoSuchMethodException(getClass().getName() + ": getPatchedString not implemented");
         exception.printStackTrace();
         return null;
@@ -277,9 +279,9 @@ public abstract class Action implements Parcelable {
     }
 
     protected enum ApplyTo {
-        NAME(R.id.action_radio_name),
-        EXTENSION(R.id.action_radio_extension),
-        BOTH(R.id.action_radio_both);
+        NAME(0),
+        EXTENSION(1),
+        BOTH(2);
 
         private final int id;
 
@@ -305,15 +307,10 @@ public abstract class Action implements Parcelable {
             return BOTH;
         }
 
-        public static int getStringResource(ApplyTo applyTo) {
-            switch (applyTo) {
-                case NAME:
-                    return R.string.action_applyToName;
-                case EXTENSION:
-                    return R.string.action_applyToExtension;
-                default:
-                    return R.string.action_applyToBoth;
-            }
+        public static String getLabel(Context context, ApplyTo applyTo) {
+            String[] applyString = context.getResources().getStringArray(R.array.action_apply_array);
+            int index = Math.min(applyTo.id, applyString.length - 1);
+            return applyString[index];
         }
     }
 }

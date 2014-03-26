@@ -1,65 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:stretchColumns="1"
-    android:shrinkColumns="1">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="match_parent">
-
-        <TextView
-            android:id="@+id/action_add_text_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_add_text"
-            android:layout_marginRight="@dimen/card_padding_between_elements"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_gravity="center_vertical" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/action_add_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:inputType="textMultiLine"
-            android:layout_span="3" />
+            android:hint="@string/action_add_text" />
 
-    </TableRow>
+        <include layout="@layout/action_section_position" />
 
-    <TableRow
-        android:id="@+id/tableRow2"
-        android:layout_width="match_parent">
+        <include layout="@layout/action_section_applyto" />
 
-        <TextView
-            android:id="@+id/action_add_index_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_add_index"
-            android:layout_marginRight="@dimen/card_padding_between_elements"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/action_add_index"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:layout_marginRight="@dimen/card_padding_between_elements"
-            android:maxLength="3"
-            android:selectAllOnFocus="true" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/action_add_backward"
-            android:id="@+id/action_add_backward"
-            android:layout_column="3" />
-
-    </TableRow>
-
-    <include layout="@layout/action_applyto"
-        android:id="@+id/tableRow3" />
-
-</TableLayout>
+</ScrollView>
