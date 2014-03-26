@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/action_replace_text"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/action_replace_text"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/action_replace_with"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/action_replace_with"
+            android:inputType="textMultiLine" />
+
+        <include layout="@layout/action_section_applyto" />
+
+    </LinearLayout>
+
+</ScrollView>

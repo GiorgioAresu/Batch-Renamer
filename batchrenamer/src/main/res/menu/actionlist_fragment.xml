@@ -14,6 +14,7 @@
             <item android:title="@string/action_add_title" />
             <item android:title="@string/action_counter_title" />
             <item android:title="@string/action_remove_title" />
+            <item android:title="@string/action_replace_title" />
         </menu>
 
     </item>

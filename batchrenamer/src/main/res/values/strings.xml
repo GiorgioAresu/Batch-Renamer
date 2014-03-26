@@ -69,6 +69,7 @@
     <string name="action_add_title">Add</string>
     <string name="action_counter_title">Counter</string>
     <string name="action_remove_title">Remove</string>
+    <string name="action_replace_title">Replace</string>
 
     <!-- Action: Add -->
     <string name="action_add_text">Text</string>
@@ -85,5 +86,9 @@
 
     <!-- Action: Remove -->
     <string name="action_remove_characters">No. of characters</string>
+
+    <!-- Action: Replace -->
+    <string name="action_replace_text">Replace</string>
+    <string name="action_replace_with">With</string>
 
 </resources>
