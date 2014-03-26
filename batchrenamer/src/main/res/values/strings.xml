@@ -54,6 +54,7 @@
     <string name="action_edit_positive">Ok</string>
     <string name="action_edit_negative">Cancel</string>
     <string name="action_list_row_contentdescription">Action Preview. Click to edit.</string>
+    <string name="action_regex">Regex</string>
     <string name="action_position">Position</string>
     <string name="action_position_backward">Backward</string>
     <string name="action_apply">Apply to</string>
