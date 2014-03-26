@@ -219,7 +219,7 @@ public class Counter extends Action {
         padMode = PadMode.getValue(in.readInt());
         padding = in.readInt();
         position = in.readInt();
-        backward = in.readByte() != 0 ? true : false;
+        backward = toBoolean(in.readByte());
         applyTo = ApplyTo.getValue(in.readInt());
     }
 
@@ -233,7 +233,7 @@ public class Counter extends Action {
         parcel.writeInt(padMode.getID());
         parcel.writeInt(padding);
         parcel.writeInt(position);
-        parcel.writeByte((byte) (backward ? 1 : 0));
+        parcel.writeByte(toByte(backward));
         parcel.writeInt(applyTo.getID());
     }
 

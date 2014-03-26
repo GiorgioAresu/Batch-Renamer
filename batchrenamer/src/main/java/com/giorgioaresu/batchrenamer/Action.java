@@ -186,6 +186,26 @@ public abstract class Action implements Parcelable {
     }
 
     /**
+     * Returns a byte encoding a boolean value
+     *
+     * @param b boolean value
+     * @return 1 if true, 0 otherwise
+     */
+    protected byte toByte(boolean b) {
+        return (byte) (b ? 1 : 0);
+    }
+
+    /**
+     * Returns the boolean value encoded in a byte
+     *
+     * @param b byte
+     * @return true if 1, false otherwise
+     */
+    protected boolean toBoolean(byte b) {
+        return b != 0;
+    }
+
+    /**
      * Dump action to a JSONObject
      *
      * @return the JSONObject created

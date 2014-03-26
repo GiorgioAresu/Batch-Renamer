@@ -143,7 +143,7 @@ public class Add extends Action {
     protected void createFromParcel(Parcel in) {
         text = in.readString();
         position = in.readInt();
-        backward = in.readByte() != 0 ? true : false;
+        backward = toBoolean(in.readByte());
         applyTo = ApplyTo.getValue(in.readInt());
     }
 
@@ -154,7 +154,7 @@ public class Add extends Action {
     public void dumpToParcel(Parcel parcel, int i) {
         parcel.writeString(text);
         parcel.writeInt(position);
-        parcel.writeByte((byte) (backward ? 1 : 0));
+        parcel.writeByte(toByte(backward));
         parcel.writeInt(applyTo.getID());
     }
 }
