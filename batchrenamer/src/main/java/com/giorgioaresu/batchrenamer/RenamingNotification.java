@@ -30,6 +30,8 @@ public class RenamingNotification {
      */
     private static final int INDETERMINATE = -1;
 
+    private static long defaultWhen = System.currentTimeMillis();
+
     /**
      * Shows the notification, or updates a previously shown notification of
      * this type, with the given parameters.
@@ -83,15 +85,14 @@ public class RenamingNotification {
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                         // Set the pending intent to be initiated when the user touches
                         // the notification.
-                .setContentIntent(resultPendingIntent)
-                        // Show expanded text content on devices running Android 4.1 or
-                        // later.
+                //.setContentIntent(resultPendingIntent)
                         // Automatically dismiss the notification when it is touched.*/
                 .setAutoCancel(true)
                         // Set a time to avoid blinking notification
-                .setWhen((when > 0) ? when : System.currentTimeMillis());
+                .setWhen((when > 0) ? when : defaultWhen);
 
         if (!indeterminate) {
+            // Show expanded text content on devices running Android 4.1 or later.
             builder.setStyle(new NotificationCompat.BigTextStyle()
                     .bigText(text)
                     .setBigContentTitle(title)
