@@ -201,8 +201,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
 
     protected void startFileRename() {
         // Start activity
-        Intent intent = new Intent(this, RenameStatusActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, RenameStatusActivity.class);
+        startActivity(intent);*/
 
         // TODO: handle cancellation?
         Log.d(getLocalClassName(), "Firing async rename task");
