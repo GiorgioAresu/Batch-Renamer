@@ -2,9 +2,12 @@ package com.giorgioaresu.batchrenamer.actions;
 
 import android.app.Activity;
 import android.os.Parcel;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import com.giorgioaresu.batchrenamer.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class Replace extends Action {
@@ -92,6 +96,7 @@ public class Replace extends Action {
         try {
             EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
             mTarget.setText(target);
+            checkRegex(mTarget, regex);
 
             CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
             mRegex.setChecked(regex);
@@ -155,6 +160,48 @@ public class Replace extends Action {
         regex = toBoolean(in.readByte());
         replacement = in.readString();
         applyTo = ApplyTo.getValue(in.readInt());
+    }
+
+    @Override
+    public void onInflate(View view) {
+        final CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
+        final EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
+
+        mRegex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mTarget.setError(null);
+                checkRegex(mTarget, isChecked);
+            }
+        });
+
+        mTarget.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkRegex(mTarget, mRegex.isChecked());
+            }
+        });
+    }
+
+    private void checkRegex(EditText mTarget, boolean regex) {
+        if (regex) {
+            try {
+                Pattern.compile(mTarget.getText().toString());
+                mTarget.setError(null);
+            } catch (PatternSyntaxException ex) {
+                mTarget.setError(context.getString(R.string.action_regex_wrong));
+            }
+        }
     }
 
     /**
