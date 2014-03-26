@@ -1,5 +1,6 @@
 package com.giorgioaresu.batchrenamer.actions;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Parcel;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class Counter extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Counter(Context context) {
+    public Counter(Activity context) {
         super(context, context.getString(R.string.action_counter_title), R.layout.action_card_counter);
     }
 

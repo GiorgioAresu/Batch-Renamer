@@ -89,10 +89,9 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
             mActions = savedInstanceState.getParcelableArrayList(ARG_ACTIONS);
         } else {
             // Eventually populate actions for the first time
-            Context mContext = getActivity();
             mActions = new ArrayList<>();
             for (int i = 0; i < 0; i++) {
-                mActions.add(new Add(mContext));
+                mActions.add(new Add(getActivity()));
             }
         }
         setListAdapter(new ActionAdapter(getActivity(), R.layout.action_list_row, mActions, this));

@@ -1,6 +1,6 @@
 package com.giorgioaresu.batchrenamer.actions;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +26,7 @@ public class Remove extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Remove(Context context) {
+    public Remove(Activity context) {
         super(context, context.getString(R.string.action_remove_title), R.layout.action_card_remove);
     }
 

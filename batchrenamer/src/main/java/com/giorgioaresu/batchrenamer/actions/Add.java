@@ -1,6 +1,6 @@
 package com.giorgioaresu.batchrenamer.actions;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.Parcel;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +26,7 @@ public class Add extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Add(Context context) {
+    public Add(Activity context) {
         super(context, context.getString(R.string.action_add_title), R.layout.action_card_add);
     }
 
