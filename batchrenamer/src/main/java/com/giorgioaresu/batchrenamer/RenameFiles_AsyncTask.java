@@ -113,7 +113,6 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
     protected void onPostExecute(Void aVoid) {
         notification.notifyCompleted(context, completed, failed);
         mListener.setUiResult();
-        // TODO : Update current file names with new ones
     }
 
     public interface renameFiles_Callbacks {

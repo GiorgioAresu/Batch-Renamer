@@ -113,7 +113,6 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
     public void onClick(DialogInterface dialogInterface, int i) {
         switch (i) {
             case DialogInterface.BUTTON_POSITIVE:
-                // TODO: Validate changes
                 Action mAction = getArguments().getParcelable(keyAction);
                 mAction.updateDataFromView(dialogView);
                 mListener.notifyActionDataSetChanged();

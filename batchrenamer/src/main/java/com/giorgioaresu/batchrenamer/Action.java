@@ -191,7 +191,6 @@ public abstract class Action implements Parcelable {
      * @return the Bitmap of the preview
      */
     public Bitmap getBitmapOfView(int width) {
-        // TODO: Speed up bitmap creation (ie. keep an inflated view) to avoid lag on scrolling big lists
         // Inflate the view
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(viewId, null);
