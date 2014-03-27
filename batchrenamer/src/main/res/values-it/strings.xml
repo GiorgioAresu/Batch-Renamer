@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!--                     -->
+    <!--  APPLICATION        -->
+    <!--                     -->
+    <string name="undo">Annulla</string>
+    <string name="accept">Accetta</string>
+    <string name="decline">Rifiuta</string>
+    <string name="title_activity_rename_status">RenameStatusActivity</string>
+
+    <!--                     -->
+    <!--  NOTIFICATION       -->
+    <!--                     -->
+    <string name="renaming_notification_title">Rinomina file</string>
+    <string name="renaming_notification_text_completed">Operazione completata</string>
+    <string name="renaming_notification_text_indeterminate">Inizializzazione<xliff:g id="ellipsis">\u2026</xliff:g></string>
+    <string name="renaming_notification_text_template">File <xliff:g id="number" example="5">%1$d</xliff:g> di <xliff:g id="number" example="8">%2$d</xliff:g>.</string>
+    <string name="renaming_notification_ticker_started">Ridenominazione iniziata</string>
+    <string name="renaming_notification_ticker_completed">Ridenominazione completata</string>
+    <string name="renaming_notification_summary_big">Rinominati: <xliff:g id="number" example="5">%1$d</xliff:g> - Falliti: <xliff:g id="number" example="1">%2$d</xliff:g></string>
+
+    <!--                     -->
+    <!--  ABOUT ACTIVITY     -->
+    <!--                     -->
+    <string name="title_activity_about">A proposito di...</string>
+    <string name="about_header_info">Info</string>
+    <string name="about_author_title">Autore</string>
+    <string name="about_version_title">Versione</string>
+    <string name="about_header_legal">Informazioni legali</string>
+    <string name="about_eula_title">EULA</string>
+    <string name="about_eula_summary">Mostra accordo di licenza</string>
+    <string name="about_eula_dialog_title">ACCORDO DI LICENZA CON L\'UTENTE FINALE</string>
+
+    <!--                     -->
+    <!--  ACTION BAR         -->
+    <!--                     -->
+    <!-- Text for the item that adds an action to the list -->
+    <string name="action_newAction">Nuova azione</string>
+    <!-- Text for the item that removes ALL actions from the list -->
+    <string name="action_clearActions">Elimina tutte le azioni</string>
+    <!-- Toast message showed when clearing the action list -->
+    <string name="action_clearActions_message">Azioni eliminate</string>
+    <!-- Toast message showed when clearing the EMPTY action list -->
+    <string name="action_clearActions_emptymessage">Nessuna azione da eliminare</string>
+    <string name="action_start">Rinomina</string>
+    <string name="action_start_alert_title">Rinominare i files?</string>
+    <string name="action_start_alert_message">L\'operazione non può essere annullata.</string>
+    <string name="action_start_alert_positive">Rinomina</string>
+    <string name="action_start_alert_negative">Annulla</string>
+    <!-- Toast message showed when trying to start the rename with NO files -->
+    <string name="empty_filelist">Lista dei file vuota. Aggiungi qualche file prima</string>
+    <!-- Toast message showed when trying to start the rename with NO actions -->
+    <string name="empty_actionlist">Lista delle azioni vuota. Aggiungi qualche azione prima</string>
+
+    <!--                     -->
+    <!--  FILE SECTION       -->
+    <!--                     -->
+    <string name="filelist_header_current">Nome attuale</string>
+    <string name="filelist_header_preview">Anteprima</string>
+    <string name="filelist_header_preview_updating">Anteprima (aggiornamento)</string>
+
+    <!--                     -->
+    <!--  ACTION STRINGS     -->
+    <!--                     -->
+    <string name="actioncard_remove">Elimina azione</string>
+    <string name="actioncard_remove_message">Azione eliminata</string>
+    <!-- Content description of the image holding the action preview -->
+    <string name="actioncard_list_row_contentdescription">Anteprima dell\'azione, clicca per modificare</string>
+    <string name="actioncard_empty_field_contentdescription">Campo vuoto</string>
+    <string name="actioncard_regex">Regex</string>
+    <string name="actioncard_regex_invalid">Errore di sintassi</string>
+    <string name="actioncard_position">Posizione</string>
+    <string name="actioncard_position_backward">Dalla fine</string>
+    <string name="actioncard_apply">Applica a</string>
+    <string-array name="actioncard_apply_array">
+        <item>Nome</item>
+        <item>Estensione</item>
+        <item>Nome + Estensione</item>
+    </string-array>
+
+    <!--                     -->
+    <!--  ACTION TITLES      -->
+    <!--                     -->
+    <string name="actioncard_add_title">Aggiungi</string>
+    <string name="actioncard_renumber_title">Rinumera</string>
+    <string name="actioncard_remove_title">Rimuovi</string>
+    <string name="actioncard_replace_title">Sostituisci</string>
+
+    <!--                     -->
+    <!--  ACTION: ADD        -->
+    <!--                     -->
+    <string name="actioncard_add_text">Testo</string>
+
+    <!--                     -->
+    <!--  ACTION: RENUMBER    -->
+    <!--                     -->
+    <string name="actioncard_renumber_start">Inizia da</string>
+    <string name="actioncard_renumber_step">Salta</string>
+    <string name="actioncard_renumber_padding">Riempimento con zeri</string>
+    <string-array name="actioncard_renumber_padding_array">
+        <item>Automatico</item>
+        <item>Manuale</item>
+        <item>Spento</item>
+    </string-array>
+
+    <!--                     -->
+    <!--  ACTION: REMOVE     -->
+    <!--                     -->
+    <string name="actioncard_remove_characters">N° di caratteri</string>
+
+    <!--                     -->
+    <!--  ACTION: REPLACE    -->
+    <!--                     -->
+    <string name="actioncard_replace_pattern">Modello</string>
+    <string name="actioncard_replace_replacement">Sostituisci con</string>
+
+</resources>
