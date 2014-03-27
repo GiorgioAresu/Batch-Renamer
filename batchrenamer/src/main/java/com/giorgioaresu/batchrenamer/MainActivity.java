@@ -165,7 +165,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
     @Override
     public void onFileSelected(File file) {
         // TODO: Implement interface
-        Toast.makeText(this, file.fileUri.toString(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, file.newName, Toast.LENGTH_LONG).show();
     }
 
     protected void startFileNamesUpdate() {
