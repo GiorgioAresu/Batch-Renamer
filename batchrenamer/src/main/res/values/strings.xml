@@ -14,7 +14,7 @@
     <!--                     -->
     <string name="renaming_notification_title">File rename</string>
     <string name="renaming_notification_text_completed">Operation completed</string>
-    <string name="renaming_notification_text_indeterminate">Preparing<xliff:g id="ellipsis">\u2026</xliff:g></string>
+    <string name="renaming_notification_text_indeterminate">Initialization<xliff:g id="ellipsis">\u2026</xliff:g></string>
     <string name="renaming_notification_text_template">File <xliff:g id="number" example="5">%1$d</xliff:g> of <xliff:g id="number" example="8">%2$d</xliff:g>.</string>
     <string name="renaming_notification_ticker_started">File rename started</string>
     <string name="renaming_notification_ticker_completed">File rename completed</string>
@@ -30,7 +30,7 @@
     <string name="about_header_legal">Legal</string>
     <string name="about_eula_title">EULA</string>
     <string name="about_eula_summary">Show License Agreement</string>
-    <string name="about_eula_dialog_title">END USER LICENSE AGREEMENT</string>
+    <string name="about_eula_dialog_title">END-USER LICENSE AGREEMENT</string>
 
     <!--                     -->
     <!--  ACTION BAR         -->
@@ -38,21 +38,20 @@
     <!-- Text for the item that adds an action to the list -->
     <string name="action_newAction">New action</string>
     <!-- Text for the item that removes ALL actions from the list -->
-    <string name="action_clearActions">Remove all actions</string>
+    <string name="action_clearActions">Delete all actions</string>
     <!-- Toast message showed when clearing the action list -->
-    <string name="action_clearActions_message">All actions removed</string>
+    <string name="action_clearActions_message">Actions deleted</string>
     <!-- Toast message showed when clearing the EMPTY action list -->
-    <string name="action_clearActions_emptymessage">No actions</string>
+    <string name="action_clearActions_emptymessage">No actions to delete</string>
     <string name="action_start">Rename</string>
     <string name="action_start_alert_title">Rename files?</string>
-    <string name="action_start_alert_message">This can\'t be undone.</string>
+    <string name="action_start_alert_message">Operation can\'t be undone.</string>
     <string name="action_start_alert_positive">Rename</string>
     <string name="action_start_alert_negative">Cancel</string>
     <!-- Toast message showed when trying to start the rename with NO files -->
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <!-- Toast message showed when trying to start the rename with NO actions -->
     <string name="empty_actionlist">Empty action list. Add some actions first</string>
-    <string name="action_about">About</string>
 
     <!--                     -->
     <!--  FILE SECTION       -->
@@ -66,12 +65,11 @@
     <!--                     -->
     <string name="actioncard_remove">Remove action</string>
     <string name="actioncard_remove_message">Action removed</string>
-    <string name="actioncard_edit_positive">Ok</string>
-    <string name="actioncard_edit_negative">Cancel</string>
-    <string name="actioncard_list_row_contentdescription">Action Preview. Click to edit.</string>
+    <!-- Content description of the image holding the action preview -->
+    <string name="actioncard_list_row_contentdescription">Action preview, click to edit</string>
     <string name="actioncard_empty_field_contentdescription">Empty Field</string>
     <string name="actioncard_regex">Regex</string>
-    <string name="actioncard_regex_invalid">Invalid syntax</string>
+    <string name="actioncard_regex_invalid">Syntax error</string>
     <string name="actioncard_position">Position</string>
     <string name="actioncard_position_backward">Backward</string>
     <string name="actioncard_apply">Apply to</string>
@@ -85,7 +83,7 @@
     <!--  ACTION TITLES      -->
     <!--                     -->
     <string name="actioncard_add_title">Add</string>
-    <string name="actioncard_counter_title">Counter</string>
+    <string name="actioncard_renumber_title">Renumber</string>
     <string name="actioncard_remove_title">Remove</string>
     <string name="actioncard_replace_title">Replace</string>
 
@@ -95,12 +93,12 @@
     <string name="actioncard_add_text">Text</string>
 
     <!--                     -->
-    <!--  ACTION: COUNTER    -->
+    <!--  ACTION: RENUMBER    -->
     <!--                     -->
-    <string name="actioncard_counter_start">Start</string>
-    <string name="actioncard_counter_step">Step</string>
-    <string name="actioncard_counter_padding">Padding</string>
-    <string-array name="actioncard_counter_padding_array">
+    <string name="actioncard_renumber_start">Start</string>
+    <string name="actioncard_renumber_step">Step</string>
+    <string name="actioncard_renumber_padding">Padding</string>
+    <string-array name="actioncard_renumber_padding_array">
         <item>Automatic</item>
         <item>Manual</item>
         <item>Off</item>
@@ -114,7 +112,7 @@
     <!--                     -->
     <!--  ACTION: REPLACE    -->
     <!--                     -->
-    <string name="actioncard_replace_target">Target</string>
-    <string name="actioncard_replace_replacement">Replacement</string>
+    <string name="actioncard_replace_pattern">Pattern</string>
+    <string name="actioncard_replace_replacement">Replace with</string>
 
 </resources>

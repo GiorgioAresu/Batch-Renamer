@@ -16,7 +16,7 @@ import com.giorgioaresu.batchrenamer.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Counter extends Action {
+public class Renumber extends Action {
     static final String KEY_START = "Start";
     static final String KEY_STEP = "Step";
     static final String KEY_PADMODE = "PadMode";
@@ -34,8 +34,8 @@ public class Counter extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Counter(Activity context) {
-        super(context, context.getString(R.string.actioncard_counter_title), R.layout.action_card_counter);
+    public Renumber(Activity context) {
+        super(context, context.getString(R.string.actioncard_renumber_title), R.layout.action_card_renumber);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -81,16 +81,16 @@ public class Counter extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mStart = (EditText) view.findViewById(R.id.action_counter_start);
+            EditText mStart = (EditText) view.findViewById(R.id.action_renumber_start);
             start = Integer.parseInt(mStart.getText().toString());
 
-            EditText mStep = (EditText) view.findViewById(R.id.action_counter_step);
+            EditText mStep = (EditText) view.findViewById(R.id.action_renumber_step);
             step = Integer.parseInt(mStep.getText().toString());
 
-            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_counter_padding_spinner);
+            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_renumber_padding_spinner);
             padMode = PadMode.getValue(mPadMode.getSelectedItemPosition());
 
-            EditText mPadding = (EditText) view.findViewById(R.id.action_counter_padding_amount);
+            EditText mPadding = (EditText) view.findViewById(R.id.action_renumber_padding_amount);
             padding = Integer.parseInt(mPadding.getText().toString());
 
             EditText mPosition = (EditText) view.findViewById(R.id.action_position);
@@ -115,13 +115,13 @@ public class Counter extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mStart = (EditText) view.findViewById(R.id.action_counter_start);
+            EditText mStart = (EditText) view.findViewById(R.id.action_renumber_start);
             mStart.setText(String.valueOf(start));
 
-            EditText mStep = (EditText) view.findViewById(R.id.action_counter_step);
+            EditText mStep = (EditText) view.findViewById(R.id.action_renumber_step);
             mStep.setText(String.valueOf(step));
 
-            final EditText mPadding = (EditText) view.findViewById(R.id.action_counter_padding_amount);
+            final EditText mPadding = (EditText) view.findViewById(R.id.action_renumber_padding_amount);
             mPadding.setText(String.valueOf(padding));
             if (PadMode.MANUAL.equals(padMode)) {
                 mPadding.setVisibility(View.VISIBLE);
@@ -129,7 +129,7 @@ public class Counter extends Action {
                 mPadding.setVisibility(View.GONE);
             }
 
-            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_counter_padding_spinner);
+            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_renumber_padding_spinner);
             mPadMode.setSelection(padMode.getID());
             mPadMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -170,9 +170,9 @@ public class Counter extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.actioncard_counter_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
-                + context.getString(R.string.actioncard_counter_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
-                + context.getString(R.string.actioncard_counter_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
+        str = context.getString(R.string.actioncard_renumber_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
+                + context.getString(R.string.actioncard_renumber_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
+                + context.getString(R.string.actioncard_renumber_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
                 + context.getString(R.string.actioncard_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
                 + context.getString(R.string.actioncard_position_backward) + ": " + getValueToString(backward) + ". "
                 + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
@@ -267,7 +267,7 @@ public class Counter extends Action {
         }
 
         public static String getLabel(Context context, PadMode padMode) {
-            String[] paddingString = context.getResources().getStringArray(R.array.actioncard_counter_padding_array);
+            String[] paddingString = context.getResources().getStringArray(R.array.actioncard_renumber_padding_array);
             int index = Math.min(padMode.getID(), paddingString.length - 1);
             return paddingString[index];
         }

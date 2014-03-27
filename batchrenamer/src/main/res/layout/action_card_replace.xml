@@ -15,11 +15,11 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/action_replace_target"
+                android:id="@+id/action_replace_pattern"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:hint="@string/actioncard_replace_target"
+                android:hint="@string/actioncard_replace_pattern"
                 android:inputType="textMultiLine" />
 
             <CheckBox

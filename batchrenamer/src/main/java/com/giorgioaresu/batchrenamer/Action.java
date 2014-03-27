@@ -47,7 +47,7 @@ public abstract class Action implements Parcelable {
      * getPatchedString(String, int) putting the new filename logic there
      *
      * @param currentName   current string
-     * @param positionInSet position of the string in the original set (useful for counters)
+     * @param positionInSet position of the string in the original set (useful for renumbers)
      * @param setSize number of items in the set
      * @return the new string
      */
@@ -59,7 +59,7 @@ public abstract class Action implements Parcelable {
      * Given a string, its position in the original set of strings
      * and the selected ApplyTo value, process it and returns the new one
      * @param currentName current string
-     * @param positionInSet position of the string in the original set (useful for counters)
+     * @param positionInSet position of the string in the original set (useful for renumbers)
      * @param setSize number of items in the set
      *@param applyTo enum value representing what part of the filename we should process  @return the new string
      */
@@ -104,7 +104,7 @@ public abstract class Action implements Parcelable {
      *
      * Apply action to a string
      * @param string string to be computed
-     * @param positionInSet position of the string in the original set (useful for counters
+     * @param positionInSet position of the string in the original set (useful for renumbers)
      * @param setSize number of items in the set
      * @return the new string
      */

@@ -22,12 +22,12 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class Replace extends Action {
-    static final String KEY_TARGET = "Target";
+    static final String KEY_PATTERN = "Pattern";
     static final String KEY_REGEX = "Regex";
     static final String KEY_REPLACEMENT = "Replacement";
     static final String KEY_APPLYTO = "ApplyTo";
 
-    String target = "";
+    String pattern = "";
     Boolean regex = false;
     String replacement = "";
     ApplyTo applyTo = ApplyTo.BOTH;
@@ -46,9 +46,9 @@ public class Replace extends Action {
         String res;
         if (regex) {
             try {
-                res = string.replaceAll(target, replacement);
+                res = string.replaceAll(pattern, replacement);
             } catch (PatternSyntaxException e) {
-                Log.e(getClass().getName(), "Wrong pattern syntax: " + target);
+                Log.e(getClass().getName(), "Wrong pattern syntax: " + pattern);
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -58,7 +58,7 @@ public class Replace extends Action {
                 return string;
             }
         } else {
-            res = string.replace(target, replacement);
+            res = string.replace(pattern, replacement);
         }
         return res;
     }
@@ -69,8 +69,8 @@ public class Replace extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
-            target = mTarget.getText().toString();
+            EditText mPattern = (EditText) view.findViewById(R.id.action_replace_pattern);
+            pattern = mPattern.getText().toString();
 
             CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
             regex = mRegex.isChecked();
@@ -94,9 +94,9 @@ public class Replace extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
-            mTarget.setText(target);
-            checkRegex(mTarget, regex);
+            EditText mPattern = (EditText) view.findViewById(R.id.action_replace_pattern);
+            mPattern.setText(pattern);
+            checkRegex(mPattern, regex);
 
             CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
             mRegex.setChecked(regex);
@@ -120,7 +120,7 @@ public class Replace extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.actioncard_replace_target) + ": " + checkForEmpty(target) + ". "
+        str = context.getString(R.string.actioncard_replace_pattern) + ": " + checkForEmpty(pattern) + ". "
                 + context.getString(R.string.actioncard_regex) + ": " + getValueToString(regex) + ". "
                 + context.getString(R.string.actioncard_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
                 + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
@@ -133,7 +133,7 @@ public class Replace extends Action {
     @Override
     protected JSONObject serializeToJSON() throws JSONException {
         JSONObject jObject = new JSONObject();
-        jObject.put(KEY_TARGET, target);
+        jObject.put(KEY_PATTERN, pattern);
         jObject.put(KEY_REGEX, regex);
         jObject.put(KEY_REPLACEMENT, replacement);
         jObject.put(KEY_APPLYTO, applyTo);
@@ -145,7 +145,7 @@ public class Replace extends Action {
      */
     @Override
     protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
-        target = jObject.getString(KEY_TARGET);
+        pattern = jObject.getString(KEY_PATTERN);
         regex = jObject.getBoolean(KEY_REGEX);
         replacement = jObject.getString(KEY_REPLACEMENT);
         applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
@@ -156,7 +156,7 @@ public class Replace extends Action {
      */
     @Override
     protected void createFromParcel(Parcel in) {
-        target = in.readString();
+        pattern = in.readString();
         regex = toBoolean(in.readByte());
         replacement = in.readString();
         applyTo = ApplyTo.getValue(in.readInt());
@@ -165,17 +165,17 @@ public class Replace extends Action {
     @Override
     public void onInflate(View view) {
         final CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
-        final EditText mTarget = (EditText) view.findViewById(R.id.action_replace_target);
+        final EditText mPattern = (EditText) view.findViewById(R.id.action_replace_pattern);
 
         mRegex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTarget.setError(null);
-                checkRegex(mTarget, isChecked);
+                mPattern.setError(null);
+                checkRegex(mPattern, isChecked);
             }
         });
 
-        mTarget.addTextChangedListener(new TextWatcher() {
+        mPattern.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -188,18 +188,18 @@ public class Replace extends Action {
 
             @Override
             public void afterTextChanged(Editable s) {
-                checkRegex(mTarget, mRegex.isChecked());
+                checkRegex(mPattern, mRegex.isChecked());
             }
         });
     }
 
-    private void checkRegex(EditText mTarget, boolean regex) {
+    private void checkRegex(EditText mPattern, boolean regex) {
         if (regex) {
             try {
-                Pattern.compile(mTarget.getText().toString());
-                mTarget.setError(null);
+                Pattern.compile(mPattern.getText().toString());
+                mPattern.setError(null);
             } catch (PatternSyntaxException ex) {
-                mTarget.setError(context.getString(R.string.actioncard_regex_invalid));
+                mPattern.setError(context.getString(R.string.actioncard_regex_invalid));
             }
         }
     }
@@ -209,7 +209,7 @@ public class Replace extends Action {
      */
     @Override
     public void dumpToParcel(Parcel parcel, int i) {
-        parcel.writeString(target);
+        parcel.writeString(pattern);
         parcel.writeByte(toByte(regex));
         parcel.writeString(replacement);
         parcel.writeInt(applyTo.getID());
