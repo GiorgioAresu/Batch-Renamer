@@ -14,8 +14,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Constructor;
+import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class Action implements Parcelable {
+    public static final Parcelable.Creator<Action> CREATOR
+            = new Parcelable.Creator<Action>() {
+        public Action createFromParcel(Parcel in) {
+            try {
+                Class<?> c = Class.forName(in.readString());
+                Constructor<?> cons = c.getConstructors()[0];
+                Action action = (Action) cons.newInstance(Application.getContext());
+                action.createFromParcel(in);
+                return action;
+            } catch (Exception b) {
+                Log.e("createFromParcel", "Exception creating item, skipping");
+                return null;
+            }
+        }
+
+        public Action[] newArray(int size) {
+            return new Action[size];
+        }
+    };
     static final String KEY_CONTENT = "Content";
     static final String KEY_TYPE = "Type";
 
@@ -27,6 +48,35 @@ public abstract class Action implements Parcelable {
         this.context = context;
         this.title = title;
         this.viewId = viewId;
+    }
+
+    public static final Map<String, String> getActions(Context context) {
+        Map<String, String> actions = new TreeMap<>();
+        actions.put(context.getString(R.string.actioncard_add_title), "Add");
+        actions.put(context.getString(R.string.actioncard_remove_title), "Remove");
+        actions.put(context.getString(R.string.actioncard_renumber_title), "Renumber");
+        actions.put(context.getString(R.string.actioncard_replace_title), "Replace");
+        return actions;
+    }
+
+    /**
+     * Creates an action from content described in a JSONObject
+     *
+     * @param context Context used to instantiate the action
+     * @param jObject JSONObject containing action description
+     * @return
+     */
+    public static final Action createFromJSON(Context context, JSONObject jObject) {
+        try {
+            Class<?> c = Class.forName(jObject.getString(KEY_TYPE));
+            Constructor<?> cons = c.getConstructors()[0];
+            Action action = (Action) cons.newInstance(context);
+            action.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
+            return action;
+        } catch (Exception b) {
+            Log.e("createFromJSON", "Exception creating item, skipping");
+            return null;
+        }
     }
 
     public String getTitle() {
@@ -224,26 +274,6 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Creates an action from content described in a JSONObject
-     *
-     * @param context Context used to instantiate the action
-     * @param jObject JSONObject containing action description
-     * @return
-     */
-    public static final Action createFromJSON(Context context, JSONObject jObject) {
-        try {
-            Class<?> c = Class.forName(jObject.getString(KEY_TYPE));
-            Constructor<?> cons = c.getConstructors()[0];
-            Action action = (Action) cons.newInstance(context);
-            action.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
-            return action;
-        } catch (Exception b) {
-            Log.e("createFromJSON", "Exception creating item, skipping");
-            return null;
-        }
-    }
-
-    /**
      * Dump action fields to a JSONObject
      *
      * @return JSONObject created
@@ -258,26 +288,6 @@ public abstract class Action implements Parcelable {
      * @throws JSONException
      */
     protected abstract void deserializeFromJSON(JSONObject jObject) throws JSONException;
-
-    public static final Parcelable.Creator<Action> CREATOR
-            = new Parcelable.Creator<Action>() {
-        public Action createFromParcel(Parcel in) {
-            try {
-                Class<?> c = Class.forName(in.readString());
-                Constructor<?> cons = c.getConstructors()[0];
-                Action action = (Action) cons.newInstance(Application.getContext());
-                action.createFromParcel(in);
-                return action;
-            } catch (Exception b) {
-                Log.e("createFromParcel", "Exception creating item, skipping");
-                return null;
-            }
-        }
-
-        public Action[] newArray(int size) {
-            return new Action[size];
-        }
-    };
 
     /**
      * Dump action to a Parcel
@@ -326,14 +336,6 @@ public abstract class Action implements Parcelable {
             this.id = id;
         }
 
-        public int getID() {
-            return id;
-        }
-
-        public boolean compare(int i) {
-            return id == i;
-        }
-
         public static ApplyTo getValue(int _id) {
             ApplyTo[] As = ApplyTo.values();
             for (int i = 0; i < As.length; i++) {
@@ -348,6 +350,14 @@ public abstract class Action implements Parcelable {
             String[] applyString = context.getResources().getStringArray(R.array.actioncard_apply_array);
             int index = Math.min(applyTo.id, applyString.length - 1);
             return applyString[index];
+        }
+
+        public int getID() {
+            return id;
+        }
+
+        public boolean compare(int i) {
+            return id == i;
         }
     }
 }

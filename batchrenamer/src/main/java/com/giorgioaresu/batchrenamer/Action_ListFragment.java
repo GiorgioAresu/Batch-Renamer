@@ -27,6 +27,7 @@ import com.giorgioaresu.batchrenamer.actions.Add;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Map;
 
 /**
  * A fragment representing a list of Items.
@@ -36,27 +37,21 @@ import java.util.ConcurrentModificationException;
  * interface.
  */
 public class Action_ListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener, ActionAdapter.actionAdapter_Callbacks, ActionEdit_Fragment.actionEditFragment_Callbacks {
-
     private static final String ARG_ACTIONS = "actions";
     private static final String ARG_ACTION = "action";
     private static final String ARG_INDEX = "index";
 
     private static final int ID_NEW_ACTION_ADD = 1;
-
-    public ArrayList<Action> getActions() {
-        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
-        ArrayList<Action> actions = new ArrayList<>();
-
-        for (int i = 0; i < adapter.getCount(); ++i) {
-            actions.add((Action) adapter.getItem(i));
-        }
-        return actions;
-    }
-
-    private final SparseIntArray mItemIdTopMap = new SparseIntArray();
-
     private static final long MOVE_DURATION = 250;
     private static final long FADE_DURATION = 250;
+    private final SparseIntArray mItemIdTopMap = new SparseIntArray();
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public Action_ListFragment() {
+    }
 
     public static Action_ListFragment newInstance(ArrayList<Action> actions) {
         Action_ListFragment fragment = new Action_ListFragment();
@@ -66,11 +61,14 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public Action_ListFragment() {
+    public ArrayList<Action> getActions() {
+        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
+        ArrayList<Action> actions = new ArrayList<>();
+
+        for (int i = 0; i < adapter.getCount(); ++i) {
+            actions.add((Action) adapter.getItem(i));
+        }
+        return actions;
     }
 
     @Override
@@ -129,10 +127,11 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         inflater.inflate(R.menu.actionlist_fragment, menu);
         SubMenu subMenu = menu.findItem(R.id.action_newAction).getSubMenu();
 
-        if (subMenu != null) {
-            for (int i = 0; i < subMenu.size(); i++) {
-                subMenu.getItem(i).setOnMenuItemClickListener(this);
-            }
+        Map<String, String> actions = Action.getActions(getActivity());
+
+        for (String key : actions.keySet()) {
+            subMenu.add(key)
+                    .setOnMenuItemClickListener(this);
         }
     }
 
@@ -171,7 +170,7 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         // Inflate appropriate class based on item title and add it to the list
         try {
             Activity activity = getActivity();
-            String className = activity.getPackageName() + ".actions." + item.getTitle().toString();
+            String className = activity.getPackageName() + ".actions." + Action.getActions(activity).get(item.getTitle());
             Class<?> c = Class.forName(className);
             Constructor<?> cons = c.getConstructors()[0];
             Action action = (Action) cons.newInstance(activity);
