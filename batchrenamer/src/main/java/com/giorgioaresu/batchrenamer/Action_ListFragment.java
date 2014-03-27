@@ -170,7 +170,8 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         // Inflate appropriate class based on item title and add it to the list
         try {
             Activity activity = getActivity();
-            String className = activity.getPackageName() + ".actions." + Action.getActions(activity).get(item.getTitle());
+            String packageName = getClass().getPackage().getName() + (BuildConfig.DEBUG ? ".actions.debug." : ".actions.");
+            String className = packageName + Action.getActions(activity).get(item.getTitle());
             Class<?> c = Class.forName(className);
             Constructor<?> cons = c.getConstructors()[0];
             Action action = (Action) cons.newInstance(activity);

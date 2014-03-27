@@ -30,7 +30,7 @@ android {
 
     buildTypes {
         debug {
-            //packageNameSuffix '.debug'
+            packageNameSuffix '.debug'
             versionNameSuffix '-debug'
         }
         release {
