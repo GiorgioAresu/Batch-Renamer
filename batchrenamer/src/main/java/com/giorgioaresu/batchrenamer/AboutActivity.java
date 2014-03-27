@@ -21,6 +21,7 @@ public class AboutActivity extends Activity {
     }
 
     public static class AboutFragment extends PreferenceFragment {
+        Eula eula = new Eula();
 
         public AboutFragment() {
         }
@@ -54,10 +55,16 @@ public class AboutActivity extends Activity {
             findPreference("about_eula").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    Eula.show(true, activity);
+                    eula.show(true, activity);
                     return true;
                 }
             });
+        }
+
+        @Override
+        public void onPause() {
+            eula.dismiss();
+            super.onPause();
         }
     }
 }

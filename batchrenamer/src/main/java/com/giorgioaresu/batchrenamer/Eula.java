@@ -5,16 +5,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spanned;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
 public class Eula {
+    AlertDialog dialog = null;
+
     private static final String KEY_ACCEPTED_EULA = "eula_accepted";
     /**
      * Returns true if has accepted eula.
@@ -39,12 +38,12 @@ public class Eula {
     /**
      * Show End User License Agreement.
      *
-     * @param accepted True IF user has accepted license already, which means it can be dismissed.
+     * @param accepted True IF user has already accepted license, which means it can be dismissed.
      *                 If the user hasn't accepted, then the EULA must be accepted or the program
      *                 exits.
      * @param activity Activity started from.
      */
-    public static void show(final boolean accepted, final Activity activity) {
+    public void show(final boolean accepted, final Activity activity) {
         Spanned message = Html.fromHtml(String.format(activity.getString(R.string.eula_text), activity.getString(R.string.app_name), Calendar.getInstance().get(Calendar.YEAR)));
 
         AlertDialog.Builder eula = new AlertDialog.Builder(activity)
@@ -79,6 +78,17 @@ public class Eula {
                                 }
                             });
         }
-        eula.show();
+        dialog = eula.create();
+        dialog.show();
+    }
+
+    /**
+     * Dismisses eula dialog
+     */
+    public void dismiss() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
     }
 }

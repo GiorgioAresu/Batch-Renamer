@@ -22,18 +22,21 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends Activity implements File_ListFragment.FileFragmentInterface {
     public static java.io.File scriptFile;
+
     private Action_ListFragment actionList_fragment;
     private FilePreview_ListFragment filePreviewList_fragment;
     private UpdateFileNames_AsyncTask updateFileNames_asyncTask;
 
     private UpdatingFilenamesGuiHolder guiHolder;
 
+    private Eula eula = new Eula();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (!Eula.hasAcceptedEula(this)) {
-            Eula.show(false, this);
+            eula.show(false, this);
         }
 
         setContentView(R.layout.activity_main);
@@ -75,6 +78,12 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         elaborateIntent(getIntent());
 
         guiHolder = new UpdatingFilenamesGuiHolder();
+    }
+
+    @Override
+    protected void onPause() {
+        eula.dismiss();
+        super.onPause();
     }
 
     /**
