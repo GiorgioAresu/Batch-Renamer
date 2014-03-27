@@ -35,7 +35,7 @@ android {
         }
         release {
             runProguard true
-            proguardFile getDefaultProguardFile('proguard-android.txt')
+            proguardFile 'proguard-rules.txt'
             debuggable false
             zipAlign true
         }
