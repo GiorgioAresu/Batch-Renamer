@@ -27,7 +27,7 @@ public class Add extends Action {
 
 
     public Add(Activity context) {
-        super(context, context.getString(R.string.action_add_title), R.layout.action_card_add);
+        super(context, context.getString(R.string.actioncard_add_title), R.layout.action_card_add);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -105,10 +105,10 @@ public class Add extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.action_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.action_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.actioncard_add_text) + ": " + checkForEmpty(text) + ". "
+                + context.getString(R.string.actioncard_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.actioncard_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 

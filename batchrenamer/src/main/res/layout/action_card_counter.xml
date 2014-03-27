@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
             <TextView
-                android:text="@string/action_counter_start"
+                android:text="@string/actioncard_counter_start"
                 style="@style/ActionCard_ItemLabel" />
 
             <EditText
@@ -21,7 +21,7 @@
                 android:selectAllOnFocus="true" />
 
             <TextView
-                android:text="@string/action_counter_step"
+                android:text="@string/actioncard_counter_step"
                 style="@style/ActionCard_ItemLabel" />
 
             <EditText
@@ -32,7 +32,7 @@
                 android:selectAllOnFocus="true" />
 
         <TextView
-            android:text="@string/action_counter_padding"
+            android:text="@string/actioncard_counter_padding"
             style="@style/ActionCard_ItemLabel" />
 
         <LinearLayout
@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/action_counter_padding_spinner"
                 android:spinnerMode="dropdown"
-                android:entries="@array/action_counter_padding_array" />
+                android:entries="@array/actioncard_counter_padding_array" />
 
             <EditText
                 android:id="@+id/action_counter_padding_amount"

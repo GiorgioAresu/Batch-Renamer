@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:text="@string/action_apply"
+        android:text="@string/actioncard_apply"
         style="@style/ActionCard_ItemLabel" />
 
     <Spinner
@@ -11,5 +11,5 @@
         android:minHeight="48dp"
         android:id="@+id/action_apply_spinner"
         android:spinnerMode="dropdown"
-        android:entries="@array/action_apply_array" />
+        android:entries="@array/actioncard_apply_array" />
 </merge>

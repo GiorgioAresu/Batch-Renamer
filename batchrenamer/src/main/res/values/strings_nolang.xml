@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="about_author_summary">Giorgio Aresu<xliff:g id="newline">\n</xliff:g>Copyright <xliff:g id="copyright">\u00A9</xliff:g> 2013-<xliff:g id="year" example="2014">%1$d</xliff:g></string>
     <string name="app_name">Batch Renamer</string>
     <string name="eula_text"><![CDATA[
         %1$s

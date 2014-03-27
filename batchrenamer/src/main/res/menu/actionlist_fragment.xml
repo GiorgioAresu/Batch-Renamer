@@ -11,10 +11,10 @@
 
         <menu>
             <!-- Add a MenuItem for each action type -->
-            <item android:title="@string/action_add_title" />
-            <item android:title="@string/action_counter_title" />
-            <item android:title="@string/action_remove_title" />
-            <item android:title="@string/action_replace_title" />
+            <item android:title="@string/actioncard_add_title" />
+            <item android:title="@string/actioncard_counter_title" />
+            <item android:title="@string/actioncard_remove_title" />
+            <item android:title="@string/actioncard_replace_title" />
         </menu>
 
     </item>

@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:inputType="textMultiLine"
-            android:hint="@string/action_add_text" />
+            android:hint="@string/actioncard_add_text" />
 
         <include layout="@layout/action_section_position" />
 

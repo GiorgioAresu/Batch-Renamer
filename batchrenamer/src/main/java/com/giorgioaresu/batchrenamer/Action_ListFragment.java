@@ -4,7 +4,6 @@ package com.giorgioaresu.batchrenamer;
 import android.animation.Animator;
 import android.app.Activity;
 import android.app.ListFragment;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -336,7 +335,7 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
                 ActionAdapter adapter = (ActionAdapter) getListAdapter();
                 adapter.insert(action, index);
             }
-        }).showUndoBar(false, getString(R.string.action_remove_message), bundle);
+        }).showUndoBar(false, getString(R.string.actioncard_remove_message), bundle);
 
         // Delete the item from the adapter
         mAdapter.remove(removedAction);

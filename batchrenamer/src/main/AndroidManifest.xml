@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.giorgioaresu.batchrenamer"
     android:versionCode="1"
-    android:versionName="0.1.172">
+    android:versionName="0.1.174">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -50,6 +50,8 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" />
     </application>
+
+    <supports-screens android:smallScreens="false" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />

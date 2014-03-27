@@ -28,7 +28,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/action_remove"
+            android:contentDescription="@string/actioncard_remove"
             android:src="@drawable/ic_action_remove_light"
             android:scaleType="fitCenter" />
 
@@ -42,8 +42,8 @@
     <!-- Content -->
     <ImageView
         android:id="@+id/action_imgContent"
-        style="@style/ActionCards_ContentView"
+        style="@style/ActionCard_ContentView"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/action_list_row_contentdescription" />
+        android:contentDescription="@string/actioncard_list_row_contentdescription" />
 
 </LinearLayout>

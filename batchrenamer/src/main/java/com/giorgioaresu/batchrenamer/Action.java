@@ -173,7 +173,7 @@ public abstract class Action implements Parcelable {
      * @return R.string.empty_field_label if string is empty, the string itself otherwise
      */
     protected String checkForEmpty(String string) {
-        return string.isEmpty() ? context.getString(R.string.empty_field_label) : string;
+        return string.isEmpty() ? context.getString(R.string.actioncard_empty_field_contentdescription) : string;
     }
 
     /**
@@ -345,7 +345,7 @@ public abstract class Action implements Parcelable {
         }
 
         public static String getLabel(Context context, ApplyTo applyTo) {
-            String[] applyString = context.getResources().getStringArray(R.array.action_apply_array);
+            String[] applyString = context.getResources().getStringArray(R.array.actioncard_apply_array);
             int index = Math.min(applyTo.id, applyString.length - 1);
             return applyString[index];
         }

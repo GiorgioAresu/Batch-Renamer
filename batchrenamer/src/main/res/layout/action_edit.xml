@@ -23,6 +23,6 @@
     <!-- Content -->
     <ViewStub
         android:id="@+id/action_edit_contentViewStub"
-        style="@style/ActionCards_ContentView" />
+        style="@style/ActionCard_ContentView" />
 
 </LinearLayout>

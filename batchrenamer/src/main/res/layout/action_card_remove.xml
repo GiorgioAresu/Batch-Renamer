@@ -11,7 +11,7 @@
 
         <TextView
             style="@style/ActionCard_ItemLabel"
-            android:text="@string/action_remove_characters" />
+            android:text="@string/actioncard_remove_characters" />
 
         <EditText
             android:id="@+id/action_remove_characters"

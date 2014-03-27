@@ -35,7 +35,7 @@ public class Counter extends Action {
 
 
     public Counter(Activity context) {
-        super(context, context.getString(R.string.action_counter_title), R.layout.action_card_counter);
+        super(context, context.getString(R.string.actioncard_counter_title), R.layout.action_card_counter);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -170,12 +170,12 @@ public class Counter extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.action_counter_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
-                + context.getString(R.string.action_counter_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
-                + context.getString(R.string.action_counter_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
-                + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.action_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.actioncard_counter_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
+                + context.getString(R.string.actioncard_counter_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
+                + context.getString(R.string.actioncard_counter_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
+                + context.getString(R.string.actioncard_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.actioncard_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 
@@ -267,7 +267,7 @@ public class Counter extends Action {
         }
 
         public static String getLabel(Context context, PadMode padMode) {
-            String[] paddingString = context.getResources().getStringArray(R.array.action_counter_padding_array);
+            String[] paddingString = context.getResources().getStringArray(R.array.actioncard_counter_padding_array);
             int index = Math.min(padMode.getID(), paddingString.length - 1);
             return paddingString[index];
         }

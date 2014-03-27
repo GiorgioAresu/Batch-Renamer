@@ -19,13 +19,13 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:hint="@string/action_replace_target"
+                android:hint="@string/actioncard_replace_target"
                 android:inputType="textMultiLine" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/action_regex"
+                android:text="@string/actioncard_regex"
                 android:id="@+id/action_replace_regex" />
 
         </LinearLayout>
@@ -34,7 +34,7 @@
             android:id="@+id/action_replace_replacement"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="@string/action_replace_replacement"
+            android:hint="@string/actioncard_replace_replacement"
             android:inputType="textMultiLine" />
 
         <include layout="@layout/action_section_applyto" />

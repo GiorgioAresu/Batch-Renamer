@@ -27,7 +27,7 @@ public class Remove extends Action {
 
 
     public Remove(Activity context) {
-        super(context, context.getString(R.string.action_remove_title), R.layout.action_card_remove);
+        super(context, context.getString(R.string.actioncard_remove_title), R.layout.action_card_remove);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -111,10 +111,10 @@ public class Remove extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.action_remove_characters) + ": " + checkForEmpty(String.valueOf(characters)) + ". "
-                + context.getString(R.string.action_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.action_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.actioncard_remove_characters) + ": " + checkForEmpty(String.valueOf(characters)) + ". "
+                + context.getString(R.string.actioncard_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.actioncard_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 

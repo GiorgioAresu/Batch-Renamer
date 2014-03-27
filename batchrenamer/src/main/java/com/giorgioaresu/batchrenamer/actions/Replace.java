@@ -34,7 +34,7 @@ public class Replace extends Action {
 
 
     public Replace(Activity context) {
-        super(context, context.getString(R.string.action_replace_title), R.layout.action_card_replace);
+        super(context, context.getString(R.string.actioncard_replace_title), R.layout.action_card_replace);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -52,7 +52,7 @@ public class Replace extends Action {
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(context, context.getString(R.string.action_regex_wrong), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, context.getString(R.string.actioncard_regex_invalid), Toast.LENGTH_LONG).show();
                     }
                 });
                 return string;
@@ -120,10 +120,10 @@ public class Replace extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.action_replace_target) + ": " + checkForEmpty(target) + ". "
-                + context.getString(R.string.action_regex) + ": " + getValueToString(regex) + ". "
-                + context.getString(R.string.action_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
-                + context.getString(R.string.action_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.actioncard_replace_target) + ": " + checkForEmpty(target) + ". "
+                + context.getString(R.string.actioncard_regex) + ": " + getValueToString(regex) + ". "
+                + context.getString(R.string.actioncard_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
+                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 
@@ -199,7 +199,7 @@ public class Replace extends Action {
                 Pattern.compile(mTarget.getText().toString());
                 mTarget.setError(null);
             } catch (PatternSyntaxException ex) {
-                mTarget.setError(context.getString(R.string.action_regex_wrong));
+                mTarget.setError(context.getString(R.string.actioncard_regex_invalid));
             }
         }
     }
