@@ -7,6 +7,7 @@
     <string name="undo">Undo</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="expired_message">You\'re using an old version of the app, update now?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
     <!--                     -->
