@@ -3,7 +3,6 @@ package com.giorgioaresu.batchrenamer;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.util.List;
 

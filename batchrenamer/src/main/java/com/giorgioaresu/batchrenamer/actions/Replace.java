@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Parcel;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;

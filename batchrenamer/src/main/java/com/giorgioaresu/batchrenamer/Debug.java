@@ -16,7 +16,6 @@
 
 package com.giorgioaresu.batchrenamer;
 
-import android.os.Looper;
 import android.util.Log;
 
 import eu.chainfire.libsuperuser.BuildConfig;

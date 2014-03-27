@@ -2,7 +2,6 @@ package com.giorgioaresu.batchrenamer.actions;
 
 import android.app.Activity;
 import android.os.Parcel;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
