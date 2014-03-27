@@ -28,7 +28,7 @@ public abstract class Action implements Parcelable {
                 action.createFromParcel(in);
                 return action;
             } catch (Exception b) {
-                Log.e("createFromParcel", "Exception creating item, skipping");
+                Log.e("batchrenamer", "Exception creating item, skipping");
                 return null;
             }
         }
@@ -73,8 +73,8 @@ public abstract class Action implements Parcelable {
             Action action = (Action) cons.newInstance(context);
             action.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
             return action;
-        } catch (Exception b) {
-            Log.e("createFromJSON", "Exception creating item, skipping");
+        } catch (Exception e) {
+            Log.e("batchrenamer", "Exception creating item from JSON, skipping");
             return null;
         }
     }
@@ -268,7 +268,7 @@ public abstract class Action implements Parcelable {
             jObject.put(KEY_TYPE, getClass().getName());
             return jObject;
         } catch (JSONException e) {
-            Log.e("dumpToJSON", "Exception dumping item, skipping");
+            Log.e("batchrenamer", "Exception dumping item to JSON, skipping");
             return null;
         }
     }

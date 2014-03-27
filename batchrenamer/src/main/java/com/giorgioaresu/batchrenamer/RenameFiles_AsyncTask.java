@@ -56,23 +56,23 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
             switch (result) {
                 case SUCCESSFUL:
                     // Correctly renamed file
-                    Log.d(getClass().getSimpleName(), "Rename successful for file: " + f.oldName + " to: " + f.newName);
+                    Debug.log("Rename successful for file: " + f.oldName + " to: " + f.newName);
                     break;
                 case FAILED_GENERIC:
                     // Failed with unknown cause
-                    Log.d(getClass().getSimpleName(), "Rename failed for file: " + f.oldName);
+                    Debug.logError("Rename failed for file: " + f.oldName);
                     break;
                 case FAILED_PERMISSION:
                     // Insufficient permission on folder or file
-                    Log.d(getClass().getSimpleName(), "Rename failed (insufficient permissions) for file: " + f.oldName);
+                    Debug.logError("Rename failed (insufficient permissions) for file: " + f.oldName);
                     break;
                 case FAILED_NOSOURCEFILE:
                     // Source file doesn't exist
-                    Log.d(getClass().getSimpleName(), "Rename failed (file doesn't exist) for file: " + f.oldName);
+                    Debug.logError("Rename failed (file doesn't exist) for file: " + f.oldName);
                     break;
                 case FAILED_DESTINATIONEXISTS:
                     // Destination file already exists
-                    Log.d(getClass().getSimpleName(), "Rename failed (file already exists) for file: " + f.oldName);
+                    Debug.logError("Rename failed (file already exists) for file: " + f.oldName);
                     break;
             }
             publishProgress(i + 1, size, result.getID());
@@ -112,7 +112,6 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        Log.d("Rename task", "Hiding notification");
         notification.notifyCompleted(context, completed, failed);
         mListener.setUiResult();
         // TODO : Update current file names with new ones

@@ -55,7 +55,7 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         Action mAction = getArguments().getParcelable(keyAction);
 
         if (mAction == null) {
-            Log.e("onCreateDialog", "mAction is null");
+            Debug.log("mAction is null");
         }
 
         // Inflate layout

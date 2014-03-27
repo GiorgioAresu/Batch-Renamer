@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.giorgioaresu.batchrenamer.Action;
+import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
 
 import org.json.JSONException;
@@ -48,7 +49,7 @@ public class Replace extends Action {
             try {
                 res = string.replaceAll(pattern, replacement);
             } catch (PatternSyntaxException e) {
-                Log.e(getClass().getName(), "Wrong pattern syntax: " + pattern);
+                Debug.logError(getClass(), "wrong syntax " + pattern);
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -81,7 +82,7 @@ public class Replace extends Action {
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
             applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
         } catch (Exception e) {
-            Log.e("updateDataFromView", "NPE");
+            Debug.logError(getClass(), "NPE updating from view");
             return false;
         }
 
@@ -107,7 +108,7 @@ public class Replace extends Action {
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
         } catch (Exception e) {
-            Log.e("updateViewFromData", "NPE");
+            Debug.logError(getClass(), "NPE updating view");
             return false;
         }
 

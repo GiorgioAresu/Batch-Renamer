@@ -71,7 +71,7 @@ public class File implements Parcelable {
         if (!dir.canRead() && !dir.canWrite() && !from.exists() && !to.exists()) {
             // Every check fails, it's highly probable we're required to use superuser permissions
             // Try to obtain root access
-            Log.d("rename", "Trying to obtain root access");
+            Debug.log("Trying to obtain root access");
             try {
                 if (SuHelper.isSuAvailable()) {
                     String shell = "sh";
@@ -86,7 +86,7 @@ public class File implements Parcelable {
                         status = RENAME.getValue(Integer.valueOf(result.get(0)));
                     }
                 } else {
-                    Log.d("rename", "su not available");
+                    Debug.log("su not available");
                 }
             } catch (Exception e) {
             }

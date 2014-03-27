@@ -178,7 +178,7 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
             actionAdapter.add(action);
             return true;
         } catch (Exception b) {
-            Log.e(getClass().getSimpleName(), "Exception handling item click, skipping");
+            Log.e("batchrenamer", "Exception handling item click, skipping");
             return false;
         }
     }

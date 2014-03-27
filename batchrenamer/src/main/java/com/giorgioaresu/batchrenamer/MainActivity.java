@@ -58,7 +58,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                         }
                         outputStream.close();
                     } catch (Exception e) {
-                        Log.e(getLocalClassName(), "Failed to copy script");
+                        Log.e("batchrenamer", "Failed to copy script");
                     }
                 }
             };
@@ -171,10 +171,10 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
     protected void startFileNamesUpdate() {
         // If there was already a task, try to stop it
         if (updateFileNames_asyncTask != null && updateFileNames_asyncTask.cancel(true)) {
-            Log.d(getLocalClassName(), "Cancelled old async task");
+            Debug.log("Cancelled old async task");
         }
 
-        Log.d(getLocalClassName(), "Firing async newnames task");
+        Debug.log("Firing async newnames task");
         // Fire off an AsyncTask to compute file names
         updateFileNames_asyncTask = new UpdateFileNames_AsyncTask(new UpdateFileNames_AsyncTask.updateFileNames_Callbacks() {
 
@@ -213,23 +213,22 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         /*Intent intent = new Intent(this, RenameStatusActivity.class);
         startActivity(intent);*/
 
-        // TODO: handle cancellation?
-        Log.d(getLocalClassName(), "Firing async rename task");
+        Debug.log("Firing async rename task");
 
         RenameFiles_AsyncTask renameFiles_asyncTask = new RenameFiles_AsyncTask(new RenameFiles_AsyncTask.renameFiles_Callbacks() {
             @Override
             public void updateProgressInUI(Integer progress, Integer elements, File.RENAME result) {
-                Log.d("Rename task", "Progress: " + progress);
+                Debug.log("Progress: " + progress);
             }
 
             @Override
             public void setUiLoading() {
-                Log.d("Rename task", "Preparing UI");
+                Debug.log("Preparing UI for rename");
             }
 
             @Override
             public void setUiResult() {
-                Log.d("Rename task", "Resetting UI");
+                Debug.log("Resetting UI after rename");
             }
 
             @Override
