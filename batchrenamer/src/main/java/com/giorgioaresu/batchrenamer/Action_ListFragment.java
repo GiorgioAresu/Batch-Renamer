@@ -167,9 +167,9 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        Activity activity = getActivity();
         // Inflate appropriate class based on item title and add it to the list
         try {
-            Activity activity = getActivity();
             String actionsPackageName = getClass().getPackage().getName() + ".actions.";
             String className = actionsPackageName + Action.getActions(activity).get(item.getTitle());
             Class<?> c = Class.forName(className);
@@ -179,6 +179,7 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
             actionAdapter.add(action);
             return true;
         } catch (Exception b) {
+            Toast.makeText(activity, getString(R.string.action_newAction_error), Toast.LENGTH_SHORT).show();
             Log.e("batchrenamer", "Exception handling item click, skipping");
             return false;
         }

@@ -38,6 +38,8 @@
     <!--                     -->
     <!-- Text for the item that adds an action to the list -->
     <string name="action_newAction">Nuova azione</string>
+    <!-- Toast message showed when adding action has failed -->
+    <string name="action_newAction_error">Si è verificato un errore. Contatta lo sviluppatore</string>
     <!-- Text for the item that removes ALL actions from the list -->
     <string name="action_clearActions">Elimina tutte le azioni</string>
     <!-- Toast message showed when clearing the action list -->
