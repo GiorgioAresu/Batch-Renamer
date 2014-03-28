@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.giorgioaresu.batchrenamer.Action;
 import com.giorgioaresu.batchrenamer.Debug;
@@ -48,13 +47,6 @@ public class Replace extends Action {
             try {
                 res = string.replaceAll(pattern, replacement);
             } catch (PatternSyntaxException e) {
-                Debug.logError(getClass(), "wrong syntax " + pattern);
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, context.getString(R.string.actioncard_regex_invalid), Toast.LENGTH_LONG).show();
-                    }
-                });
                 // Syntax error, keep string untouched
                 res = string;
             }
