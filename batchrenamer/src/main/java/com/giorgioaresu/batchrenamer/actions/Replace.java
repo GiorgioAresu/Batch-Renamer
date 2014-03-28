@@ -1,6 +1,6 @@
 package com.giorgioaresu.batchrenamer.actions;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Parcel;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,7 +32,7 @@ public class Replace extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Replace(Activity context) {
+    public Replace(Context context) {
         super(context, context.getString(R.string.actioncard_replace_title), R.layout.action_card_replace);
     }
 

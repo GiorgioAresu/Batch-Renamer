@@ -51,5 +51,5 @@
 
 # Keep the constructor name (<init> means constructor) un-obfuscated that has a single argument of Activity and extends Action
 -keepclassmembers class * extends com.giorgioaresu.batchrenamer.Action{
- public <init>(android.app.Activity);
+ public <init>(android.content.Context);
 }

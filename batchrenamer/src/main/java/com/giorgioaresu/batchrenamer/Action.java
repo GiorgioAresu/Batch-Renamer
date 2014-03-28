@@ -1,6 +1,5 @@
 package com.giorgioaresu.batchrenamer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -40,11 +39,11 @@ public abstract class Action implements Parcelable {
     static final String KEY_CONTENT = "Content";
     static final String KEY_TYPE = "Type";
 
-    protected Activity context;
+    protected Context context;
     private String title;
     private int viewId;
 
-    public Action(Activity context, String title, int viewId) {
+    public Action(Context context, String title, int viewId) {
         this.context = context;
         this.title = title;
         this.viewId = viewId;
