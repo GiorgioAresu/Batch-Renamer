@@ -55,7 +55,8 @@ public class Replace extends Action {
                         Toast.makeText(context, context.getString(R.string.actioncard_regex_invalid), Toast.LENGTH_LONG).show();
                     }
                 });
-                return string;
+                // Syntax error, keep string untouched
+                res = string;
             }
         } else {
             res = string.replace(pattern, replacement);
