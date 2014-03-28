@@ -1,6 +1,6 @@
 package com.giorgioaresu.batchrenamer.actions;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Parcel;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,7 +26,7 @@ public class Add extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Add(Activity context) {
+    public Add(Context context) {
         super(context, context.getString(R.string.actioncard_add_title), R.layout.action_card_add);
     }
 

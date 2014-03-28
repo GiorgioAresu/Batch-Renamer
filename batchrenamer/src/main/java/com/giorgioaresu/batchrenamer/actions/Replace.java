@@ -1,6 +1,6 @@
 package com.giorgioaresu.batchrenamer.actions;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Parcel;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.giorgioaresu.batchrenamer.Action;
 import com.giorgioaresu.batchrenamer.Debug;
@@ -33,7 +32,7 @@ public class Replace extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Replace(Activity context) {
+    public Replace(Context context) {
         super(context, context.getString(R.string.actioncard_replace_title), R.layout.action_card_replace);
     }
 
@@ -48,13 +47,6 @@ public class Replace extends Action {
             try {
                 res = string.replaceAll(pattern, replacement);
             } catch (PatternSyntaxException e) {
-                Debug.logError(getClass(), "wrong syntax " + pattern);
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, context.getString(R.string.actioncard_regex_invalid), Toast.LENGTH_LONG).show();
-                    }
-                });
                 // Syntax error, keep string untouched
                 res = string;
             }
@@ -62,6 +54,18 @@ public class Replace extends Action {
             res = string.replace(pattern, replacement);
         }
         return res;
+    }
+
+    @Override
+    public boolean isValid() {
+        if (regex) {
+            try {
+                Pattern.compile(pattern);
+            } catch (PatternSyntaxException ex) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

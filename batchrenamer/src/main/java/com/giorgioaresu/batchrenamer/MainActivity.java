@@ -206,7 +206,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
 
         Debug.log("Firing async newnames task");
         // Fire off an AsyncTask to compute file names
-        updateFileNames_asyncTask = new UpdateFileNames_AsyncTask(new UpdateFileNames_AsyncTask.updateFileNames_Callbacks() {
+        updateFileNames_asyncTask = new UpdateFileNames_AsyncTask(this, new UpdateFileNames_AsyncTask.updateFileNames_Callbacks() {
 
             @Override
             public Action_ListFragment getActionListFragment() {

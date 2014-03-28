@@ -1,6 +1,5 @@
 package com.giorgioaresu.batchrenamer.actions;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Parcel;
 import android.view.View;
@@ -34,7 +33,7 @@ public class Renumber extends Action {
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Renumber(Activity context) {
+    public Renumber(Context context) {
         super(context, context.getString(R.string.actioncard_renumber_title), R.layout.action_card_renumber);
     }
 

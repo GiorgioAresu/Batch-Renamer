@@ -68,6 +68,8 @@
     <!--                     -->
     <string name="actioncard_remove">Elimina azione</string>
     <string name="actioncard_remove_message">Azione eliminata</string>
+    <!-- Toast showed when some action returned the invalid status -->
+    <string name="some_action_invalid">Alcune azioni sono non valide, postresti volerle controllare</string>
     <!-- Content description of the image holding the action preview -->
     <string name="actioncard_list_row_contentdescription">Anteprima dell\'azione, clicca per modificare</string>
     <string name="actioncard_empty_field_contentdescription">Campo vuoto</string>
