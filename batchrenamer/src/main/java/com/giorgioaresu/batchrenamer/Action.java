@@ -164,6 +164,13 @@ public abstract class Action implements Parcelable {
     }
 
     /**
+     * Actions should perform validity checkings in this method (ie. check regex syntax)
+     *
+     * @return
+     */
+    public boolean isValid() { return true; }
+
+    /**
      * Update underlying data from a view of the appropriate type
      *
      * @param view the view from which to get data

@@ -56,6 +56,18 @@ public class Replace extends Action {
         return res;
     }
 
+    @Override
+    public boolean isValid() {
+        if (regex) {
+            try {
+                Pattern.compile(pattern);
+            } catch (PatternSyntaxException ex) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * {@inheritDoc}
      */

@@ -208,6 +208,18 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         return res;
     }
 
+    /**
+     * Checks if all actions return a valid status
+     * @return true if all actions are valid, false if at least one is not valid
+     */
+    public boolean areAllActionsValid() {
+        ArrayList<Action> actions = getActions();
+        for (Action action : actions) {
+            if (!action.isValid()) return false;
+        }
+        return true;
+    }
+
     @Override
     public void notifyActionDataSetChanged() {
         ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
