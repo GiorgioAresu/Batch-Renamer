@@ -108,8 +108,8 @@ incrementVersionCode.mustRunAfter build
 
 assembleDebug.dependsOn debug
 //debug.dependsOn incrementVersionCode
-debug.dependsOn incrementVersionName
+//debug.dependsOn incrementVersionName
 
 assembleRelease.dependsOn release
-release.dependsOn incrementVersionCode
-release.dependsOn incrementVersionName
+//release.dependsOn incrementVersionCode
+//release.dependsOn incrementVersionName
