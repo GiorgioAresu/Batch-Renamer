@@ -27,7 +27,7 @@ public class Renumber extends Rule {
     int start = 1;
     int step = 1;
     PadMode padMode = PadMode.AUTO;
-    int padding = 0;
+    int padding = 1;
     int position = 0;
     boolean backward = false;
     ApplyTo applyTo = ApplyTo.BOTH;
@@ -65,7 +65,11 @@ public class Renumber extends Rule {
                 paddedNumber = String.format("%0" + lenght + "d", number);
                 break;
             case MANUAL:
-                paddedNumber = String.format("%0" + padding + "d", number);
+                if (padding > 0) {
+                    paddedNumber = String.format("%0" + padding + "d", number);
+                } else {
+                    paddedNumber = String.valueOf(number);
+                }
                 break;
             default:
                 paddedNumber = String.valueOf(number);
