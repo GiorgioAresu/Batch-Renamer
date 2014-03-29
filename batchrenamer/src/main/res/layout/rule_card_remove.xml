@@ -15,10 +15,7 @@
 
         <EditText
             android:id="@+id/rule_remove_characters"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:inputType="number"
-            android:selectAllOnFocus="true" />
+            style="@style/Rule_EditTextNumeric" />
 
         <include layout="@layout/rule_section_position" />
 

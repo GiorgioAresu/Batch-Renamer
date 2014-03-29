@@ -9,4 +9,5 @@
     <dimen name="space_between_fragments">16dp</dimen>
     <dimen name="cardlist_divider_height">16dp</dimen>
     <dimen name="rule_removedrawable_offset">7dp</dimen>
+    <dimen name="rule_item_height">48dp</dimen>
 </resources>

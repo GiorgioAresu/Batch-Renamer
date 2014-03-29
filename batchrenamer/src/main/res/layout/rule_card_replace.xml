@@ -11,31 +11,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/rule_replace_pattern"
+                style="@style/Rule_EditTextMultiline"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:hint="@string/rule_replace_pattern"
-                android:inputType="textMultiLine" />
+                android:hint="@string/rule_replace_pattern" />
 
             <CheckBox
+                android:id="@+id/rule_replace_regex"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/rule_regex"
-                android:id="@+id/rule_replace_regex" />
+                android:layout_height="@dimen/rule_item_height"
+                android:text="@string/rule_regex" />
 
         </LinearLayout>
 
         <EditText
             android:id="@+id/rule_replace_replacement"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="@string/rule_replace_replacement"
-            android:inputType="textMultiLine" />
+            style="@style/Rule_EditTextMultiline"
+            android:hint="@string/rule_replace_replacement" />
 
         <include layout="@layout/rule_section_applyto" />
 

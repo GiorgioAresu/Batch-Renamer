@@ -60,4 +60,19 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="Rule_EditTextAbstract">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/rule_item_height</item>
+    </style>
+
+    <style name="Rule_EditTextMultiline" parent="Rule_EditTextAbstract">
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+    <style name="Rule_EditTextNumeric" parent="Rule_EditTextAbstract">
+        <item name="android:inputType">number</item>
+        <item name="android:selectAllOnFocus">true</item>
+    </style>
+
 </resources>

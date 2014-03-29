@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    android:layout_height="wrap_content" >
 
     <LinearLayout
         android:orientation="vertical"
@@ -10,52 +9,44 @@
         android:layout_height="wrap_content">
 
             <TextView
-                android:text="@string/rule_renumber_start"
-                style="@style/Rule_ItemLabel" />
+                style="@style/Rule_ItemLabel"
+                android:text="@string/rule_renumber_start" />
 
             <EditText
                 android:id="@+id/rule_renumber_start"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:inputType="number"
-                android:selectAllOnFocus="true" />
+                style="@style/Rule_EditTextNumeric" />
 
             <TextView
-                android:text="@string/rule_renumber_step"
-                style="@style/Rule_ItemLabel" />
+                style="@style/Rule_ItemLabel"
+                android:text="@string/rule_renumber_step" />
 
             <EditText
                 android:id="@+id/rule_renumber_step"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:inputType="number"
-                android:selectAllOnFocus="true" />
+                style="@style/Rule_EditTextNumeric" />
 
         <TextView
-            android:text="@string/rule_renumber_padding"
-            style="@style/Rule_ItemLabel" />
+            style="@style/Rule_ItemLabel"
+            android:text="@string/rule_renumber_padding" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:animateLayoutChanges="true" >
 
             <Spinner
+                android:id="@+id/rule_renumber_padding_spinner"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:id="@+id/rule_renumber_padding_spinner"
+                android:layout_height="@dimen/rule_item_height"
                 android:spinnerMode="dropdown"
                 android:entries="@array/rule_renumber_padding_array" />
 
             <EditText
                 android:id="@+id/rule_renumber_padding_amount"
+                style="@style/Rule_EditTextNumeric"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:inputType="number"
-                android:maxLength="2"
-                android:selectAllOnFocus="true" />
+                android:maxLength="2" />
 
         </LinearLayout>
 

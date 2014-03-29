@@ -2,14 +2,14 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-        android:text="@string/rule_apply"
-        style="@style/Rule_ItemLabel" />
+        style="@style/Rule_ItemLabel"
+        android:text="@string/rule_apply" />
 
     <Spinner
+        android:id="@+id/rule_apply_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:id="@+id/rule_apply_spinner"
+        android:minHeight="@dimen/rule_item_height"
         android:spinnerMode="dropdown"
         android:entries="@array/rule_apply_array" />
 </merge>
