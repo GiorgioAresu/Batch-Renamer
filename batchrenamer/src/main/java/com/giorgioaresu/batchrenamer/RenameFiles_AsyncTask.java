@@ -37,18 +37,8 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
         // Allow asking the user to give superuser permission even if
         // the previous time it declined the request
         SuHelper.resetSuStatus();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         publishProgress(0, size);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         for (int i = 0; i < size; i++) {
             File f = arrayLists[0].get(i);
             File.RENAME result = f.rename();
@@ -75,11 +65,6 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
                     break;
             }
             publishProgress(i + 1, size, result.getID());
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         return null;
     }
