@@ -10,19 +10,19 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/ActionCard_ItemLabel"
-            android:text="@string/actioncard_remove_characters" />
+            style="@style/Rule_ItemLabel"
+            android:text="@string/rule_remove_characters" />
 
         <EditText
-            android:id="@+id/action_remove_characters"
+            android:id="@+id/rule_remove_characters"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:inputType="number"
             android:selectAllOnFocus="true" />
 
-        <include layout="@layout/action_section_position" />
+        <include layout="@layout/rule_section_position" />
 
-        <include layout="@layout/action_section_applyto" />
+        <include layout="@layout/rule_section_applyto" />
 
     </LinearLayout>
 

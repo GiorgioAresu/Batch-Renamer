@@ -64,7 +64,7 @@ public abstract class File_ListFragment extends ListFragment {
             //Retrieve files from arguments
             mFiles = getArguments().getParcelableArrayList(ARG_FILES);
         } else if (savedInstanceState != null) {
-            // Retrieve actions from saved state (ie. after rotation)
+            // Retrieve rules from saved state (ie. after rotation)
             mFiles = savedInstanceState.getParcelableArrayList(ARG_FILES);
         } else {
             // Eventually populate files for the first time

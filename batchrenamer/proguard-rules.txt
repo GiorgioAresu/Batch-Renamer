@@ -46,10 +46,10 @@
 # platform version.  We know about them, and they are safe.
 -dontwarn android.support.**
 
-# Do not obfuscate class names that extend Action 
--keep public class * extends com.giorgioaresu.batchrenamer.Action
+# Do not obfuscate class names that extend Rule
+-keep public class * extends com.giorgioaresu.batchrenamer.Rule
 
-# Keep the constructor name (<init> means constructor) un-obfuscated that has a single argument of Activity and extends Action
--keepclassmembers class * extends com.giorgioaresu.batchrenamer.Action{
+# Keep the constructor name (<init> means constructor) un-obfuscated that has a single argument of Activity and extends Rule
+-keepclassmembers class * extends com.giorgioaresu.batchrenamer.Rule{
  public <init>(android.content.Context);
 }

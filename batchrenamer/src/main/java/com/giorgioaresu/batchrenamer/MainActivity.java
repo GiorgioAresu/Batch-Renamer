@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
 
     public static java.io.File scriptFile;
 
-    private Action_ListFragment actionList_fragment;
+    private Rule_ListFragment ruleList_fragment;
     private FilePreview_ListFragment filePreviewList_fragment;
     private UpdateFileNames_AsyncTask updateFileNames_asyncTask;
 
@@ -97,8 +97,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
 
         FragmentManager mFragmentManager = getFragmentManager();
         filePreviewList_fragment = (FilePreview_ListFragment) mFragmentManager.findFragmentById(R.id.file_fragment);
-        actionList_fragment = (Action_ListFragment) mFragmentManager.findFragmentById(R.id.action_fragment);
-        actionList_fragment.getListAdapter().registerDataSetObserver(new DataSetObserver() {
+        ruleList_fragment = (Rule_ListFragment) mFragmentManager.findFragmentById(R.id.rule_fragment);
+        ruleList_fragment.getListAdapter().registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
                 startFileNamesUpdate();
@@ -159,8 +159,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             case R.id.action_start:
                 if (filePreviewList_fragment.getListAdapter().getCount() == 0) {
                     Toast.makeText(this, getString(R.string.empty_filelist), Toast.LENGTH_LONG).show();
-                } else if (actionList_fragment.getListAdapter().getCount() == 0) {
-                    Toast.makeText(this, getString(R.string.empty_actionlist), Toast.LENGTH_LONG).show();
+                } else if (ruleList_fragment.getListAdapter().getCount() == 0) {
+                    Toast.makeText(this, getString(R.string.empty_rulelist), Toast.LENGTH_LONG).show();
                 } else {
                     // Show alert to confirm rename
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -209,8 +209,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         updateFileNames_asyncTask = new UpdateFileNames_AsyncTask(this, new UpdateFileNames_AsyncTask.updateFileNames_Callbacks() {
 
             @Override
-            public Action_ListFragment getActionListFragment() {
-                return actionList_fragment;
+            public Rule_ListFragment getRuleListFragment() {
+                return ruleList_fragment;
             }
 
             @Override

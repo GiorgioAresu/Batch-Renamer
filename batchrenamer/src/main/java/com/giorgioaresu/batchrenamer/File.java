@@ -56,7 +56,7 @@ public class File implements Parcelable {
     public File(Uri uri) {
         fileUri = uri;
         oldName = fileUri.getLastPathSegment();
-        // TODO: Double-check if it's safe or it's better to do something more complex (maybe there are actions already loaded that doesn't fire an update?)
+        // TODO: Double-check if it's safe or it's better to do something more complex (maybe there are rules already loaded that doesn't fire an update?)
         newName = oldName;
         status = RENAME.SUCCESSFUL;
     }

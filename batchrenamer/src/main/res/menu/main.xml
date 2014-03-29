@@ -7,7 +7,7 @@
         android:title="@string/action_start"
         android:showAsAction="ifRoom|withText"
         android:orderInCategory="3"
-        android:icon="@drawable/ic_action_start_light" />
+        android:icon="@drawable/ic_rule_start_light" />
 
     <item
         android:id="@+id/action_about"

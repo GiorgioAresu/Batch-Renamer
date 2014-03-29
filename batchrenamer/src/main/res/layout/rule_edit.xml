@@ -11,18 +11,18 @@
     android:paddingLeft="@dimen/card_padding_horizontal">
 
 <TextView
-        android:id="@+id/action_title"
-        style="@style/ActionCard_Title"
-        android:text="Action_Title"
+        android:id="@+id/rule_title"
+        style="@style/Rule_Title"
+        android:text="Rule_Title"
         tools:ignore="HardcodedText" />
 
     <ImageView
         tools:ignore="ContentDescription"
-        style="@style/ActionCard_HeaderSeparator" />
+        style="@style/Rule_HeaderSeparator" />
 
     <!-- Content -->
     <ViewStub
-        android:id="@+id/action_edit_contentViewStub"
-        style="@style/ActionCard_ContentView" />
+        android:id="@+id/rule_edit_contentViewStub"
+        style="@style/Rule_ContentView" />
 
 </LinearLayout>

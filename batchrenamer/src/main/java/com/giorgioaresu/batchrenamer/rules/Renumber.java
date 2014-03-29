@@ -1,4 +1,4 @@
-package com.giorgioaresu.batchrenamer.actions;
+package com.giorgioaresu.batchrenamer.rules;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -8,14 +8,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.giorgioaresu.batchrenamer.Action;
+import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Renumber extends Action {
+public class Renumber extends Rule {
     static final String KEY_START = "Start";
     static final String KEY_STEP = "Step";
     static final String KEY_PADMODE = "PadMode";
@@ -34,7 +34,7 @@ public class Renumber extends Action {
 
 
     public Renumber(Context context) {
-        super(context, context.getString(R.string.actioncard_renumber_title), R.layout.action_card_renumber);
+        super(context, context.getString(R.string.rule_renumber_title), R.layout.rule_card_renumber);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -80,25 +80,25 @@ public class Renumber extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mStart = (EditText) view.findViewById(R.id.action_renumber_start);
+            EditText mStart = (EditText) view.findViewById(R.id.rule_renumber_start);
             start = Integer.parseInt(mStart.getText().toString());
 
-            EditText mStep = (EditText) view.findViewById(R.id.action_renumber_step);
+            EditText mStep = (EditText) view.findViewById(R.id.rule_renumber_step);
             step = Integer.parseInt(mStep.getText().toString());
 
-            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_renumber_padding_spinner);
+            Spinner mPadMode = (Spinner) view.findViewById(R.id.rule_renumber_padding_spinner);
             padMode = PadMode.getValue(mPadMode.getSelectedItemPosition());
 
-            EditText mPadding = (EditText) view.findViewById(R.id.action_renumber_padding_amount);
+            EditText mPadding = (EditText) view.findViewById(R.id.rule_renumber_padding_amount);
             padding = Integer.parseInt(mPadding.getText().toString());
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
+            EditText mPosition = (EditText) view.findViewById(R.id.rule_position);
             position = Integer.parseInt(mPosition.getText().toString());
 
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.rule_position_backward);
             backward = mBackward.isChecked();
 
-            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
         } catch (Exception e) {
             Debug.logError(getClass(), "NPE updating from view");
@@ -114,13 +114,13 @@ public class Renumber extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mStart = (EditText) view.findViewById(R.id.action_renumber_start);
+            EditText mStart = (EditText) view.findViewById(R.id.rule_renumber_start);
             mStart.setText(String.valueOf(start));
 
-            EditText mStep = (EditText) view.findViewById(R.id.action_renumber_step);
+            EditText mStep = (EditText) view.findViewById(R.id.rule_renumber_step);
             mStep.setText(String.valueOf(step));
 
-            final EditText mPadding = (EditText) view.findViewById(R.id.action_renumber_padding_amount);
+            final EditText mPadding = (EditText) view.findViewById(R.id.rule_renumber_padding_amount);
             mPadding.setText(String.valueOf(padding));
             if (PadMode.MANUAL.equals(padMode)) {
                 mPadding.setVisibility(View.VISIBLE);
@@ -128,7 +128,7 @@ public class Renumber extends Action {
                 mPadding.setVisibility(View.GONE);
             }
 
-            Spinner mPadMode = (Spinner) view.findViewById(R.id.action_renumber_padding_spinner);
+            Spinner mPadMode = (Spinner) view.findViewById(R.id.rule_renumber_padding_spinner);
             mPadMode.setSelection(padMode.getID());
             mPadMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -147,13 +147,13 @@ public class Renumber extends Action {
                 }
             });
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
+            EditText mPosition = (EditText) view.findViewById(R.id.rule_position);
             mPosition.setText(String.valueOf(position));
 
-            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.action_position_backward);
+            CheckBox mFromEnd = (CheckBox) view.findViewById(R.id.rule_position_backward);
             mFromEnd.setChecked(backward);
 
-            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
         } catch (Exception e) {
             Debug.logError(getClass(), "NPE updating view");
@@ -169,12 +169,12 @@ public class Renumber extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.actioncard_renumber_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
-                + context.getString(R.string.actioncard_renumber_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
-                + context.getString(R.string.actioncard_renumber_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
-                + context.getString(R.string.actioncard_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.actioncard_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.rule_renumber_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
+                + context.getString(R.string.rule_renumber_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
+                + context.getString(R.string.rule_renumber_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
+                + context.getString(R.string.rule_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.rule_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 
@@ -266,7 +266,7 @@ public class Renumber extends Action {
         }
 
         public static String getLabel(Context context, PadMode padMode) {
-            String[] paddingString = context.getResources().getStringArray(R.array.actioncard_renumber_padding_array);
+            String[] paddingString = context.getResources().getStringArray(R.array.rule_renumber_padding_array);
             int index = Math.min(padMode.getID(), paddingString.length - 1);
             return paddingString[index];
         }

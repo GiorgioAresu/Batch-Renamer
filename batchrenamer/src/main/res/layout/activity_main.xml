@@ -31,12 +31,12 @@
                 android:layout_height="match_parent" />
 
             <fragment
-                android:id="@+id/action_fragment"
-                android:name="com.giorgioaresu.batchrenamer.Action_ListFragment"
+                android:id="@+id/rule_fragment"
+                android:name="com.giorgioaresu.batchrenamer.Rule_ListFragment"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                tools:layout="@layout/action_list_fragment_content" />
+                tools:layout="@layout/rule_list_fragment_content" />
 
         </LinearLayout>
 

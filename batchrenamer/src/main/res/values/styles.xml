@@ -26,8 +26,8 @@
         <item name="android:singleLine">true</item>
     </style>
 
-    <!-- Action tabs -->
-    <style name="ActionCard_Title">
+    <!-- Rule tabs -->
+    <style name="Rule_Title">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">32dp</item>
@@ -38,7 +38,7 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="ActionCard_HeaderSeparator">
+    <style name="Rule_HeaderSeparator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_marginTop">@dimen/card_padding_vertical</item>
@@ -46,12 +46,12 @@
         <item name="android:src">#ccc</item>
     </style>
 
-    <style name="ActionCard_ContentView">
+    <style name="Rule_ContentView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="ActionCard_ItemLabel">
+    <style name="Rule_ItemLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">32dp</item>
         <item name="android:gravity">bottom</item>

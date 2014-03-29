@@ -16,34 +16,34 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/action_title"
-            style="@style/ActionCard_Title"
+            android:id="@+id/rule_title"
+            style="@style/Rule_Title"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="Action_Title"
+            android:text="Rule_Title"
             tools:ignore="HardcodedText" />
 
         <ImageView
-            android:id="@+id/actionlistrow_button_remove"
+            android:id="@+id/rulelistrow_button_remove"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/actioncard_remove"
-            android:src="@drawable/ic_action_remove_light"
+            android:contentDescription="@string/rule_remove"
+            android:src="@drawable/ic_rule_remove_light"
             android:scaleType="fitCenter" />
 
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/action_headerSeparator"
+        android:id="@+id/rule_headerSeparator"
         tools:ignore="ContentDescription"
-        style="@style/ActionCard_HeaderSeparator" />
+        style="@style/Rule_HeaderSeparator" />
 
     <!-- Content -->
     <ImageView
-        android:id="@+id/action_imgContent"
-        style="@style/ActionCard_ContentView"
+        android:id="@+id/rule_imgContent"
+        style="@style/Rule_ContentView"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/actioncard_list_row_contentdescription" />
+        android:contentDescription="@string/rule_list_row_contentdescription" />
 
 </LinearLayout>

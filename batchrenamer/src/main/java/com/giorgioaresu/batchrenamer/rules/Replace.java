@@ -1,4 +1,4 @@
-package com.giorgioaresu.batchrenamer.actions;
+package com.giorgioaresu.batchrenamer.rules;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -10,7 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.giorgioaresu.batchrenamer.Action;
+import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
 
@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
-public class Replace extends Action {
+public class Replace extends Rule {
     static final String KEY_PATTERN = "Pattern";
     static final String KEY_REGEX = "Regex";
     static final String KEY_REPLACEMENT = "Replacement";
@@ -33,7 +33,7 @@ public class Replace extends Action {
 
 
     public Replace(Context context) {
-        super(context, context.getString(R.string.actioncard_replace_title), R.layout.action_card_replace);
+        super(context, context.getString(R.string.rule_replace_title), R.layout.rule_card_replace);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -74,16 +74,16 @@ public class Replace extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mPattern = (EditText) view.findViewById(R.id.action_replace_pattern);
+            EditText mPattern = (EditText) view.findViewById(R.id.rule_replace_pattern);
             pattern = mPattern.getText().toString();
 
-            CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
+            CheckBox mRegex = (CheckBox) view.findViewById(R.id.rule_replace_regex);
             regex = mRegex.isChecked();
 
-            EditText mReplacement = (EditText) view.findViewById(R.id.action_replace_replacement);
+            EditText mReplacement = (EditText) view.findViewById(R.id.rule_replace_replacement);
             replacement = mReplacement.getText().toString();
 
-            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
         } catch (Exception e) {
             Debug.logError(getClass(), "NPE updating from view");
@@ -99,17 +99,17 @@ public class Replace extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mPattern = (EditText) view.findViewById(R.id.action_replace_pattern);
+            EditText mPattern = (EditText) view.findViewById(R.id.rule_replace_pattern);
             mPattern.setText(pattern);
             checkRegex(mPattern, regex);
 
-            CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
+            CheckBox mRegex = (CheckBox) view.findViewById(R.id.rule_replace_regex);
             mRegex.setChecked(regex);
 
-            EditText mReplacement = (EditText) view.findViewById(R.id.action_replace_replacement);
+            EditText mReplacement = (EditText) view.findViewById(R.id.rule_replace_replacement);
             mReplacement.setText(replacement);
 
-            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
         } catch (Exception e) {
             Debug.logError(getClass(), "NPE updating view");
@@ -125,10 +125,10 @@ public class Replace extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.actioncard_replace_pattern) + ": " + checkForEmpty(pattern) + ". "
-                + context.getString(R.string.actioncard_regex) + ": " + getValueToString(regex) + ". "
-                + context.getString(R.string.actioncard_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
-                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.rule_replace_pattern) + ": " + checkForEmpty(pattern) + ". "
+                + context.getString(R.string.rule_regex) + ": " + getValueToString(regex) + ". "
+                + context.getString(R.string.rule_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
+                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 
@@ -169,8 +169,8 @@ public class Replace extends Action {
 
     @Override
     public void onInflate(View view) {
-        final CheckBox mRegex = (CheckBox) view.findViewById(R.id.action_replace_regex);
-        final EditText mPattern = (EditText) view.findViewById(R.id.action_replace_pattern);
+        final CheckBox mRegex = (CheckBox) view.findViewById(R.id.rule_replace_regex);
+        final EditText mPattern = (EditText) view.findViewById(R.id.rule_replace_pattern);
 
         mRegex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -204,7 +204,7 @@ public class Replace extends Action {
                 Pattern.compile(mPattern.getText().toString());
                 mPattern.setError(null);
             } catch (PatternSyntaxException ex) {
-                mPattern.setError(context.getString(R.string.actioncard_regex_invalid));
+                mPattern.setError(context.getString(R.string.rule_regex_invalid));
             }
         }
     }

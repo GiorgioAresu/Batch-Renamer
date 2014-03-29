@@ -11,15 +11,15 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/action_add_text"
+            android:id="@+id/rule_add_text"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:inputType="textMultiLine"
-            android:hint="@string/actioncard_add_text" />
+            android:hint="@string/rule_add_text" />
 
-        <include layout="@layout/action_section_position" />
+        <include layout="@layout/rule_section_position" />
 
-        <include layout="@layout/action_section_applyto" />
+        <include layout="@layout/rule_section_applyto" />
 
     </LinearLayout>
 

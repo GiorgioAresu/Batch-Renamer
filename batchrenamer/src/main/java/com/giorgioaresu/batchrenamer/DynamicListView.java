@@ -74,9 +74,9 @@ public class DynamicListView extends ListView {
     private boolean mIsMobileScrolling = false;
     private int mSmoothScrollAmountAtEdge = 0;
 
-    private Action mAboveItem;
-    private Action mMobileItem;
-    private Action mBelowItem;
+    private Rule mAboveItem;
+    private Rule mMobileItem;
+    private Rule mBelowItem;
 
     private BitmapDrawable mHoverCell;
     private Rect mHoverCellCurrentBounds;
@@ -123,7 +123,7 @@ public class DynamicListView extends ListView {
                     int itemNum = position - getFirstVisiblePosition();
 
                     View selectedView = getChildAt(itemNum);
-                    mMobileItem = (Action) getAdapter().getItem(position);
+                    mMobileItem = (Rule) getAdapter().getItem(position);
                     mHoverCell = getAndAddHoverView(selectedView);
                     selectedView.setVisibility(INVISIBLE);
 
@@ -188,9 +188,9 @@ public class DynamicListView extends ListView {
      * item is either at the top or bottom of the list, mAboveItem or mBelowItem
      * may be invalid.
      */
-    private void updateNeighborViews(Action item) {
+    private void updateNeighborViews(Rule item) {
         int position = getPosition(item);
-        ActionAdapter adapter = (ActionAdapter) getAdapter();
+        RuleAdapter adapter = (RuleAdapter) getAdapter();
 
         // Get items if they are in bounds
         try {
@@ -208,14 +208,14 @@ public class DynamicListView extends ListView {
     /**
      * Retrieves the view in the list corresponding to item
      */
-    public View getView(Action item) {
+    public View getView(Rule item) {
         int firstVisiblePosition = getFirstVisiblePosition();
-        ActionAdapter adapter = (ActionAdapter) getAdapter();
+        RuleAdapter adapter = (RuleAdapter) getAdapter();
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
             int position = firstVisiblePosition + i;
-            Action action = adapter.getItem(position);
-            if (action == item) {
+            Rule rule = adapter.getItem(position);
+            if (rule == item) {
                 return v;
             }
         }
@@ -225,7 +225,7 @@ public class DynamicListView extends ListView {
     /**
      * Retrieves the position in the list corresponding to item
      */
-    public int getPosition(Action item) {
+    public int getPosition(Rule item) {
         View v = getView(item);
         if (v == null) {
             return -1;
@@ -327,7 +327,7 @@ public class DynamicListView extends ListView {
 
         if (isBelow || isAbove) {
 
-            final Action switchItem = isBelow ? mBelowItem : mAboveItem;
+            final Rule switchItem = isBelow ? mBelowItem : mAboveItem;
             View switchView = isBelow ? belowView : aboveView;
             final int originalItem = getPositionForView(mobileView);
 
@@ -336,7 +336,7 @@ public class DynamicListView extends ListView {
                 return;
             }
 
-            ((ActionAdapter) getAdapter()).swapElements(originalItem, getPositionForView(switchView));
+            ((RuleAdapter) getAdapter()).swapElements(originalItem, getPositionForView(switchView));
 
             mDownY = mLastEventY;
 

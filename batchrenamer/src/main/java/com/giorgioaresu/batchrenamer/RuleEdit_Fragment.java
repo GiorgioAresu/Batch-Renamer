@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.TextView;
 
-public class ActionEdit_Fragment extends DialogFragment implements DialogInterface.OnClickListener {
+public class RuleEdit_Fragment extends DialogFragment implements DialogInterface.OnClickListener {
     // Used to store/retrieve elements to/from bundles
-    static final String keyAction = "ACTION";
+    static final String KEY_RULE = "RULE";
 
-    private actionEditFragment_Callbacks mListener;
+    private ruleEditFragment_Callbacks mListener;
 
     private View dialogView;
 
@@ -30,12 +30,12 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         }
     }
 
-    static ActionEdit_Fragment newInstance(Action action) {
-        ActionEdit_Fragment f = new ActionEdit_Fragment();
+    static RuleEdit_Fragment newInstance(Rule rule) {
+        RuleEdit_Fragment f = new RuleEdit_Fragment();
 
-        // Supply action input as an argument.
+        // Supply rule input as an argument.
         Bundle args = new Bundle();
-        args.putParcelable(keyAction, action);
+        args.putParcelable(KEY_RULE, rule);
         f.setArguments(args);
 
         return f;
@@ -50,39 +50,39 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Retrieve associated action (the one the user selected)
-        Action mAction = getArguments().getParcelable(keyAction);
+        // Retrieve associated rule (the one the user selected)
+        Rule mRule = getArguments().getParcelable(KEY_RULE);
 
-        if (mAction == null) {
-            Debug.log("mAction is null");
+        if (mRule == null) {
+            Debug.log("mRule is null");
         }
 
         // Inflate layout
         // Pass null as the parent view because its going in the dialog layout
-        dialogView = inflater.inflate(R.layout.action_edit, null);
+        dialogView = inflater.inflate(R.layout.rule_edit, null);
 
         // Set title
-        ((TextView) dialogView.findViewById(R.id.action_title)).setText(mAction.getTitle());
+        ((TextView) dialogView.findViewById(R.id.rule_title)).setText(mRule.getTitle());
 
         // Expand ViewStub with corresponding layout
-        ViewStub viewStub = (ViewStub) dialogView.findViewById(R.id.action_edit_contentViewStub);
-        viewStub.setLayoutResource(mAction.getViewId());
+        ViewStub viewStub = (ViewStub) dialogView.findViewById(R.id.rule_edit_contentViewStub);
+        viewStub.setLayoutResource(mRule.getViewId());
         View cardLayout = viewStub.inflate();
-        // Let the action do its stuff
-        mAction.onInflate(cardLayout);
+        // Let the rule do its stuff
+        mRule.onInflate(cardLayout);
         // Fill card with data
-        mAction.updateViewFromData(cardLayout);
+        mRule.updateViewFromData(cardLayout);
 
         // Set dialog layout
         builder.setView(dialogView)
-                // Add action buttons
+                // Add rule buttons
                 .setPositiveButton(android.R.string.ok, this)
                 .setNegativeButton(android.R.string.cancel, this);
 
         return builder.create();
     }
 
-    public void setListener(actionEditFragment_Callbacks listener) {
+    public void setListener(ruleEditFragment_Callbacks listener) {
         mListener = listener;
     }
 
@@ -95,10 +95,10 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
             // the callback interface. If not, it throws an exception
             try {
                 FragmentManager fragmentManager = activity.getFragmentManager();
-                mListener = (actionEditFragment_Callbacks) fragmentManager.findFragmentById(R.id.action_fragment);
+                mListener = (ruleEditFragment_Callbacks) fragmentManager.findFragmentById(R.id.rule_fragment);
             } catch (ClassCastException e) {
                 throw new ClassCastException(activity.toString()
-                        + " must implement OnActionSelectedListener");
+                        + " must implement OnRuleSelectedListener");
             }
         }
     }
@@ -113,13 +113,13 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
     public void onClick(DialogInterface dialogInterface, int i) {
         switch (i) {
             case DialogInterface.BUTTON_POSITIVE:
-                Action mAction = getArguments().getParcelable(keyAction);
-                mAction.updateDataFromView(dialogView);
-                mListener.notifyActionDataSetChanged();
+                Rule mRule = getArguments().getParcelable(KEY_RULE);
+                mRule.updateDataFromView(dialogView);
+                mListener.notifyRuleDataSetChanged();
                 break;
 
             case DialogInterface.BUTTON_NEGATIVE:
-                ActionEdit_Fragment.this.getDialog().cancel();
+                RuleEdit_Fragment.this.getDialog().cancel();
                 break;
         }
         isShowing = false;
@@ -131,11 +131,11 @@ public class ActionEdit_Fragment extends DialogFragment implements DialogInterfa
         super.onDismiss(dialog);
     }
 
-    public interface actionEditFragment_Callbacks {
+    public interface ruleEditFragment_Callbacks {
         /**
-         * Notify that actions DataSet has changed, ie. after closing the
-         * dialog used to modify actions
+         * Notify that rules DataSet has changed, ie. after closing the
+         * dialog used to modify rules
          */
-        public void notifyActionDataSetChanged();
+        public void notifyRuleDataSetChanged();
     }
 }

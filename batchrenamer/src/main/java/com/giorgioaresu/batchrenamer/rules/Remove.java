@@ -1,4 +1,4 @@
-package com.giorgioaresu.batchrenamer.actions;
+package com.giorgioaresu.batchrenamer.rules;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -7,27 +7,27 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.giorgioaresu.batchrenamer.Action;
+import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Add extends Action {
-    static final String KEY_TEXT = "Text";
+public class Remove extends Rule {
+    static final String KEY_CHARACTERS = "Characters";
     static final String KEY_POSITION = "Position";
     static final String KEY_BACKWARD = "Backward";
     static final String KEY_APPLYTO = "ApplyTo";
 
-    String text = "";
+    int characters = 0;
     int position = 0;
     boolean backward = false;
     ApplyTo applyTo = ApplyTo.BOTH;
 
 
-    public Add(Context context) {
-        super(context, context.getString(R.string.actioncard_add_title), R.layout.action_card_add);
+    public Remove(Context context) {
+        super(context, context.getString(R.string.rule_remove_title), R.layout.rule_card_remove);
     }
 
     public String getNewName(String currentName, int positionInSet, int setSize) {
@@ -37,16 +37,22 @@ public class Add extends Action {
     @Override
     protected String getPatchedString(String string, int positionInSet, int setSize) {
         // Compute right index
-        int pos;
+        int position;
+        int posStart;
+        int posEnd;
         if (backward) {
             // Right index or 0 if out of bounds
-            pos = Math.max(string.length() - position, 0);
+            position = Math.max(string.length() - this.position, 0);
+            posStart = Math.max(position - characters, 0);
+            posEnd = position;
         } else {
             // Right index or last one if out of bounds
-            pos = Math.min(string.length(), position);
+            position = Math.min(string.length(), this.position);
+            posStart = position;
+            posEnd = Math.min(string.length(), position + characters);
         }
 
-        return string.substring(0, pos).concat(text).concat(string.substring(pos));
+        return string.substring(0, posStart).concat(string.substring(posEnd));
     }
 
     /**
@@ -55,16 +61,16 @@ public class Add extends Action {
     @Override
     public boolean updateDataFromView(View view) {
         try {
-            EditText mText = (EditText) view.findViewById(R.id.action_add_text);
-            text = mText.getText().toString();
+            EditText mCharacters = (EditText) view.findViewById(R.id.rule_remove_characters);
+            characters = Integer.valueOf(mCharacters.getText().toString());
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
+            EditText mPosition = (EditText) view.findViewById(R.id.rule_position);
             position = Integer.valueOf(mPosition.getText().toString());
 
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.rule_position_backward);
             backward = mBackward.isChecked();
 
-            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             applyTo = ApplyTo.getValue(mApplyTo.getSelectedItemPosition());
         } catch (Exception e) {
             Debug.logError(getClass(), "NPE updating from view");
@@ -80,16 +86,16 @@ public class Add extends Action {
     @Override
     public boolean updateViewFromData(View view) {
         try {
-            EditText mText = (EditText) view.findViewById(R.id.action_add_text);
-            mText.setText(text);
+            EditText mRemoveCharacters = (EditText) view.findViewById(R.id.rule_remove_characters);
+            mRemoveCharacters.setText(String.valueOf(characters));
 
-            EditText mPosition = (EditText) view.findViewById(R.id.action_position);
+            EditText mPosition = (EditText) view.findViewById(R.id.rule_position);
             mPosition.setText(String.valueOf(position));
 
-            CheckBox mBackward = (CheckBox) view.findViewById(R.id.action_position_backward);
+            CheckBox mBackward = (CheckBox) view.findViewById(R.id.rule_position_backward);
             mBackward.setChecked(backward);
 
-            Spinner mApplyTo = (Spinner) view.findViewById(R.id.action_apply_spinner);
+            Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
         } catch (Exception e) {
             Debug.logError(getClass(), "NPE updating view");
@@ -105,10 +111,10 @@ public class Add extends Action {
     @Override
     protected String getContentDescription() {
         String str;
-        str = context.getString(R.string.actioncard_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.actioncard_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.actioncard_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.actioncard_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+        str = context.getString(R.string.rule_remove_characters) + ": " + checkForEmpty(String.valueOf(characters)) + ". "
+                + context.getString(R.string.rule_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.rule_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 
@@ -118,7 +124,7 @@ public class Add extends Action {
     @Override
     protected JSONObject serializeToJSON() throws JSONException {
         JSONObject jObject = new JSONObject();
-        jObject.put(KEY_TEXT, text);
+        jObject.put(KEY_CHARACTERS, characters);
         jObject.put(KEY_POSITION, position);
         jObject.put(KEY_BACKWARD, backward);
         jObject.put(KEY_APPLYTO, applyTo);
@@ -130,7 +136,7 @@ public class Add extends Action {
      */
     @Override
     protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
-        text = jObject.getString(KEY_TEXT);
+        characters = jObject.getInt(KEY_CHARACTERS);
         position = jObject.getInt(KEY_POSITION);
         backward = jObject.getBoolean(KEY_BACKWARD);
         applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
@@ -141,7 +147,7 @@ public class Add extends Action {
      */
     @Override
     protected void createFromParcel(Parcel in) {
-        text = in.readString();
+        characters = in.readInt();
         position = in.readInt();
         backward = toBoolean(in.readByte());
         applyTo = ApplyTo.getValue(in.readInt());
@@ -152,7 +158,7 @@ public class Add extends Action {
      */
     @Override
     public void dumpToParcel(Parcel parcel, int i) {
-        parcel.writeString(text);
+        parcel.writeInt(characters);
         parcel.writeInt(position);
         parcel.writeByte(toByte(backward));
         parcel.writeInt(applyTo.getID());

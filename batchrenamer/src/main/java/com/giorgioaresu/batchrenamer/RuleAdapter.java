@@ -11,12 +11,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class ActionAdapter extends ArrayAdapter<Action> {
+public class RuleAdapter extends ArrayAdapter<Rule> {
     // Handle to layout resource
     int layoutResource;
-    actionAdapter_Callbacks mCallbacks;
+    ruleAdapter_Callbacks mCallbacks;
 
-    public ActionAdapter(Context context, int resource, List<Action> objects, actionAdapter_Callbacks callbacks) {
+    public RuleAdapter(Context context, int resource, List<Rule> objects, ruleAdapter_Callbacks callbacks) {
         super(context, resource, objects);
         layoutResource = resource;
         mCallbacks = callbacks;
@@ -38,7 +38,7 @@ public class ActionAdapter extends ArrayAdapter<Action> {
             viewHolder = new ViewHolder(v);
 
             // If user clicks on trash icon we remove that list item
-            v.findViewById(R.id.actionlistrow_button_remove).setOnClickListener(new View.OnClickListener() {
+            v.findViewById(R.id.rulelistrow_button_remove).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mCallbacks.animateItemDeletion(v);
@@ -53,12 +53,12 @@ public class ActionAdapter extends ArrayAdapter<Action> {
             setViewEnabled(v, true);
         }
 
-        Action action = getItem(position);
-        viewHolder.title.setText((position + 1) + ". " + action.getTitle());
+        Rule rule = getItem(position);
+        viewHolder.title.setText((position + 1) + ". " + rule.getTitle());
         // Compute wanted width for view
         int width = parent.getWidth() - parent.getPaddingLeft() - parent.getPaddingRight();
-        viewHolder.imageView.setImageBitmap(action.getBitmapOfView(width));
-        viewHolder.imageView.setContentDescription(action.getContentDescription());
+        viewHolder.imageView.setImageBitmap(rule.getBitmapOfView(width));
+        viewHolder.imageView.setContentDescription(rule.getContentDescription());
         viewHolder.imageView.invalidate();
 
         return v;
@@ -93,18 +93,18 @@ public class ActionAdapter extends ArrayAdapter<Action> {
         private int verticalPadding;
 
         public ViewHolder(View base) {
-            title = (TextView) base.findViewById(R.id.action_title);
-            imageView = (ImageView) base.findViewById(R.id.action_imgContent);
+            title = (TextView) base.findViewById(R.id.rule_title);
+            imageView = (ImageView) base.findViewById(R.id.rule_imgContent);
 
             // Convert the dps to pixels, based on density scale
-            int iconOffsetPx = (int) getContext().getResources().getDimension(R.dimen.action_removedrawable_offset);
+            int iconOffsetPx = (int) getContext().getResources().getDimension(R.dimen.rule_removedrawable_offset);
 
             // Fix aligment
             base.setPadding(base.getPaddingLeft(), base.getPaddingTop(), base.getPaddingRight() - iconOffsetPx, base.getPaddingBottom());
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) imageView.getLayoutParams();
             lp.rightMargin = iconOffsetPx;
             imageView.setLayoutParams(lp);
-            ImageView separator = (ImageView) base.findViewById(R.id.action_headerSeparator);
+            ImageView separator = (ImageView) base.findViewById(R.id.rule_headerSeparator);
             lp = (LinearLayout.LayoutParams) separator.getLayoutParams();
             lp.rightMargin = iconOffsetPx;
             separator.setLayoutParams(lp);
@@ -131,21 +131,21 @@ public class ActionAdapter extends ArrayAdapter<Action> {
             indexLow = indexTwo;
             indexHigh = indexOne;
         }
-        // Pick both actions to avoid interferences
-        Action actionLow = getItem(indexLow);
-        Action actionHigh = getItem(indexHigh);
+        // Pick both rules to avoid interferences
+        Rule ruleLow = getItem(indexLow);
+        Rule ruleHigh = getItem(indexHigh);
 
-        remove(actionHigh);
-        insert(actionLow, indexHigh);
+        remove(ruleHigh);
+        insert(ruleLow, indexHigh);
 
-        remove(actionLow);
-        insert(actionHigh, indexLow);
+        remove(ruleLow);
+        insert(ruleHigh, indexLow);
 
         setNotifyOnChange(true);
         notifyDataSetChanged();
     }
 
-    public interface actionAdapter_Callbacks {
+    public interface ruleAdapter_Callbacks {
         public void animateItemDeletion(View view);
     }
 }

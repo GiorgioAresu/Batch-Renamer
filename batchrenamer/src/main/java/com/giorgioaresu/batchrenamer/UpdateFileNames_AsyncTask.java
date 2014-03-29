@@ -23,26 +23,26 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
 
     @Override
     protected Void doInBackground(ArrayList<File>... arrayLists) {
-        Action_ListFragment actionList_fragment = mListener.getActionListFragment();
+        Rule_ListFragment ruleList_fragment = mListener.getRuleListFragment();
         File_ListFragment fileList_fragment = mListener.getFileListFragment();
         int counter = 0;
         int oldPerc = 0;
         int newPerc = 0;
 
         if (arrayLists.length > 0) {
-            // Warn user if some action is not valid
-            if (!actionList_fragment.areAllActionsValid()) {
+            // Warn user if some rule is not valid
+            if (!ruleList_fragment.areAllRulesValid()) {
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(mActivity, R.string.some_action_invalid, Toast.LENGTH_LONG).show();
+                        Toast.makeText(mActivity, R.string.some_rule_invalid, Toast.LENGTH_LONG).show();
                     }
                 });
             }
 
             for (int i=0; i<arrayLists[0].size(); i++) {
                 File file = arrayLists[0].get(i);
-                file.newName = actionList_fragment.getNewName(file.oldName, i, fileList_fragment.getListAdapter().getCount());
+                file.newName = ruleList_fragment.getNewName(file.oldName, i, fileList_fragment.getListAdapter().getCount());
 
                 // Check progress
                 newPerc = (int) (++counter * 100f / arrayLists[0].size());
@@ -70,7 +70,7 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
     }
 
     public interface updateFileNames_Callbacks {
-        public Action_ListFragment getActionListFragment();
+        public Rule_ListFragment getRuleListFragment();
         public File_ListFragment getFileListFragment();
 
         public void updateProgressInUI(Integer progress);

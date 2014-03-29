@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.giorgioaresu.batchrenamer.actions.Add;
+import com.giorgioaresu.batchrenamer.rules.Add;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -36,12 +36,12 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the Callbacks
  * interface.
  */
-public class Action_ListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener, ActionAdapter.actionAdapter_Callbacks, ActionEdit_Fragment.actionEditFragment_Callbacks {
-    private static final String ARG_ACTIONS = "actions";
-    private static final String ARG_ACTION = "action";
+public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener, RuleAdapter.ruleAdapter_Callbacks, RuleEdit_Fragment.ruleEditFragment_Callbacks {
+    private static final String ARG_RULES = "rules";
+    private static final String ARG_RULE = "rule";
     private static final String ARG_INDEX = "index";
 
-    private static final int ID_NEW_ACTION_ADD = 1;
+    private static final int ID_NEW_RULE_ADD = 1;
     private static final long MOVE_DURATION = 250;
     private static final long FADE_DURATION = 250;
     private final SparseIntArray mItemIdTopMap = new SparseIntArray();
@@ -50,25 +50,25 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public Action_ListFragment() {
+    public Rule_ListFragment() {
     }
 
-    public static Action_ListFragment newInstance(ArrayList<Action> actions) {
-        Action_ListFragment fragment = new Action_ListFragment();
+    public static Rule_ListFragment newInstance(ArrayList<Rule> rules) {
+        Rule_ListFragment fragment = new Rule_ListFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_ACTIONS, actions);
+        args.putParcelableArrayList(ARG_RULES, rules);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ArrayList<Action> getActions() {
+    public ArrayList<Rule> getRules() {
         ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
-        ArrayList<Action> actions = new ArrayList<>();
+        ArrayList<Rule> rules = new ArrayList<>();
 
         for (int i = 0; i < adapter.getCount(); ++i) {
-            actions.add((Action) adapter.getItem(i));
+            rules.add((Rule) adapter.getItem(i));
         }
-        return actions;
+        return rules;
     }
 
     @Override
@@ -76,39 +76,39 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ArrayList<Action> mActions;
+        ArrayList<Rule> mRules;
 
         if (getArguments() != null) {
-            // Retrieve actions from arguments
-            mActions = getArguments().getParcelableArrayList(ARG_ACTIONS);
+            // Retrieve rules from arguments
+            mRules = getArguments().getParcelableArrayList(ARG_RULES);
         } else if (savedInstanceState != null) {
-            // Retrieve actions from saved state (ie. after rotation)
-            mActions = savedInstanceState.getParcelableArrayList(ARG_ACTIONS);
+            // Retrieve rules from saved state (ie. after rotation)
+            mRules = savedInstanceState.getParcelableArrayList(ARG_RULES);
         } else {
-            // Eventually populate actions for the first time
-            mActions = new ArrayList<>();
+            // Eventually populate rules for the first time
+            mRules = new ArrayList<>();
             for (int i = 0; i < 0; i++) {
-                mActions.add(new Add(getActivity()));
+                mRules.add(new Add(getActivity()));
             }
         }
-        setListAdapter(new ActionAdapter(getActivity(), R.layout.action_list_row, mActions, this));
+        setListAdapter(new RuleAdapter(getActivity(), R.layout.rule_list_row, mRules, this));
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(ARG_ACTIONS, getActions());
+        outState.putParcelableArrayList(ARG_RULES, getRules());
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate layout
-        LinearLayout fragmentLayout = (LinearLayout) inflater.inflate(R.layout.action_list_fragment_content, container, false);
+        LinearLayout fragmentLayout = (LinearLayout) inflater.inflate(R.layout.rule_list_fragment_content, container, false);
 
         /*// Set title
         View header = fragmentLayout.findViewById(R.id.file_list_header);
         if (header != null)
-            ((TextView) header.findViewById(R.id.section_title_label)).setText(R.string.section_title_actionlist);*/
+            ((TextView) header.findViewById(R.id.section_title_label)).setText(R.string.section_title_rulelist);*/
 
         return fragmentLayout;
     }
@@ -117,19 +117,19 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        ActionEdit_Fragment actionEdit_fragment = ActionEdit_Fragment.newInstance((Action) getListAdapter().getItem(position));
-        actionEdit_fragment.setListener(this);
-        actionEdit_fragment.show(getFragmentManager(), "editAction");
+        RuleEdit_Fragment ruleEdit_fragment = RuleEdit_Fragment.newInstance((Rule) getListAdapter().getItem(position));
+        ruleEdit_fragment.setListener(this);
+        ruleEdit_fragment.show(getFragmentManager(), "editRule");
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.actionlist_fragment, menu);
-        SubMenu subMenu = menu.findItem(R.id.action_newAction).getSubMenu();
+        inflater.inflate(R.menu.rulelist_fragment, menu);
+        SubMenu subMenu = menu.findItem(R.id.action_newRule).getSubMenu();
 
-        Map<String, String> actions = Action.getActions(getActivity());
+        Map<String, String> rules = Rule.getRules(getActivity());
 
-        for (String key : actions.keySet()) {
+        for (String key : rules.keySet()) {
             subMenu.add(key)
                     .setOnMenuItemClickListener(this);
         }
@@ -138,26 +138,26 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_clearActions:
+            case R.id.action_clearRules:
                 if (getListAdapter().getCount() != 0) {
-                    ActionAdapter adapter = (ActionAdapter) getListAdapter();
+                    RuleAdapter adapter = (RuleAdapter) getListAdapter();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList(ARG_ACTIONS, getActions());
+                    bundle.putParcelableArrayList(ARG_RULES, getRules());
 
                     new UndoBarController(getActivity().findViewById(R.id.undobar), new UndoBarController.UndoListener() {
                         @Override
                         public void onUndo(Parcelable token) {
                             Bundle b = (Bundle) token;
-                            ArrayList<Action> actions = b.getParcelableArrayList(ARG_ACTIONS);
-                            ActionAdapter adapter = (ActionAdapter) getListAdapter();
+                            ArrayList<Rule> rules = b.getParcelableArrayList(ARG_RULES);
+                            RuleAdapter adapter = (RuleAdapter) getListAdapter();
                             adapter.clear();
-                            adapter.addAll(actions);
+                            adapter.addAll(rules);
                         }
-                    }).showUndoBar(false, getString(R.string.action_clearActions_message), bundle);
+                    }).showUndoBar(false, getString(R.string.action_clearRules_message), bundle);
 
-                    ((ActionAdapter) getListAdapter()).clear();
+                    ((RuleAdapter) getListAdapter()).clear();
                 } else {
-                    Toast.makeText(getActivity(), R.string.action_clearActions_emptymessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.action_clearRules_emptymessage, Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default:
@@ -170,23 +170,23 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
         Activity activity = getActivity();
         // Inflate appropriate class based on item title and add it to the list
         try {
-            String actionsPackageName = getClass().getPackage().getName() + ".actions.";
-            String className = actionsPackageName + Action.getActions(activity).get(item.getTitle());
+            String rulesPackageName = getClass().getPackage().getName() + ".rules.";
+            String className = rulesPackageName + Rule.getRules(activity).get(item.getTitle());
             Class<?> c = Class.forName(className);
             Constructor<?> cons = c.getConstructors()[0];
-            Action action = (Action) cons.newInstance(activity);
-            ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
-            actionAdapter.add(action);
+            Rule rule = (Rule) cons.newInstance(activity);
+            RuleAdapter ruleAdapter = (RuleAdapter) getListAdapter();
+            ruleAdapter.add(rule);
             return true;
         } catch (Exception b) {
-            Toast.makeText(activity, getString(R.string.action_newAction_error), Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, getString(R.string.action_newRule_error), Toast.LENGTH_SHORT).show();
             Log.e("batchrenamer", "Exception handling item click, skipping");
             return false;
         }
     }
 
     /**
-     * Given a file name process it applying all actions consecutively to get
+     * Given a file name process it applying all rules consecutively to get
      * the resulting new name
      *
      * @param fileName filename to be processed
@@ -197,33 +197,33 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
     public String getNewName(String fileName, int position, int fileCount) {
         String res = fileName;
         try {
-            ActionAdapter adapter = (ActionAdapter) getListAdapter();
+            RuleAdapter adapter = (RuleAdapter) getListAdapter();
             for (int i = 0; i < adapter.getCount(); i++) {
                 res = adapter.getItem(i).getNewName(res, position, fileCount);
             }
         } catch (ConcurrentModificationException ex) {
-            // Actions are deleted while computing new name
+            // Rules are deleted while computing new name
             ex.printStackTrace();
         }
         return res;
     }
 
     /**
-     * Checks if all actions return a valid status
-     * @return true if all actions are valid, false if at least one is not valid
+     * Checks if all rules return a valid status
+     * @return true if all rules are valid, false if at least one is not valid
      */
-    public boolean areAllActionsValid() {
-        ArrayList<Action> actions = getActions();
-        for (Action action : actions) {
-            if (!action.isValid()) return false;
+    public boolean areAllRulesValid() {
+        ArrayList<Rule> rules = getRules();
+        for (Rule rule : rules) {
+            if (!rule.isValid()) return false;
         }
         return true;
     }
 
     @Override
-    public void notifyActionDataSetChanged() {
-        ActionAdapter actionAdapter = (ActionAdapter) getListAdapter();
-        actionAdapter.notifyDataSetChanged();
+    public void notifyRuleDataSetChanged() {
+        RuleAdapter ruleAdapter = (RuleAdapter) getListAdapter();
+        ruleAdapter.notifyDataSetChanged();
 
     }
 
@@ -315,7 +315,7 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
      * layout, and then to run animations between all of those start/end positions.
      */
     private void animateRemoval(final ListView listview, View viewToRemove) {
-        final ActionAdapter mAdapter = (ActionAdapter) getListAdapter();
+        final RuleAdapter mAdapter = (RuleAdapter) getListAdapter();
 
         // Get position of element in the ListArray
         int position = listview.getPositionForView(viewToRemove);
@@ -333,25 +333,25 @@ public class Action_ListFragment extends ListFragment implements MenuItem.OnMenu
             }
         }
 
-        Action removedAction = mAdapter.getItem(position);
+        Rule removedRule = mAdapter.getItem(position);
 
         // Prepare and show undobar
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_INDEX, position);
-        bundle.putParcelable(ARG_ACTION, removedAction);
+        bundle.putParcelable(ARG_RULE, removedRule);
         new UndoBarController(getActivity().findViewById(R.id.undobar), new UndoBarController.UndoListener() {
             @Override
             public void onUndo(Parcelable token) {
                 Bundle b = (Bundle) token;
                 int index = b.getInt(ARG_INDEX);
-                Action action = b.getParcelable(ARG_ACTION);
-                ActionAdapter adapter = (ActionAdapter) getListAdapter();
-                adapter.insert(action, index);
+                Rule rule = b.getParcelable(ARG_RULE);
+                RuleAdapter adapter = (RuleAdapter) getListAdapter();
+                adapter.insert(rule, index);
             }
-        }).showUndoBar(false, getString(R.string.actioncard_remove_message), bundle);
+        }).showUndoBar(false, getString(R.string.rule_remove_message), bundle);
 
         // Delete the item from the adapter
-        mAdapter.remove(removedAction);
+        mAdapter.remove(removedRule);
 
         final ViewTreeObserver observer = listview.getViewTreeObserver();
         observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

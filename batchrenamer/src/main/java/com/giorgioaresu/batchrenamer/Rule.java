@@ -16,24 +16,24 @@ import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.TreeMap;
 
-public abstract class Action implements Parcelable {
-    public static final Parcelable.Creator<Action> CREATOR
-            = new Parcelable.Creator<Action>() {
-        public Action createFromParcel(Parcel in) {
+public abstract class Rule implements Parcelable {
+    public static final Parcelable.Creator<Rule> CREATOR
+            = new Parcelable.Creator<Rule>() {
+        public Rule createFromParcel(Parcel in) {
             try {
                 Class<?> c = Class.forName(in.readString());
                 Constructor<?> cons = c.getConstructors()[0];
-                Action action = (Action) cons.newInstance(Application.getContext());
-                action.createFromParcel(in);
-                return action;
+                Rule rule = (Rule) cons.newInstance(Application.getContext());
+                rule.createFromParcel(in);
+                return rule;
             } catch (Exception b) {
                 Log.e("batchrenamer", "Exception creating item, skipping");
                 return null;
             }
         }
 
-        public Action[] newArray(int size) {
-            return new Action[size];
+        public Rule[] newArray(int size) {
+            return new Rule[size];
         }
     };
     static final String KEY_CONTENT = "Content";
@@ -43,35 +43,35 @@ public abstract class Action implements Parcelable {
     private String title;
     private int viewId;
 
-    public Action(Context context, String title, int viewId) {
+    public Rule(Context context, String title, int viewId) {
         this.context = context;
         this.title = title;
         this.viewId = viewId;
     }
 
-    public static final Map<String, String> getActions(Context context) {
-        Map<String, String> actions = new TreeMap<>();
-        actions.put(context.getString(R.string.actioncard_add_title), "Add");
-        actions.put(context.getString(R.string.actioncard_remove_title), "Remove");
-        actions.put(context.getString(R.string.actioncard_renumber_title), "Renumber");
-        actions.put(context.getString(R.string.actioncard_replace_title), "Replace");
-        return actions;
+    public static final Map<String, String> getRules(Context context) {
+        Map<String, String> rules = new TreeMap<>();
+        rules.put(context.getString(R.string.rule_add_title), "Add");
+        rules.put(context.getString(R.string.rule_remove_title), "Remove");
+        rules.put(context.getString(R.string.rule_renumber_title), "Renumber");
+        rules.put(context.getString(R.string.rule_replace_title), "Replace");
+        return rules;
     }
 
     /**
-     * Creates an action from content described in a JSONObject
+     * Creates an rule from content described in a JSONObject
      *
-     * @param context Context used to instantiate the action
-     * @param jObject JSONObject containing action description
+     * @param context Context used to instantiate the rule
+     * @param jObject JSONObject containing rule description
      * @return
      */
-    public static final Action createFromJSON(Context context, JSONObject jObject) {
+    public static final Rule createFromJSON(Context context, JSONObject jObject) {
         try {
             Class<?> c = Class.forName(jObject.getString(KEY_TYPE));
             Constructor<?> cons = c.getConstructors()[0];
-            Action action = (Action) cons.newInstance(context);
-            action.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
-            return action;
+            Rule rule = (Rule) cons.newInstance(context);
+            rule.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
+            return rule;
         } catch (Exception e) {
             Log.e("batchrenamer", "Exception creating item from JSON, skipping");
             return null;
@@ -151,7 +151,7 @@ public abstract class Action implements Parcelable {
     /**
      * OVERRIDE THIS METHOD IF YOU USE getNewName(String, int, ApplyTo)
      *
-     * Apply action to a string
+     * Apply rule to a string
      * @param string string to be computed
      * @param positionInSet position of the string in the original set (useful for renumbers)
      * @param setSize number of items in the set
@@ -164,7 +164,7 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Actions should perform validity checkings in this method (ie. check regex syntax)
+     * Rules should perform validity checkings in this method (ie. check regex syntax)
      *
      * @return
      */
@@ -187,7 +187,7 @@ public abstract class Action implements Parcelable {
     public abstract boolean updateViewFromData(View view);
 
     /**
-     * Get the preview of a view, populated with current data from action.
+     * Get the preview of a view, populated with current data from rule.
      * Due to some problems with match_parent in layout not been applied when inflating
      * without a parent view, the width must be supplied to this method
      * (ie. when the preview has to be showed in a ImageView, pass iv.getMeasuredWidth()
@@ -215,7 +215,7 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Describes the action content in a string (ie. for accessibility purposes)
+     * Describes the rule content in a string (ie. for accessibility purposes)
      *
      * @return the string created
      */
@@ -228,7 +228,7 @@ public abstract class Action implements Parcelable {
      * @return R.string.empty_field_label if string is empty, the string itself otherwise
      */
     protected String checkForEmpty(String string) {
-        return string.isEmpty() ? context.getString(R.string.actioncard_empty_field_contentdescription) : string;
+        return string.isEmpty() ? context.getString(R.string.rule_empty_field_contentdescription) : string;
     }
 
     /**
@@ -262,7 +262,7 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Dump action to a JSONObject
+     * Dump rule to a JSONObject
      *
      * @return the JSONObject created
      */
@@ -279,7 +279,7 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Dump action fields to a JSONObject
+     * Dump rule fields to a JSONObject
      *
      * @return JSONObject created
      * @throws JSONException
@@ -287,17 +287,17 @@ public abstract class Action implements Parcelable {
     protected abstract JSONObject serializeToJSON() throws JSONException;
 
     /**
-     * Restore action status from content described in a JSONObject
+     * Restore rule status from content described in a JSONObject
      *
-     * @param jObject JSONObject containing action description
+     * @param jObject JSONObject containing rule description
      * @throws JSONException
      */
     protected abstract void deserializeFromJSON(JSONObject jObject) throws JSONException;
 
     /**
-     * Dump action to a Parcel
+     * Dump rule to a Parcel
      *
-     * @param parcel Parcel to dump action to
+     * @param parcel Parcel to dump rule to
      * @param i
      */
     public void writeToParcel(Parcel parcel, int i) {
@@ -306,17 +306,17 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Dump action fields to a Parcel
+     * Dump rule fields to a Parcel
      *
-     * @param parcel Parcel to dump action to
+     * @param parcel Parcel to dump rule to
      * @param i
      */
     public abstract void dumpToParcel(Parcel parcel, int i);
 
     /**
-     * Restore action status from content described in a Parcel
+     * Restore rule status from content described in a Parcel
      *
-     * @param in Parcel containing action description
+     * @param in Parcel containing rule description
      */
     protected abstract void createFromParcel(Parcel in);
 
@@ -325,8 +325,8 @@ public abstract class Action implements Parcelable {
     }
 
     /**
-     * Call when inflating layout to let the action prepare the UI (ie. attach listeners)
-     * @param view the inflated view for the action
+     * Call when inflating layout to let the rule prepare the UI (ie. attach listeners)
+     * @param view the inflated view for the rule
      */
     public void onInflate(View view) { }
 
@@ -352,7 +352,7 @@ public abstract class Action implements Parcelable {
         }
 
         public static String getLabel(Context context, ApplyTo applyTo) {
-            String[] applyString = context.getResources().getStringArray(R.array.actioncard_apply_array);
+            String[] applyString = context.getResources().getStringArray(R.array.rule_apply_array);
             int index = Math.min(applyTo.id, applyString.length - 1);
             return applyString[index];
         }

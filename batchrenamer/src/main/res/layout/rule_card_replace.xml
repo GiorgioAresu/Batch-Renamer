@@ -15,29 +15,29 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/action_replace_pattern"
+                android:id="@+id/rule_replace_pattern"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:hint="@string/actioncard_replace_pattern"
+                android:hint="@string/rule_replace_pattern"
                 android:inputType="textMultiLine" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/actioncard_regex"
-                android:id="@+id/action_replace_regex" />
+                android:text="@string/rule_regex"
+                android:id="@+id/rule_replace_regex" />
 
         </LinearLayout>
 
         <EditText
-            android:id="@+id/action_replace_replacement"
+            android:id="@+id/rule_replace_replacement"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="@string/actioncard_replace_replacement"
+            android:hint="@string/rule_replace_replacement"
             android:inputType="textMultiLine" />
 
-        <include layout="@layout/action_section_applyto" />
+        <include layout="@layout/rule_section_applyto" />
 
     </LinearLayout>
 
