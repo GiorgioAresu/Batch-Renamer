@@ -47,7 +47,11 @@ public class RenamingNotification {
         final String title = res.getString(R.string.renaming_notification_title);
         final String text;
         if (completed) {
-            text = res.getString(R.string.renaming_notification_text_completed);
+            if (failedNumber == 0) {
+                text = res.getString(R.string.renaming_notification_text_completed);
+            } else {
+                text = String.format(res.getString(R.string.renaming_notification_text_completed_failed), failedNumber);
+            }
         } else if (indeterminate) {
             text = res.getString(R.string.renaming_notification_text_indeterminate);
         } else {

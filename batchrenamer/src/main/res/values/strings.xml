@@ -15,6 +15,7 @@
     <!--                     -->
     <string name="renaming_notification_title">File rename</string>
     <string name="renaming_notification_text_completed">Operation completed</string>
+    <string name="renaming_notification_text_completed_failed">Operation completed (<xliff:g id="number" example="5">%1$d</xliff:g> failed)</string>
     <string name="renaming_notification_text_indeterminate">Initialization<xliff:g id="ellipsis">\u2026</xliff:g></string>
     <string name="renaming_notification_text_template">File <xliff:g id="number" example="5">%1$d</xliff:g> of <xliff:g id="number" example="8">%2$d</xliff:g>.</string>
     <string name="renaming_notification_ticker_started">File rename started</string>
