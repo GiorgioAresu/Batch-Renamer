@@ -1579,6 +1579,8 @@ com.giorgioaresu.batchrenamer.Rule -> com.giorgioaresu.batchrenamer.Rule:
     java.lang.String getValueToString(boolean) -> a
     byte toByte(boolean) -> b
     void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    void updateRegexFieldsErrors(android.widget.EditText,android.widget.EditText) -> a
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus checkRegex(java.lang.String,java.lang.String) -> a
     void dumpToParcel$176e5455(android.os.Parcel) -> a
     void createFromParcel(android.os.Parcel) -> b
     int describeContents() -> describeContents
@@ -1587,7 +1589,9 @@ com.giorgioaresu.batchrenamer.Rule$1 -> com.giorgioaresu.batchrenamer.ah:
     com.giorgioaresu.batchrenamer.Rule createFromParcel(android.os.Parcel) -> a
     java.lang.Object[] newArray(int) -> newArray
     java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
-com.giorgioaresu.batchrenamer.Rule$ApplyTo -> com.giorgioaresu.batchrenamer.ai:
+com.giorgioaresu.batchrenamer.Rule$2 -> com.giorgioaresu.batchrenamer.ai:
+    int[] $SwitchMap$com$giorgioaresu$batchrenamer$Rule$RegexStatus -> a
+com.giorgioaresu.batchrenamer.Rule$ApplyTo -> com.giorgioaresu.batchrenamer.aj:
     com.giorgioaresu.batchrenamer.Rule$ApplyTo NAME -> a
     com.giorgioaresu.batchrenamer.Rule$ApplyTo EXTENSION -> b
     com.giorgioaresu.batchrenamer.Rule$ApplyTo BOTH -> c
@@ -1598,22 +1602,31 @@ com.giorgioaresu.batchrenamer.Rule$ApplyTo -> com.giorgioaresu.batchrenamer.ai:
     com.giorgioaresu.batchrenamer.Rule$ApplyTo getValue(int) -> a
     java.lang.String getLabel(android.content.Context,com.giorgioaresu.batchrenamer.Rule$ApplyTo) -> a
     int getID() -> a
-com.giorgioaresu.batchrenamer.RuleAdapter -> com.giorgioaresu.batchrenamer.aj:
+com.giorgioaresu.batchrenamer.Rule$RegexStatus -> com.giorgioaresu.batchrenamer.ak:
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus OK -> a
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus PATTERN_SYNTAX_ERROR -> b
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus GROUP_OUT_OF_BOUNDS -> c
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus[] $VALUES -> d
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus[] values() -> values
+    com.giorgioaresu.batchrenamer.Rule$RegexStatus valueOf(java.lang.String) -> valueOf
+    java.lang.String errorStringPattern(android.content.Context,com.giorgioaresu.batchrenamer.Rule$RegexStatus) -> a
+    java.lang.String errorStringReplacement(android.content.Context,com.giorgioaresu.batchrenamer.Rule$RegexStatus) -> b
+com.giorgioaresu.batchrenamer.RuleAdapter -> com.giorgioaresu.batchrenamer.al:
     int layoutResource -> a
     com.giorgioaresu.batchrenamer.RuleAdapter$ruleAdapter_Callbacks mCallbacks -> b
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
     void setViewEnabled(android.view.View,boolean) -> a
     void swapElements(int,int) -> a
-com.giorgioaresu.batchrenamer.RuleAdapter$1 -> com.giorgioaresu.batchrenamer.ak:
+com.giorgioaresu.batchrenamer.RuleAdapter$1 -> com.giorgioaresu.batchrenamer.am:
     com.giorgioaresu.batchrenamer.RuleAdapter this$0 -> a
     void onClick(android.view.View) -> onClick
-com.giorgioaresu.batchrenamer.RuleAdapter$ViewHolder -> com.giorgioaresu.batchrenamer.al:
+com.giorgioaresu.batchrenamer.RuleAdapter$ViewHolder -> com.giorgioaresu.batchrenamer.an:
     android.widget.TextView title -> a
     android.widget.ImageView imageView -> b
     com.giorgioaresu.batchrenamer.RuleAdapter this$0 -> c
-com.giorgioaresu.batchrenamer.RuleAdapter$ruleAdapter_Callbacks -> com.giorgioaresu.batchrenamer.am:
+com.giorgioaresu.batchrenamer.RuleAdapter$ruleAdapter_Callbacks -> com.giorgioaresu.batchrenamer.ao:
     void animateItemDeletion(android.view.View) -> a
-com.giorgioaresu.batchrenamer.RuleEdit_Fragment -> com.giorgioaresu.batchrenamer.an:
+com.giorgioaresu.batchrenamer.RuleEdit_Fragment -> com.giorgioaresu.batchrenamer.ap:
     com.giorgioaresu.batchrenamer.RuleEdit_Fragment$ruleEditFragment_Callbacks mListener -> a
     android.view.View dialogView -> b
     boolean isShowing -> c
@@ -1625,7 +1638,7 @@ com.giorgioaresu.batchrenamer.RuleEdit_Fragment -> com.giorgioaresu.batchrenamer
     void onDetach() -> onDetach
     void onClick(android.content.DialogInterface,int) -> onClick
     void onDismiss(android.content.DialogInterface) -> onDismiss
-com.giorgioaresu.batchrenamer.RuleEdit_Fragment$ruleEditFragment_Callbacks -> com.giorgioaresu.batchrenamer.ao:
+com.giorgioaresu.batchrenamer.RuleEdit_Fragment$ruleEditFragment_Callbacks -> com.giorgioaresu.batchrenamer.aq:
     void notifyRuleDataSetChanged() -> a
 com.giorgioaresu.batchrenamer.Rule_ListFragment -> com.giorgioaresu.batchrenamer.Rule_ListFragment:
     android.util.SparseIntArray mItemIdTopMap -> a
@@ -1646,15 +1659,15 @@ com.giorgioaresu.batchrenamer.Rule_ListFragment -> com.giorgioaresu.batchrenamer
     void access$000(com.giorgioaresu.batchrenamer.Rule_ListFragment,android.widget.ListView,android.view.View) -> a
     android.util.SparseIntArray access$100(com.giorgioaresu.batchrenamer.Rule_ListFragment) -> a
     void access$200$37f13c21(com.giorgioaresu.batchrenamer.Rule_ListFragment,android.view.View) -> a
-com.giorgioaresu.batchrenamer.Rule_ListFragment$1 -> com.giorgioaresu.batchrenamer.ap:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$1 -> com.giorgioaresu.batchrenamer.ar:
     com.giorgioaresu.batchrenamer.Rule_ListFragment this$0 -> a
     void onUndo(android.os.Parcelable) -> a
-com.giorgioaresu.batchrenamer.Rule_ListFragment$2 -> com.giorgioaresu.batchrenamer.aq:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$2 -> com.giorgioaresu.batchrenamer.as:
     android.view.View val$view -> a
     android.widget.ListView val$lv -> b
     com.giorgioaresu.batchrenamer.Rule_ListFragment this$0 -> c
     void run() -> run
-com.giorgioaresu.batchrenamer.Rule_ListFragment$3 -> com.giorgioaresu.batchrenamer.ar:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$3 -> com.giorgioaresu.batchrenamer.at:
     android.view.View val$view -> a
     android.widget.ListView val$lv -> b
     com.giorgioaresu.batchrenamer.Rule_ListFragment this$0 -> c
@@ -1662,37 +1675,37 @@ com.giorgioaresu.batchrenamer.Rule_ListFragment$3 -> com.giorgioaresu.batchrenam
     void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
     void onAnimationCancel(android.animation.Animator) -> onAnimationCancel
     void onAnimationRepeat(android.animation.Animator) -> onAnimationRepeat
-com.giorgioaresu.batchrenamer.Rule_ListFragment$4 -> com.giorgioaresu.batchrenamer.as:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$4 -> com.giorgioaresu.batchrenamer.au:
     com.giorgioaresu.batchrenamer.Rule_ListFragment this$0 -> a
     void onUndo(android.os.Parcelable) -> a
-com.giorgioaresu.batchrenamer.Rule_ListFragment$5 -> com.giorgioaresu.batchrenamer.at:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$5 -> com.giorgioaresu.batchrenamer.av:
     android.view.ViewTreeObserver val$observer -> a
     android.widget.ListView val$listview -> b
     com.giorgioaresu.batchrenamer.Rule_ListFragment this$0 -> c
     boolean onPreDraw() -> onPreDraw
-com.giorgioaresu.batchrenamer.Rule_ListFragment$5$1 -> com.giorgioaresu.batchrenamer.au:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$5$1 -> com.giorgioaresu.batchrenamer.aw:
     com.giorgioaresu.batchrenamer.Rule_ListFragment$5 this$1 -> a
     void run() -> run
-com.giorgioaresu.batchrenamer.Rule_ListFragment$5$2 -> com.giorgioaresu.batchrenamer.av:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$5$2 -> com.giorgioaresu.batchrenamer.ax:
     com.giorgioaresu.batchrenamer.Rule_ListFragment$5 this$1 -> a
     void onAnimationStart(android.animation.Animator) -> onAnimationStart
     void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
     void onAnimationCancel(android.animation.Animator) -> onAnimationCancel
     void onAnimationRepeat(android.animation.Animator) -> onAnimationRepeat
-com.giorgioaresu.batchrenamer.Rule_ListFragment$5$3 -> com.giorgioaresu.batchrenamer.aw:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$5$3 -> com.giorgioaresu.batchrenamer.ay:
     com.giorgioaresu.batchrenamer.Rule_ListFragment$5 this$1 -> a
     void run() -> run
-com.giorgioaresu.batchrenamer.Rule_ListFragment$5$4 -> com.giorgioaresu.batchrenamer.ax:
+com.giorgioaresu.batchrenamer.Rule_ListFragment$5$4 -> com.giorgioaresu.batchrenamer.az:
     com.giorgioaresu.batchrenamer.Rule_ListFragment$5 this$1 -> a
     void onAnimationStart(android.animation.Animator) -> onAnimationStart
     void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
     void onAnimationCancel(android.animation.Animator) -> onAnimationCancel
     void onAnimationRepeat(android.animation.Animator) -> onAnimationRepeat
-com.giorgioaresu.batchrenamer.SuHelper -> com.giorgioaresu.batchrenamer.ay:
+com.giorgioaresu.batchrenamer.SuHelper -> com.giorgioaresu.batchrenamer.ba:
     int suStatus -> a
     boolean isSuAvailable() -> a
     void resetSuStatus() -> b
-com.giorgioaresu.batchrenamer.UndoBarController -> com.giorgioaresu.batchrenamer.az:
+com.giorgioaresu.batchrenamer.UndoBarController -> com.giorgioaresu.batchrenamer.bb:
     android.view.View mBarView -> a
     android.widget.TextView mMessageView -> e
     android.view.ViewPropertyAnimator mBarAnimator -> f
@@ -1703,28 +1716,28 @@ com.giorgioaresu.batchrenamer.UndoBarController -> com.giorgioaresu.batchrenamer
     java.lang.Runnable mHideRunnable -> h
     void showUndoBar$4302e8d0(java.lang.CharSequence,android.os.Parcelable) -> a
     void hideUndoBar(boolean) -> a
-com.giorgioaresu.batchrenamer.UndoBarController$1 -> com.giorgioaresu.batchrenamer.ba:
+com.giorgioaresu.batchrenamer.UndoBarController$1 -> com.giorgioaresu.batchrenamer.bc:
     com.giorgioaresu.batchrenamer.UndoBarController this$0 -> a
     void onClick(android.view.View) -> onClick
-com.giorgioaresu.batchrenamer.UndoBarController$2 -> com.giorgioaresu.batchrenamer.bb:
+com.giorgioaresu.batchrenamer.UndoBarController$2 -> com.giorgioaresu.batchrenamer.bd:
     com.giorgioaresu.batchrenamer.UndoBarController this$0 -> a
     void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
-com.giorgioaresu.batchrenamer.UndoBarController$3 -> com.giorgioaresu.batchrenamer.bc:
+com.giorgioaresu.batchrenamer.UndoBarController$3 -> com.giorgioaresu.batchrenamer.be:
     com.giorgioaresu.batchrenamer.UndoBarController this$0 -> a
     void run() -> run
-com.giorgioaresu.batchrenamer.UndoBarController$UndoListener -> com.giorgioaresu.batchrenamer.bd:
+com.giorgioaresu.batchrenamer.UndoBarController$UndoListener -> com.giorgioaresu.batchrenamer.bf:
     void onUndo(android.os.Parcelable) -> a
-com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask -> com.giorgioaresu.batchrenamer.be:
+com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask -> com.giorgioaresu.batchrenamer.bg:
     android.app.Activity mActivity -> a
     com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask$updateFileNames_Callbacks mListener -> b
     void onPreExecute() -> onPreExecute
     void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
     void onPostExecute(java.lang.Object) -> onPostExecute
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask$1 -> com.giorgioaresu.batchrenamer.bf:
+com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask$1 -> com.giorgioaresu.batchrenamer.bh:
     com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask this$0 -> a
     void run() -> run
-com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask$updateFileNames_Callbacks -> com.giorgioaresu.batchrenamer.bg:
+com.giorgioaresu.batchrenamer.UpdateFileNames_AsyncTask$updateFileNames_Callbacks -> com.giorgioaresu.batchrenamer.bi:
     com.giorgioaresu.batchrenamer.Rule_ListFragment getRuleListFragment() -> a
     com.giorgioaresu.batchrenamer.File_ListFragment getFileListFragment() -> b
     void updateProgressInUI(java.lang.Integer) -> a
@@ -1800,17 +1813,19 @@ com.giorgioaresu.batchrenamer.rules.Replace -> com.giorgioaresu.batchrenamer.rul
     java.lang.String getContentDescription() -> d
     void createFromParcel(android.os.Parcel) -> b
     void onInflate(android.view.View) -> c
-    void checkRegex(android.widget.EditText,boolean) -> a
     void dumpToParcel$176e5455(android.os.Parcel) -> a
-    void access$000(com.giorgioaresu.batchrenamer.rules.Replace,android.widget.EditText,boolean) -> a
+    void access$000(com.giorgioaresu.batchrenamer.rules.Replace,android.widget.EditText,android.widget.EditText) -> a
+    void access$100(com.giorgioaresu.batchrenamer.rules.Replace,android.widget.EditText,android.widget.EditText) -> b
 com.giorgioaresu.batchrenamer.rules.Replace$1 -> com.giorgioaresu.batchrenamer.rules.d:
     android.widget.EditText val$mPattern -> a
-    com.giorgioaresu.batchrenamer.rules.Replace this$0 -> b
+    android.widget.EditText val$mReplacement -> b
+    com.giorgioaresu.batchrenamer.rules.Replace this$0 -> c
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
 com.giorgioaresu.batchrenamer.rules.Replace$2 -> com.giorgioaresu.batchrenamer.rules.e:
-    android.widget.EditText val$mPattern -> a
-    android.widget.CheckBox val$mRegex -> b
-    com.giorgioaresu.batchrenamer.rules.Replace this$0 -> c
+    android.widget.CheckBox val$mRegex -> a
+    android.widget.EditText val$mPattern -> b
+    android.widget.EditText val$mReplacement -> c
+    com.giorgioaresu.batchrenamer.rules.Replace this$0 -> d
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged

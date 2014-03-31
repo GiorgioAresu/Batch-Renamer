@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +16,8 @@ import org.json.JSONObject;
 import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public abstract class Rule implements Parcelable {
     public static final Parcelable.Creator<Rule> CREATOR
@@ -306,6 +309,72 @@ public abstract class Rule implements Parcelable {
     }
 
     /**
+     * Sets or resets EditTexts errors appropriately based on regex status
+     *
+     * @param pattern EditText containing the regex pattern
+     * @param replacement EditText containing the regex replacement
+     */
+    protected void updateRegexFieldsErrors(EditText pattern, EditText replacement) {
+        RegexStatus status = checkRegex(pattern.getText().toString(), replacement.getText().toString());
+        pattern.setError(RegexStatus.errorStringPattern(context, status));
+        replacement.setError(RegexStatus.errorStringReplacement(context, status));
+    }
+
+    /**
+     * Check if the regex is valid:
+     * - the pattern compiles
+     * - groupings referred in replacement exist in the pattern
+     *
+     * @param pattern EditText containing the regex pattern
+     * @param replacement EditText containing the regex replacement
+     */
+    protected RegexStatus checkRegex(String pattern, String replacement) {
+        try {
+            Pattern p = Pattern.compile(pattern);
+            evaluateGrouping(p, replacement);
+        } catch (PatternSyntaxException ex) {
+            return RegexStatus.PATTERN_SYNTAX_ERROR;
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            return RegexStatus.GROUP_OUT_OF_BOUNDS;
+        }
+        return RegexStatus.OK;
+    }
+
+    /**
+     * Modified version of appendEvaluated method of {@link java.util.regex.Matcher}
+     * Checks that groups referred in the replacement string, occur in the pattern
+     * @param pattern pattern of the regex
+     * @param replacement replacement string
+     */
+    protected void evaluateGrouping(Pattern pattern, String replacement) {
+        boolean escape = false;
+        boolean dollar = false;
+        int groups = pattern.matcher("").groupCount();
+
+        for (int i = 0; i < replacement.length(); i++) {
+            char c = replacement.charAt(i);
+            if (c == '\\' && !escape) {
+                escape = true;
+            } else if (c == '$' && !escape) {
+                dollar = true;
+            } else if (c >= '0' && c <= '9' && dollar) {
+                if (groups < (c - '0')) {
+                    throw new ArrayIndexOutOfBoundsException();
+                }
+                dollar = false;
+            } else {
+                dollar = false;
+                escape = false;
+            }
+        }
+
+        // This seemingly stupid piece of code reproduces a JDK bug.
+        if (escape) {
+            throw new ArrayIndexOutOfBoundsException(replacement.length());
+        }
+    }
+
+    /**
      * Dump rule fields to a Parcel
      *
      * @param parcel Parcel to dump rule to
@@ -363,6 +432,44 @@ public abstract class Rule implements Parcelable {
 
         public boolean compare(int i) {
             return id == i;
+        }
+    }
+
+    protected enum RegexStatus {
+        OK,
+        PATTERN_SYNTAX_ERROR,
+        GROUP_OUT_OF_BOUNDS;
+
+        /**
+         * Provide standard error for pattern EditText
+         *
+         * @param c context for resources
+         * @param status status of the regex
+         * @return null if the regex is valid, the string for the error otherwise
+         */
+        public static String errorStringPattern(Context c, RegexStatus status) {
+            switch (status) {
+                case PATTERN_SYNTAX_ERROR:
+                    return c.getString(R.string.rule_regex_invalid_syntaxError);
+                default:
+                    return null;
+            }
+        }
+
+        /**
+         * Provide standard error for replacement EditText
+         *
+         * @param c context for resources
+         * @param status status of the regex
+         * @return null if the regex is valid, the string for the error otherwise
+         */
+        public static String errorStringReplacement(Context c, RegexStatus status) {
+            switch (status) {
+                case GROUP_OUT_OF_BOUNDS:
+                    return c.getString(R.string.rule_regex_invalid_outOfBounds);
+                default:
+                    return null;
+            }
         }
     }
 }

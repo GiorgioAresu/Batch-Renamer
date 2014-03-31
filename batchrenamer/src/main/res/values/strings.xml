@@ -75,7 +75,8 @@
     <string name="rule_list_row_contentdescription">Rule preview, click to edit</string>
     <string name="rule_empty_field_contentdescription">Empty Field</string>
     <string name="rule_regex">Regex</string>
-    <string name="rule_regex_invalid">Syntax error</string>
+    <string name="rule_regex_invalid_syntaxError">Syntax error</string>
+    <string name="rule_regex_invalid_outOfBounds">Index out of bounds</string>
     <string name="rule_position">Position</string>
     <string name="rule_position_backward">Backward</string>
     <string name="rule_apply">Apply to</string>
