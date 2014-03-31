@@ -46,7 +46,7 @@ public class Replace extends Rule {
         if (regex) {
             try {
                 res = string.replaceAll(pattern, replacement);
-            } catch (PatternSyntaxException e) {
+            } catch (PatternSyntaxException | ArrayIndexOutOfBoundsException e) {
                 // Syntax error, keep string untouched
                 res = string;
             }
@@ -59,11 +59,7 @@ public class Replace extends Rule {
     @Override
     public boolean isValid() {
         if (regex) {
-            try {
-                Pattern.compile(pattern);
-            } catch (PatternSyntaxException ex) {
-                return false;
-            }
+            return checkRegex(pattern, replacement) == RegexStatus.OK;
         }
         return true;
     }
@@ -101,13 +97,16 @@ public class Replace extends Rule {
         try {
             EditText mPattern = (EditText) view.findViewById(R.id.rule_replace_pattern);
             mPattern.setText(pattern);
-            checkRegex(mPattern, regex);
 
             CheckBox mRegex = (CheckBox) view.findViewById(R.id.rule_replace_regex);
             mRegex.setChecked(regex);
 
             EditText mReplacement = (EditText) view.findViewById(R.id.rule_replace_replacement);
             mReplacement.setText(replacement);
+
+            if (regex) {
+                updateRegexFieldsErrors(mPattern, mReplacement);
+            }
 
             Spinner mApplyTo = (Spinner) view.findViewById(R.id.rule_apply_spinner);
             mApplyTo.setSelection(applyTo.getID());
@@ -169,18 +168,23 @@ public class Replace extends Rule {
 
     @Override
     public void onInflate(View view) {
-        final CheckBox mRegex = (CheckBox) view.findViewById(R.id.rule_replace_regex);
         final EditText mPattern = (EditText) view.findViewById(R.id.rule_replace_pattern);
+        final CheckBox mRegex = (CheckBox) view.findViewById(R.id.rule_replace_regex);
+        final EditText mReplacement = (EditText) view.findViewById(R.id.rule_replace_replacement);
 
         mRegex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mPattern.setError(null);
-                checkRegex(mPattern, isChecked);
+                mReplacement.setError(null);
+                if (isChecked) {
+                    updateRegexFieldsErrors(mPattern, mReplacement);
+                }
             }
         });
 
-        mPattern.addTextChangedListener(new TextWatcher() {
+        // Common textwatcher
+        TextWatcher tw = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -193,20 +197,14 @@ public class Replace extends Rule {
 
             @Override
             public void afterTextChanged(Editable s) {
-                checkRegex(mPattern, mRegex.isChecked());
+                if (mRegex.isChecked()) {
+                    updateRegexFieldsErrors(mPattern, mReplacement);
+                }
             }
-        });
-    }
+        };
 
-    private void checkRegex(EditText mPattern, boolean regex) {
-        if (regex) {
-            try {
-                Pattern.compile(mPattern.getText().toString());
-                mPattern.setError(null);
-            } catch (PatternSyntaxException ex) {
-                mPattern.setError(context.getString(R.string.rule_regex_invalid));
-            }
-        }
+        mPattern.addTextChangedListener(tw);
+        mReplacement.addTextChangedListener(tw);
     }
 
     /**
