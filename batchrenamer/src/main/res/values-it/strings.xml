@@ -75,7 +75,8 @@
     <string name="rule_list_row_contentdescription">Anteprima della regola, clicca per modificare</string>
     <string name="rule_empty_field_contentdescription">Campo vuoto</string>
     <string name="rule_regex">Regex</string>
-    <string name="rule_regex_invalid">Errore di sintassi</string>
+    <string name="rule_regex_invalid_syntaxError">Errore di sintassi</string>
+    <string name="rule_regex_invalid_outOfBounds">Indice fuori dagli intervalli</string>
     <string name="rule_position">Posizione</string>
     <string name="rule_position_backward">Dalla fine</string>
     <string name="rule_apply">Applica a</string>
