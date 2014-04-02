@@ -52,6 +52,8 @@
     <string name="action_start_alert_message">Operation can\'t be undone.</string>
     <string name="action_start_alert_positive">Rename</string>
     <string name="action_start_alert_negative">Cancel</string>
+    <!-- Toast showed when starting rename, at least until the progress activity is completed -->
+    <string name="action_start_toast">Renaming<xliff:g id="ellipsis">\u2026</xliff:g> Check notification for details</string>
     <!-- Toast message showed when trying to start the rename with NO files -->
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->

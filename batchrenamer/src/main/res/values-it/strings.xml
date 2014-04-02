@@ -52,6 +52,8 @@
     <string name="action_start_alert_message">L\'operazione non può essere annullata.</string>
     <string name="action_start_alert_positive">Rinomina</string>
     <string name="action_start_alert_negative">Annulla</string>
+    <!-- Toast showed when starting rename, at least until the progress activity is completed -->
+    <string name="action_start_toast">Ridenominazione<xliff:g id="ellipsis">\u2026</xliff:g> Controlla la notifica per i dettagli</string>
     <!-- Toast message showed when trying to start the rename with NO files -->
     <string name="empty_filelist">Lista dei file vuota. Aggiungi qualche file prima</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->
