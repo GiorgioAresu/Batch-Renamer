@@ -130,41 +130,6 @@ public class Replace extends Rule {
         return str;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected JSONObject serializeToJSON() throws JSONException {
-        JSONObject jObject = new JSONObject();
-        jObject.put(KEY_PATTERN, pattern);
-        jObject.put(KEY_REGEX, regex);
-        jObject.put(KEY_REPLACEMENT, replacement);
-        jObject.put(KEY_APPLYTO, applyTo);
-        return jObject;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
-        pattern = jObject.getString(KEY_PATTERN);
-        regex = jObject.getBoolean(KEY_REGEX);
-        replacement = jObject.getString(KEY_REPLACEMENT);
-        applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void createFromParcel(Parcel in) {
-        pattern = in.readString();
-        regex = toBoolean(in.readByte());
-        replacement = in.readString();
-        applyTo = ApplyTo.getValue(in.readInt());
-    }
-
     @Override
     public void onInflate(View view) {
         final EditText mPattern = (EditText) view.findViewById(R.id.rule_replace_pattern);
@@ -204,6 +169,41 @@ public class Replace extends Rule {
 
         mPattern.addTextChangedListener(tw);
         mReplacement.addTextChangedListener(tw);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected JSONObject serializeToJSON() throws JSONException {
+        JSONObject jObject = new JSONObject();
+        jObject.put(KEY_PATTERN, pattern);
+        jObject.put(KEY_REGEX, regex);
+        jObject.put(KEY_REPLACEMENT, replacement);
+        jObject.put(KEY_APPLYTO, applyTo);
+        return jObject;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
+        pattern = jObject.getString(KEY_PATTERN);
+        regex = jObject.getBoolean(KEY_REGEX);
+        replacement = jObject.getString(KEY_REPLACEMENT);
+        applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void createFromParcel(Parcel in) {
+        pattern = in.readString();
+        regex = toBoolean(in.readByte());
+        replacement = in.readString();
+        applyTo = ApplyTo.getValue(in.readInt());
     }
 
     /**
