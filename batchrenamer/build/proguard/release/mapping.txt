@@ -1560,10 +1560,10 @@ com.giorgioaresu.batchrenamer.RenamingNotification -> com.giorgioaresu.batchrena
     void notifyIndeterminate(android.content.Context) -> a
     void cancel(android.content.Context) -> b
 com.giorgioaresu.batchrenamer.Rule -> com.giorgioaresu.batchrenamer.Rule:
-    android.os.Parcelable$Creator CREATOR -> CREATOR
     android.content.Context context -> a
     java.lang.String title -> b
     int viewId -> c
+    android.os.Parcelable$Creator CREATOR -> CREATOR
     java.util.Map getRules(android.content.Context) -> a
     java.lang.String getTitle() -> a
     int getViewId() -> b
@@ -1755,6 +1755,36 @@ com.giorgioaresu.batchrenamer.rules.Add -> com.giorgioaresu.batchrenamer.rules.A
     java.lang.String getContentDescription() -> d
     void createFromParcel(android.os.Parcel) -> b
     void dumpToParcel$176e5455(android.os.Parcel) -> a
+com.giorgioaresu.batchrenamer.rules.ChangeCase -> com.giorgioaresu.batchrenamer.rules.ChangeCase:
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode caseMode -> b
+    com.giorgioaresu.batchrenamer.Rule$ApplyTo applyTo -> c
+    java.lang.String getNewName(java.lang.String,int,int) -> a
+    java.lang.String getPatchedString(java.lang.String,int,int) -> b
+    boolean updateDataFromView(android.view.View) -> a
+    boolean updateViewFromData(android.view.View) -> b
+    java.lang.String getContentDescription() -> d
+    void createFromParcel(android.os.Parcel) -> b
+    void dumpToParcel$176e5455(android.os.Parcel) -> a
+com.giorgioaresu.batchrenamer.rules.ChangeCase$1 -> com.giorgioaresu.batchrenamer.rules.a:
+    int[] $SwitchMap$com$giorgioaresu$batchrenamer$rules$ChangeCase$CaseMode -> a
+com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseManipulation -> com.giorgioaresu.batchrenamer.rules.b:
+    java.lang.String toLowerCase(java.lang.String) -> a
+    java.lang.String toToggleCase(java.lang.String) -> b
+    java.lang.String toCamelCase(java.lang.String) -> c
+    java.lang.String toSentenceCase(java.lang.String) -> d
+com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode -> com.giorgioaresu.batchrenamer.rules.c:
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode UPPER -> a
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode LOWER -> b
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode CAMEL -> c
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode SENTENCE -> d
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode TOGGLE -> e
+    int id -> f
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode[] $VALUES -> g
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode[] values() -> values
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode valueOf(java.lang.String) -> valueOf
+    int getID() -> a
+    com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode getValue(int) -> a
+    java.lang.String getLabel(android.content.Context,com.giorgioaresu.batchrenamer.rules.ChangeCase$CaseMode) -> a
 com.giorgioaresu.batchrenamer.rules.Remove -> com.giorgioaresu.batchrenamer.rules.Remove:
     int characters -> b
     int position -> c
@@ -1782,14 +1812,14 @@ com.giorgioaresu.batchrenamer.rules.Renumber -> com.giorgioaresu.batchrenamer.ru
     java.lang.String getContentDescription() -> d
     void createFromParcel(android.os.Parcel) -> b
     void dumpToParcel$176e5455(android.os.Parcel) -> a
-com.giorgioaresu.batchrenamer.rules.Renumber$1 -> com.giorgioaresu.batchrenamer.rules.a:
+com.giorgioaresu.batchrenamer.rules.Renumber$1 -> com.giorgioaresu.batchrenamer.rules.d:
     android.widget.EditText val$mPadding -> a
     com.giorgioaresu.batchrenamer.rules.Renumber this$0 -> b
     void onItemSelected(android.widget.AdapterView,android.view.View,int,long) -> onItemSelected
     void onNothingSelected(android.widget.AdapterView) -> onNothingSelected
-com.giorgioaresu.batchrenamer.rules.Renumber$2 -> com.giorgioaresu.batchrenamer.rules.b:
+com.giorgioaresu.batchrenamer.rules.Renumber$2 -> com.giorgioaresu.batchrenamer.rules.e:
     int[] $SwitchMap$com$giorgioaresu$batchrenamer$rules$Renumber$PadMode -> a
-com.giorgioaresu.batchrenamer.rules.Renumber$PadMode -> com.giorgioaresu.batchrenamer.rules.c:
+com.giorgioaresu.batchrenamer.rules.Renumber$PadMode -> com.giorgioaresu.batchrenamer.rules.f:
     com.giorgioaresu.batchrenamer.rules.Renumber$PadMode AUTO -> a
     com.giorgioaresu.batchrenamer.rules.Renumber$PadMode MANUAL -> b
     com.giorgioaresu.batchrenamer.rules.Renumber$PadMode OFF -> c
@@ -1811,17 +1841,17 @@ com.giorgioaresu.batchrenamer.rules.Replace -> com.giorgioaresu.batchrenamer.rul
     boolean updateDataFromView(android.view.View) -> a
     boolean updateViewFromData(android.view.View) -> b
     java.lang.String getContentDescription() -> d
-    void createFromParcel(android.os.Parcel) -> b
     void onInflate(android.view.View) -> c
+    void createFromParcel(android.os.Parcel) -> b
     void dumpToParcel$176e5455(android.os.Parcel) -> a
     void access$000(com.giorgioaresu.batchrenamer.rules.Replace,android.widget.EditText,android.widget.EditText) -> a
     void access$100(com.giorgioaresu.batchrenamer.rules.Replace,android.widget.EditText,android.widget.EditText) -> b
-com.giorgioaresu.batchrenamer.rules.Replace$1 -> com.giorgioaresu.batchrenamer.rules.d:
+com.giorgioaresu.batchrenamer.rules.Replace$1 -> com.giorgioaresu.batchrenamer.rules.g:
     android.widget.EditText val$mPattern -> a
     android.widget.EditText val$mReplacement -> b
     com.giorgioaresu.batchrenamer.rules.Replace this$0 -> c
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-com.giorgioaresu.batchrenamer.rules.Replace$2 -> com.giorgioaresu.batchrenamer.rules.e:
+com.giorgioaresu.batchrenamer.rules.Replace$2 -> com.giorgioaresu.batchrenamer.rules.h:
     android.widget.CheckBox val$mRegex -> a
     android.widget.EditText val$mPattern -> b
     android.widget.EditText val$mReplacement -> c
@@ -1829,6 +1859,65 @@ com.giorgioaresu.batchrenamer.rules.Replace$2 -> com.giorgioaresu.batchrenamer.r
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
+com.giorgioaresu.batchrenamer.rules.Whitespaces -> com.giorgioaresu.batchrenamer.rules.Whitespaces:
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar spaceChar -> b
+    java.lang.Boolean reduceDuplicates -> c
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar replaceWith -> d
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim trim -> e
+    com.giorgioaresu.batchrenamer.Rule$ApplyTo applyTo -> f
+    java.lang.String getNewName(java.lang.String,int,int) -> a
+    java.lang.String getPatchedString(java.lang.String,int,int) -> b
+    java.lang.String rtrim(java.lang.String,char) -> a
+    java.lang.String ltrim(java.lang.String,char) -> b
+    boolean updateDataFromView(android.view.View) -> a
+    boolean updateViewFromData(android.view.View) -> b
+    java.lang.String getContentDescription() -> d
+    void createFromParcel(android.os.Parcel) -> b
+    void dumpToParcel$176e5455(android.os.Parcel) -> a
+com.giorgioaresu.batchrenamer.rules.Whitespaces$1 -> com.giorgioaresu.batchrenamer.rules.i:
+    int[] $SwitchMap$com$giorgioaresu$batchrenamer$rules$Whitespaces$Trim -> a
+    int[] $SwitchMap$com$giorgioaresu$batchrenamer$rules$Whitespaces$SpaceChar -> b
+    int[] $SwitchMap$com$giorgioaresu$batchrenamer$rules$Whitespaces$ReplaceChar -> c
+com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar -> com.giorgioaresu.batchrenamer.rules.j:
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar NULL -> a
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar WHITESPACE -> b
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar UNDERSCORE -> c
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar MINUS_SIGN -> d
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar DOT -> e
+    int id -> f
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar[] $VALUES -> g
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar[] values() -> values
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar valueOf(java.lang.String) -> valueOf
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar getValue(int) -> a
+    java.lang.String getLabel(android.content.Context,com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar) -> a
+    char getChar(com.giorgioaresu.batchrenamer.rules.Whitespaces$ReplaceChar) -> a
+    int getID() -> a
+com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar -> com.giorgioaresu.batchrenamer.rules.k:
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar WHITESPACE -> a
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar UNDERSCORE -> b
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar MINUS_SIGN -> c
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar DOT -> d
+    int id -> e
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar[] $VALUES -> f
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar[] values() -> values
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar valueOf(java.lang.String) -> valueOf
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar getValue(int) -> a
+    java.lang.String getLabel(android.content.Context,com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar) -> a
+    char getChar(com.giorgioaresu.batchrenamer.rules.Whitespaces$SpaceChar) -> a
+    int getID() -> a
+    boolean compare(int) -> b
+com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim -> com.giorgioaresu.batchrenamer.rules.l:
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim NO -> a
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim START -> b
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim END -> c
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim BOTH -> d
+    int id -> e
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim[] $VALUES -> f
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim[] values() -> values
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim valueOf(java.lang.String) -> valueOf
+    com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim getValue(int) -> a
+    java.lang.String getLabel(android.content.Context,com.giorgioaresu.batchrenamer.rules.Whitespaces$Trim) -> a
+    int getID() -> a
 eu.chainfire.libsuperuser.Debug -> a.a.a.a:
     boolean debug -> a
     int logTypes -> b
