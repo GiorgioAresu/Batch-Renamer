@@ -92,6 +92,7 @@
     <!--  RULE TITLES      -->
     <!--                     -->
     <string name="rule_add_title">Aggiungi</string>
+    <string name="rule_changecase_title">Cambia maiuscole</string>
     <string name="rule_renumber_title">Rinumera</string>
     <string name="rule_remove_title">Rimuovi</string>
     <string name="rule_replace_title">Sostituisci</string>
@@ -102,7 +103,19 @@
     <string name="rule_add_text">Testo</string>
 
     <!--                     -->
-    <!--  RULE: RENUMBER    -->
+    <!--  RULE: CHANGE CASE  -->
+    <!--                     -->
+    <string name="rule_changecase_case">Cambia in</string>
+    <string-array name="rule_changecase_case_array">
+        <item>TUTTE MAIUSCOLE</item>
+        <item>tutte minuscole</item>
+        <item>Parole Maiuscole</item>
+        <item>Frasi maiuscole</item>
+        <item>iNVERTI mAIUSCOLE</item>
+    </string-array>
+
+    <!--                     -->
+    <!--  RULE: RENUMBER     -->
     <!--                     -->
     <string name="rule_renumber_start">Inizia da</string>
     <string name="rule_renumber_step">Salta</string>

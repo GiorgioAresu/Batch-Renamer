@@ -55,6 +55,7 @@ public abstract class Rule implements Parcelable {
     public static final Map<String, String> getRules(Context context) {
         Map<String, String> rules = new TreeMap<>();
         rules.put(context.getString(R.string.rule_add_title), "Add");
+        rules.put(context.getString(R.string.rule_changecase_title), "ChangeCase");
         rules.put(context.getString(R.string.rule_remove_title), "Remove");
         rules.put(context.getString(R.string.rule_renumber_title), "Renumber");
         rules.put(context.getString(R.string.rule_replace_title), "Replace");

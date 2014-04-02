@@ -92,6 +92,7 @@
     <!--  RULE TITLES      -->
     <!--                     -->
     <string name="rule_add_title">Add</string>
+    <string name="rule_changecase_title">Change case</string>
     <string name="rule_renumber_title">Renumber</string>
     <string name="rule_remove_title">Remove</string>
     <string name="rule_replace_title">Replace</string>
@@ -102,7 +103,19 @@
     <string name="rule_add_text">Text</string>
 
     <!--                     -->
-    <!--  RULE: RENUMBER    -->
+    <!--  RULE: CHANGE CASE  -->
+    <!--                     -->
+    <string name="rule_changecase_case">Change to</string>
+    <string-array name="rule_changecase_case_array">
+        <item>UPPER CASE</item>
+        <item>lower case</item>
+        <item>Camel Case</item>
+        <item>Sentence case</item>
+        <item>tOGGLE cASE</item>
+    </string-array>
+
+    <!--                     -->
+    <!--  RULE: RENUMBER     -->
     <!--                     -->
     <string name="rule_renumber_start">Start</string>
     <string name="rule_renumber_step">Step</string>
