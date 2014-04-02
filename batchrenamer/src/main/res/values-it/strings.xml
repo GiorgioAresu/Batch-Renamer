@@ -98,6 +98,7 @@
     <string name="rule_renumber_title">Rinumera</string>
     <string name="rule_remove_title">Rimuovi</string>
     <string name="rule_replace_title">Sostituisci</string>
+    <string name="rule_whitespaces_title">Spazi bianchi</string>
 
     <!--                      -->
     <!--  RULE: ADD           -->
@@ -138,5 +139,33 @@
     <!--                      -->
     <string name="rule_replace_pattern">Modello</string>
     <string name="rule_replace_replacement">Sostituisci con</string>
+
+    <!--                      -->
+    <!--  RULE: WHITESPACES   -->
+    <!--                      -->
+    <string name="rule_whitespaces_char">Carattere di spazio</string>
+    <string-array name="rule_whitespaces_char_array">
+        <item>Spazio</item>
+        <item>Trattino basso</item>
+        <item>Segno meno</item>
+        <item>Punto</item>
+    </string-array>
+    <string name="rule_whitespaces_duplicates">Rimuovi duplicati</string>
+    <string name="rule_whitespaces_replace">Sostituisci carattere</string>
+    <!-- Please use the same as rule_whitespaces_char_array adding a "DO NOT REPLACE"-like string in first position -->
+    <string-array name="rule_whitespaces_replace_array">
+        <item>Non sostituire</item>
+        <item>Spazio</item>
+        <item>Trattino basso</item>
+        <item>Segno meno</item>
+        <item>Punto</item>
+    </string-array>
+    <string name="rule_whitespaces_trim">Trim</string>
+    <string-array name="rule_whitespaces_trim_array">
+        <item>No</item>
+        <item>Inizio</item>
+        <item>Fine</item>
+        <item>Entrambi i lati</item>
+    </string-array>
 
 </resources>

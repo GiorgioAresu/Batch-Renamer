@@ -47,6 +47,7 @@ public abstract class Rule implements Parcelable {
         rules.put(context.getString(R.string.rule_remove_title), "Remove");
         rules.put(context.getString(R.string.rule_renumber_title), "Renumber");
         rules.put(context.getString(R.string.rule_replace_title), "Replace");
+        rules.put(context.getString(R.string.rule_whitespaces_title), "Whitespaces");
         return rules;
     }
 

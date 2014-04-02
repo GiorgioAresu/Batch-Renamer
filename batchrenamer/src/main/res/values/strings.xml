@@ -98,6 +98,7 @@
     <string name="rule_renumber_title">Renumber</string>
     <string name="rule_remove_title">Remove</string>
     <string name="rule_replace_title">Replace</string>
+    <string name="rule_whitespaces_title">Whitespaces</string>
 
     <!--                      -->
     <!--  RULE: ADD           -->
@@ -138,5 +139,33 @@
     <!--                      -->
     <string name="rule_replace_pattern">Pattern</string>
     <string name="rule_replace_replacement">Replace with</string>
+
+    <!--                      -->
+    <!--  RULE: WHITESPACES   -->
+    <!--                      -->
+    <string name="rule_whitespaces_char">Whitespace character</string>
+    <string-array name="rule_whitespaces_char_array">
+        <item>Space</item>
+        <item>Underscore</item>
+        <item>Minus sign</item>
+        <item>Dot</item>
+    </string-array>
+    <string name="rule_whitespaces_duplicates">Remove duplicates</string>
+    <string name="rule_whitespaces_replace">Replace character</string>
+    <!-- Please use the same as rule_whitespaces_char_array adding a "DO NOT REPLACE"-like string in first position -->
+    <string-array name="rule_whitespaces_replace_array">
+        <item>Do not replace</item>
+        <item>Space</item>
+        <item>Underscore</item>
+        <item>Minus sign</item>
+        <item>Dot</item>
+    </string-array>
+    <string name="rule_whitespaces_trim">Trim</string>
+    <string-array name="rule_whitespaces_trim_array">
+        <item>No</item>
+        <item>Start</item>
+        <item>End</item>
+        <item>Both sides</item>
+    </string-array>
 
 </resources>
