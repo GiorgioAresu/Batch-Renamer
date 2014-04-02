@@ -220,7 +220,7 @@ public abstract class Rule implements Parcelable {
      * @return R.string.empty_field_label if string is empty, the string itself otherwise
      */
     protected String checkForEmpty(String string) {
-        return string.isEmpty() ? context.getString(R.string.rule_empty_field_contentdescription) : string;
+        return string.isEmpty() ? context.getString(R.string.rule_generic_emptyfield_contentdescription) : string;
     }
 
     /**
@@ -430,7 +430,7 @@ public abstract class Rule implements Parcelable {
         }
 
         public static String getLabel(Context context, ApplyTo applyTo) {
-            String[] applyString = context.getResources().getStringArray(R.array.rule_apply_array);
+            String[] applyString = context.getResources().getStringArray(R.array.rule_generic_apply_array);
             int index = Math.min(applyTo.id, applyString.length - 1);
             return applyString[index];
         }
@@ -459,7 +459,7 @@ public abstract class Rule implements Parcelable {
         public static String errorStringPattern(Context c, RegexStatus status) {
             switch (status) {
                 case PATTERN_SYNTAX_ERROR:
-                    return c.getString(R.string.rule_regex_invalid_syntaxError);
+                    return c.getString(R.string.rule_generic_regex_invalid_syntaxError);
                 default:
                     return null;
             }
@@ -475,7 +475,7 @@ public abstract class Rule implements Parcelable {
         public static String errorStringReplacement(Context c, RegexStatus status) {
             switch (status) {
                 case GROUP_OUT_OF_BOUNDS:
-                    return c.getString(R.string.rule_regex_invalid_outOfBounds);
+                    return c.getString(R.string.rule_generic_regex_invalid_outOfBounds);
                 default:
                     return null;
             }

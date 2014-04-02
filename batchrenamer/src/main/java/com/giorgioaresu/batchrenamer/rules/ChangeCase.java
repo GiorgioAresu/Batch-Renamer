@@ -97,7 +97,7 @@ public class ChangeCase extends Rule {
     protected String getContentDescription() {
         String str;
         str = context.getString(R.string.rule_changecase_case) + ": " + CaseMode.getLabel(context, caseMode) + ". "
-                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+                + context.getString(R.string.rule_generic_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 

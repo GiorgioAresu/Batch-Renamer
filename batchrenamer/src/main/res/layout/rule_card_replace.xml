@@ -25,7 +25,7 @@
                 android:id="@+id/rule_replace_regex"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/rule_item_height"
-                android:text="@string/rule_regex" />
+                android:text="@string/rule_generic_regex" />
 
         </LinearLayout>
 

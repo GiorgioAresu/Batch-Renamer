@@ -28,7 +28,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/rule_remove"
+            android:contentDescription="@string/rule_generic_remove"
             android:src="@drawable/ic_rule_remove_light"
             android:scaleType="fitCenter" />
 
@@ -44,6 +44,6 @@
         android:id="@+id/rule_imgContent"
         style="@style/Rule_ContentView"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/rule_list_row_contentdescription" />
+        android:contentDescription="@string/rule_generic_row_contentdescription" />
 
 </LinearLayout>

@@ -3,7 +3,7 @@
 
     <TextView
         style="@style/Rule_ItemLabel"
-        android:text="@string/rule_apply" />
+        android:text="@string/rule_generic_apply" />
 
     <Spinner
         android:id="@+id/rule_apply_spinner"
@@ -11,5 +11,5 @@
         android:layout_height="wrap_content"
         android:minHeight="@dimen/rule_item_height"
         android:spinnerMode="dropdown"
-        android:entries="@array/rule_apply_array" />
+        android:entries="@array/rule_generic_apply_array" />
 </merge>

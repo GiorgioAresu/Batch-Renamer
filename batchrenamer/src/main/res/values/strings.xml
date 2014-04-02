@@ -67,22 +67,22 @@
     <string name="filelist_header_preview_updating">Preview (updating)</string>
 
     <!--                      -->
-    <!--  RULE STRINGS        -->
+    <!--  GENERIC RULE STRINGS-->
     <!--                      -->
-    <string name="rule_remove">Remove rule</string>
-    <string name="rule_remove_message">Rule removed</string>
+    <string name="rule_generic_remove">Remove rule</string>
+    <string name="rule_generic_remove_message">Rule removed</string>
     <!-- Toast showed when some rule returned the invalid status -->
-    <string name="some_rule_invalid">Some rules are not valid, you may want to check them</string>
+    <string name="rule_generic_invalidrules">Some rules are not valid, you may want to check them</string>
     <!-- Content description of the image holding the rule preview -->
-    <string name="rule_list_row_contentdescription">Rule preview, click to edit</string>
-    <string name="rule_empty_field_contentdescription">Empty Field</string>
-    <string name="rule_regex">Regex</string>
-    <string name="rule_regex_invalid_syntaxError">Syntax error</string>
-    <string name="rule_regex_invalid_outOfBounds">Index out of bounds</string>
-    <string name="rule_position">Position</string>
-    <string name="rule_position_backward">Backward</string>
-    <string name="rule_apply">Apply to</string>
-    <string-array name="rule_apply_array">
+    <string name="rule_generic_row_contentdescription">Rule preview, click to edit</string>
+    <string name="rule_generic_emptyfield_contentdescription">Empty field</string>
+    <string name="rule_generic_regex">Regex</string>
+    <string name="rule_generic_regex_invalid_syntaxError">Syntax error</string>
+    <string name="rule_generic_regex_invalid_outOfBounds">Index out of bounds</string>
+    <string name="rule_generic_position">Position</string>
+    <string name="rule_generic_position_backward">Backward</string>
+    <string name="rule_generic_apply">Apply to</string>
+    <string-array name="rule_generic_apply_array">
         <item>Name</item>
         <item>Extension</item>
         <item>Name + Extension</item>

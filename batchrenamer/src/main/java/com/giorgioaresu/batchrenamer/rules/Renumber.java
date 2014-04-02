@@ -176,9 +176,9 @@ public class Renumber extends Rule {
         str = context.getString(R.string.rule_renumber_start) + ": " + checkForEmpty(String.valueOf(start)) + ". "
                 + context.getString(R.string.rule_renumber_step) + ": " + checkForEmpty(String.valueOf(step)) + ". "
                 + context.getString(R.string.rule_renumber_padding) + ": " + PadMode.getLabel(context, padMode) + ". "
-                + context.getString(R.string.rule_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.rule_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+                + context.getString(R.string.rule_generic_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.rule_generic_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.rule_generic_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 

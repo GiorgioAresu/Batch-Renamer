@@ -106,9 +106,9 @@ public class Add extends Rule {
     protected String getContentDescription() {
         String str;
         str = context.getString(R.string.rule_add_text) + ": " + checkForEmpty(text) + ". "
-                + context.getString(R.string.rule_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
-                + context.getString(R.string.rule_position_backward) + ": " + getValueToString(backward) + ". "
-                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+                + context.getString(R.string.rule_generic_position) + ": " + checkForEmpty(String.valueOf(position)) + ". "
+                + context.getString(R.string.rule_generic_position_backward) + ": " + getValueToString(backward) + ". "
+                + context.getString(R.string.rule_generic_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 

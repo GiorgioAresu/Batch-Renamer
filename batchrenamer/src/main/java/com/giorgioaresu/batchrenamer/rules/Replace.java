@@ -17,7 +17,6 @@ import com.giorgioaresu.batchrenamer.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class Replace extends Rule {
@@ -125,9 +124,9 @@ public class Replace extends Rule {
     protected String getContentDescription() {
         String str;
         str = context.getString(R.string.rule_replace_pattern) + ": " + checkForEmpty(pattern) + ". "
-                + context.getString(R.string.rule_regex) + ": " + getValueToString(regex) + ". "
+                + context.getString(R.string.rule_generic_regex) + ": " + getValueToString(regex) + ". "
                 + context.getString(R.string.rule_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
-                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+                + context.getString(R.string.rule_generic_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
     }
 
