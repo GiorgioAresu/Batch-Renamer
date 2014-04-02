@@ -20,25 +20,6 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public abstract class Rule implements Parcelable {
-    public static final Parcelable.Creator<Rule> CREATOR
-            = new Parcelable.Creator<Rule>() {
-        public Rule createFromParcel(Parcel in) {
-            try {
-                Class<?> c = Class.forName(in.readString());
-                Constructor<?> cons = c.getConstructors()[0];
-                Rule rule = (Rule) cons.newInstance(Application.getContext());
-                rule.createFromParcel(in);
-                return rule;
-            } catch (Exception b) {
-                Log.e("batchrenamer", "Exception creating item, skipping");
-                return null;
-            }
-        }
-
-        public Rule[] newArray(int size) {
-            return new Rule[size];
-        }
-    };
     static final String KEY_CONTENT = "Content";
     static final String KEY_TYPE = "Type";
 
@@ -52,6 +33,13 @@ public abstract class Rule implements Parcelable {
         this.viewId = viewId;
     }
 
+    /**
+     * Get the list of actions sorted alphabetically
+     * Format is Map<"Localized string", "ClassName">
+     *
+     * @param context used to retrieve localized strings
+     * @return
+     */
     public static final Map<String, String> getRules(Context context) {
         Map<String, String> rules = new TreeMap<>();
         rules.put(context.getString(R.string.rule_add_title), "Add");
@@ -297,6 +285,26 @@ public abstract class Rule implements Parcelable {
      * @throws JSONException
      */
     protected abstract void deserializeFromJSON(JSONObject jObject) throws JSONException;
+
+    public static final Parcelable.Creator<Rule> CREATOR
+            = new Parcelable.Creator<Rule>() {
+        public Rule createFromParcel(Parcel in) {
+            try {
+                Class<?> c = Class.forName(in.readString());
+                Constructor<?> cons = c.getConstructors()[0];
+                Rule rule = (Rule) cons.newInstance(Application.getContext());
+                rule.createFromParcel(in);
+                return rule;
+            } catch (Exception b) {
+                Log.e("batchrenamer", "Exception creating item, skipping");
+                return null;
+            }
+        }
+
+        public Rule[] newArray(int size) {
+            return new Rule[size];
+        }
+    };
 
     /**
      * Dump rule to a Parcel
