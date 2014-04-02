@@ -76,6 +76,8 @@
     <!-- Content description of the image holding the rule preview -->
     <string name="rule_generic_row_contentdescription">Anteprima della regola, clicca per modificare</string>
     <string name="rule_generic_emptyfield_contentdescription">Campo vuoto</string>
+    <string name="rule_generic_true_contentdescription">Yes</string>
+    <string name="rule_generic_false_contentdescription">No</string>
     <string name="rule_generic_regex">Regex</string>
     <string name="rule_generic_regex_invalid_syntaxError">Errore di sintassi</string>
     <string name="rule_generic_regex_invalid_outOfBounds">Indice fuori dagli intervalli</string>

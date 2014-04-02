@@ -227,10 +227,10 @@ public abstract class Rule implements Parcelable {
      * Returns the string for a boolean value
      *
      * @param v boolean value
-     * @return android.R.string.yes if v is true, android.R.string.no otherwise
+     * @return string representing the value
      */
     protected String getValueToString(boolean v) {
-        return context.getString(v ? android.R.string.yes : android.R.string.no);
+        return context.getString(v ? R.string.rule_generic_true_contentdescription : R.string.rule_generic_false_contentdescription);
     }
 
     /**
