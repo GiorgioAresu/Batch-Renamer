@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!--                     -->
-    <!--  APPLICATION        -->
-    <!--                     -->
+    <!--                      -->
+    <!--  APPLICATION         -->
+    <!--                      -->
     <string name="undo">Undo</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="expired_message">You\'re using an old version of the app, update now?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
-    <!--                     -->
-    <!--  NOTIFICATION       -->
-    <!--                     -->
+    <!--                      -->
+    <!--  NOTIFICATION        -->
+    <!--                      -->
     <string name="renaming_notification_title">File rename</string>
     <string name="renaming_notification_text_completed">Operation completed</string>
     <string name="renaming_notification_text_completed_failed">Operation completed (<xliff:g id="number" example="5">%1$d</xliff:g> failed)</string>
@@ -22,9 +22,9 @@
     <string name="renaming_notification_ticker_completed">File rename completed</string>
     <string name="renaming_notification_summary_big">Renamed: <xliff:g id="number" example="5">%1$d</xliff:g> - Failed: <xliff:g id="number" example="1">%2$d</xliff:g></string>
 
-    <!--                     -->
-    <!--  ABOUT ACTIVITY     -->
-    <!--                     -->
+    <!--                      -->
+    <!--  ABOUT ACTIVITY      -->
+    <!--                      -->
     <string name="title_activity_about">About</string>
     <string name="about_header_info">Info</string>
     <string name="about_author_title">Author</string>
@@ -34,9 +34,9 @@
     <string name="about_eula_summary">Show License Agreement</string>
     <string name="about_eula_dialog_title">END-USER LICENSE AGREEMENT</string>
 
-    <!--                     -->
-    <!--  ACTION BAR         -->
-    <!--                     -->
+    <!--                      -->
+    <!--  ACTION BAR          -->
+    <!--                      -->
     <!-- Text for the item that adds a rule to the list -->
     <string name="action_newRule">New rule</string>
     <!-- Toast message showed when adding rule has failed -->
@@ -52,56 +52,74 @@
     <string name="action_start_alert_message">Operation can\'t be undone.</string>
     <string name="action_start_alert_positive">Rename</string>
     <string name="action_start_alert_negative">Cancel</string>
+    <!-- Toast showed when starting rename, at least until the progress activity is completed -->
+    <string name="action_start_toast">Renaming<xliff:g id="ellipsis">\u2026</xliff:g> Check notification for details</string>
     <!-- Toast message showed when trying to start the rename with NO files -->
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->
     <string name="empty_rulelist">Empty rule list. Add some rules first</string>
 
-    <!--                     -->
-    <!--  FILE SECTION       -->
-    <!--                     -->
+    <!--                      -->
+    <!--  FILE SECTION        -->
+    <!--                      -->
     <string name="filelist_header_current">Current name</string>
     <string name="filelist_header_preview">Preview</string>
     <string name="filelist_header_preview_updating">Preview (updating)</string>
 
-    <!--                     -->
-    <!--  RULE STRINGS     -->
-    <!--                     -->
-    <string name="rule_remove">Remove rule</string>
-    <string name="rule_remove_message">Rule removed</string>
+    <!--                      -->
+    <!--  GENERIC RULE STRINGS-->
+    <!--                      -->
+    <string name="rule_generic_remove">Remove rule</string>
+    <string name="rule_generic_remove_message">Rule removed</string>
     <!-- Toast showed when some rule returned the invalid status -->
-    <string name="some_rule_invalid">Some rules are not valid, you may want to check them</string>
+    <string name="rule_generic_invalidrules">Some rules are not valid, you may want to check them</string>
     <!-- Content description of the image holding the rule preview -->
-    <string name="rule_list_row_contentdescription">Rule preview, click to edit</string>
-    <string name="rule_empty_field_contentdescription">Empty Field</string>
-    <string name="rule_regex">Regex</string>
-    <string name="rule_regex_invalid_syntaxError">Syntax error</string>
-    <string name="rule_regex_invalid_outOfBounds">Index out of bounds</string>
-    <string name="rule_position">Position</string>
-    <string name="rule_position_backward">Backward</string>
-    <string name="rule_apply">Apply to</string>
-    <string-array name="rule_apply_array">
+    <string name="rule_generic_row_contentdescription">Rule preview, click to edit</string>
+    <string name="rule_generic_emptyfield_contentdescription">Empty field</string>
+    <string name="rule_generic_true_contentdescription">Yes</string>
+    <string name="rule_generic_false_contentdescription">No</string>
+    <string name="rule_generic_regex">Regex</string>
+    <string name="rule_generic_regex_invalid_syntaxError">Syntax error</string>
+    <string name="rule_generic_regex_invalid_outOfBounds">Index out of bounds</string>
+    <string name="rule_generic_position">Position</string>
+    <string name="rule_generic_position_backward">Backward</string>
+    <string name="rule_generic_apply">Apply to</string>
+    <string-array name="rule_generic_apply_array">
         <item>Name</item>
         <item>Extension</item>
         <item>Name + Extension</item>
     </string-array>
 
-    <!--                     -->
-    <!--  RULE TITLES      -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE TITLES         -->
+    <!--                      -->
     <string name="rule_add_title">Add</string>
+    <string name="rule_changecase_title">Change case</string>
     <string name="rule_renumber_title">Renumber</string>
     <string name="rule_remove_title">Remove</string>
     <string name="rule_replace_title">Replace</string>
+    <string name="rule_whitespaces_title">Whitespaces</string>
 
-    <!--                     -->
-    <!--  RULE: ADD        -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: ADD           -->
+    <!--                      -->
     <string name="rule_add_text">Text</string>
 
-    <!--                     -->
-    <!--  RULE: RENUMBER    -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: CHANGE CASE   -->
+    <!--                      -->
+    <string name="rule_changecase_case">Change to</string>
+    <string-array name="rule_changecase_case_array">
+        <item>UPPER CASE</item>
+        <item>lower case</item>
+        <item>Camel Case</item>
+        <item>Sentence case</item>
+        <item>tOGGLE cASE</item>
+    </string-array>
+
+    <!--                      -->
+    <!--  RULE: RENUMBER      -->
+    <!--                      -->
     <string name="rule_renumber_start">Start</string>
     <string name="rule_renumber_step">Step</string>
     <string name="rule_renumber_padding">Padding</string>
@@ -111,15 +129,43 @@
         <item>Off</item>
     </string-array>
 
-    <!--                     -->
-    <!--  RULE: REMOVE     -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: REMOVE        -->
+    <!--                      -->
     <string name="rule_remove_characters">No. of characters</string>
 
-    <!--                     -->
-    <!--  RULE: REPLACE    -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: REPLACE       -->
+    <!--                      -->
     <string name="rule_replace_pattern">Pattern</string>
     <string name="rule_replace_replacement">Replace with</string>
+
+    <!--                      -->
+    <!--  RULE: WHITESPACES   -->
+    <!--                      -->
+    <string name="rule_whitespaces_char">Whitespace character</string>
+    <string-array name="rule_whitespaces_char_array">
+        <item>Space</item>
+        <item>Underscore</item>
+        <item>Minus sign</item>
+        <item>Dot</item>
+    </string-array>
+    <string name="rule_whitespaces_duplicates">Remove duplicates</string>
+    <string name="rule_whitespaces_replace">Replace character</string>
+    <!-- Please use the same as rule_whitespaces_char_array adding a "DO NOT REPLACE"-like string in first position -->
+    <string-array name="rule_whitespaces_replace_array">
+        <item>Do not replace</item>
+        <item>Space</item>
+        <item>Underscore</item>
+        <item>Minus sign</item>
+        <item>Dot</item>
+    </string-array>
+    <string name="rule_whitespaces_trim">Trim</string>
+    <string-array name="rule_whitespaces_trim_array">
+        <item>No</item>
+        <item>Start</item>
+        <item>End</item>
+        <item>Both sides</item>
+    </string-array>
 
 </resources>

@@ -35,7 +35,7 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(mActivity, R.string.some_rule_invalid, Toast.LENGTH_LONG).show();
+                        Toast.makeText(mActivity, R.string.rule_generic_invalidrules, Toast.LENGTH_LONG).show();
                     }
                 });
             }

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!--                     -->
-    <!--  APPLICATION        -->
-    <!--                     -->
+    <!--                      -->
+    <!--  APPLICATION         -->
+    <!--                      -->
     <string name="undo">Annulla</string>
     <string name="accept">Accetta</string>
     <string name="decline">Rifiuta</string>
     <string name="expired_message">Stai usando una vecchia versione dell\'app, aggiornare adesso?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
-    <!--                     -->
-    <!--  NOTIFICATION       -->
-    <!--                     -->
+    <!--                      -->
+    <!--  NOTIFICATION        -->
+    <!--                      -->
     <string name="renaming_notification_title">Rinomina file</string>
     <string name="renaming_notification_text_completed">Operazione completata</string>
     <string name="renaming_notification_text_completed_failed">Operazione completata (<xliff:g id="number" example="5">%1$d</xliff:g> falliti)</string>
@@ -22,10 +22,10 @@
     <string name="renaming_notification_ticker_completed">Ridenominazione completata</string>
     <string name="renaming_notification_summary_big">Rinominati: <xliff:g id="number" example="5">%1$d</xliff:g> - Falliti: <xliff:g id="number" example="1">%2$d</xliff:g></string>
 
-    <!--                     -->
-    <!--  ABOUT ACTIVITY     -->
-    <!--                     -->
-    <string name="title_activity_about">A proposito di...</string>
+    <!--                      -->
+    <!--  ABOUT ACTIVITY      -->
+    <!--                      -->
+    <string name="title_activity_about">A proposito di<xliff:g id="ellipsis">\u2026</xliff:g></string>
     <string name="about_header_info">Info</string>
     <string name="about_author_title">Autore</string>
     <string name="about_version_title">Versione</string>
@@ -34,9 +34,9 @@
     <string name="about_eula_summary">Mostra accordo di licenza</string>
     <string name="about_eula_dialog_title">ACCORDO DI LICENZA CON L\'UTENTE FINALE</string>
 
-    <!--                     -->
-    <!--  ACTION BAR         -->
-    <!--                     -->
+    <!--                      -->
+    <!--  ACTION BAR          -->
+    <!--                      -->
     <!-- Text for the item that adds a rule to the list -->
     <string name="action_newRule">Nuova regola</string>
     <!-- Toast message showed when adding rule has failed -->
@@ -52,56 +52,74 @@
     <string name="action_start_alert_message">L\'operazione non può essere annullata.</string>
     <string name="action_start_alert_positive">Rinomina</string>
     <string name="action_start_alert_negative">Annulla</string>
+    <!-- Toast showed when starting rename, at least until the progress activity is completed -->
+    <string name="action_start_toast">Ridenominazione<xliff:g id="ellipsis">\u2026</xliff:g> Controlla la notifica per i dettagli</string>
     <!-- Toast message showed when trying to start the rename with NO files -->
     <string name="empty_filelist">Lista dei file vuota. Aggiungi qualche file prima</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->
     <string name="empty_rulelist">Lista delle regole vuota. Aggiungi qualche regola prima</string>
 
-    <!--                     -->
-    <!--  FILE SECTION       -->
-    <!--                     -->
+    <!--                      -->
+    <!--  FILE SECTION        -->
+    <!--                      -->
     <string name="filelist_header_current">Nome attuale</string>
     <string name="filelist_header_preview">Anteprima</string>
     <string name="filelist_header_preview_updating">Anteprima (aggiornamento)</string>
 
-    <!--                     -->
-    <!--  RULE STRINGS     -->
-    <!--                     -->
-    <string name="rule_remove">Elimina regola</string>
-    <string name="rule_remove_message">Regola eliminata</string>
+    <!--                      -->
+    <!--  GENERIC RULE STRINGS-->
+    <!--                      -->
+    <string name="rule_generic_remove">Elimina regola</string>
+    <string name="rule_generic_remove_message">Regola eliminata</string>
     <!-- Toast showed when some rule returned the invalid status -->
-    <string name="some_rule_invalid">Alcune regole sono non valide, postresti volerle controllare</string>
+    <string name="rule_generic_invalidrules">Alcune regole sono non valide, postresti volerle controllare</string>
     <!-- Content description of the image holding the rule preview -->
-    <string name="rule_list_row_contentdescription">Anteprima della regola, clicca per modificare</string>
-    <string name="rule_empty_field_contentdescription">Campo vuoto</string>
-    <string name="rule_regex">Regex</string>
-    <string name="rule_regex_invalid_syntaxError">Errore di sintassi</string>
-    <string name="rule_regex_invalid_outOfBounds">Indice fuori dagli intervalli</string>
-    <string name="rule_position">Posizione</string>
-    <string name="rule_position_backward">Dalla fine</string>
-    <string name="rule_apply">Applica a</string>
-    <string-array name="rule_apply_array">
+    <string name="rule_generic_row_contentdescription">Anteprima della regola, clicca per modificare</string>
+    <string name="rule_generic_emptyfield_contentdescription">Campo vuoto</string>
+    <string name="rule_generic_true_contentdescription">Yes</string>
+    <string name="rule_generic_false_contentdescription">No</string>
+    <string name="rule_generic_regex">Regex</string>
+    <string name="rule_generic_regex_invalid_syntaxError">Errore di sintassi</string>
+    <string name="rule_generic_regex_invalid_outOfBounds">Indice fuori dagli intervalli</string>
+    <string name="rule_generic_position">Posizione</string>
+    <string name="rule_generic_position_backward">Dalla fine</string>
+    <string name="rule_generic_apply">Applica a</string>
+    <string-array name="rule_generic_apply_array">
         <item>Nome</item>
         <item>Estensione</item>
         <item>Nome + Estensione</item>
     </string-array>
 
-    <!--                     -->
-    <!--  RULE TITLES      -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE TITLES         -->
+    <!--                      -->
     <string name="rule_add_title">Aggiungi</string>
+    <string name="rule_changecase_title">Cambia maiuscole</string>
     <string name="rule_renumber_title">Rinumera</string>
     <string name="rule_remove_title">Rimuovi</string>
     <string name="rule_replace_title">Sostituisci</string>
+    <string name="rule_whitespaces_title">Spazi bianchi</string>
 
-    <!--                     -->
-    <!--  RULE: ADD        -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: ADD           -->
+    <!--                      -->
     <string name="rule_add_text">Testo</string>
 
-    <!--                     -->
-    <!--  RULE: RENUMBER    -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: CHANGE CASE   -->
+    <!--                      -->
+    <string name="rule_changecase_case">Cambia in</string>
+    <string-array name="rule_changecase_case_array">
+        <item>TUTTE MAIUSCOLE</item>
+        <item>tutte minuscole</item>
+        <item>Parole Maiuscole</item>
+        <item>Frasi maiuscole</item>
+        <item>iNVERTI mAIUSCOLE</item>
+    </string-array>
+
+    <!--                      -->
+    <!--  RULE: RENUMBER      -->
+    <!--                      -->
     <string name="rule_renumber_start">Inizia da</string>
     <string name="rule_renumber_step">Salta</string>
     <string name="rule_renumber_padding">Riempimento con zeri</string>
@@ -111,15 +129,43 @@
         <item>Spento</item>
     </string-array>
 
-    <!--                     -->
-    <!--  RULE: REMOVE     -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: REMOVE        -->
+    <!--                      -->
     <string name="rule_remove_characters">N° di caratteri</string>
 
-    <!--                     -->
-    <!--  RULE: REPLACE    -->
-    <!--                     -->
+    <!--                      -->
+    <!--  RULE: REPLACE       -->
+    <!--                      -->
     <string name="rule_replace_pattern">Modello</string>
     <string name="rule_replace_replacement">Sostituisci con</string>
+
+    <!--                      -->
+    <!--  RULE: WHITESPACES   -->
+    <!--                      -->
+    <string name="rule_whitespaces_char">Carattere di spazio</string>
+    <string-array name="rule_whitespaces_char_array">
+        <item>Spazio</item>
+        <item>Trattino basso</item>
+        <item>Segno meno</item>
+        <item>Punto</item>
+    </string-array>
+    <string name="rule_whitespaces_duplicates">Rimuovi duplicati</string>
+    <string name="rule_whitespaces_replace">Sostituisci carattere</string>
+    <!-- Please use the same as rule_whitespaces_char_array adding a "DO NOT REPLACE"-like string in first position -->
+    <string-array name="rule_whitespaces_replace_array">
+        <item>Non sostituire</item>
+        <item>Spazio</item>
+        <item>Trattino basso</item>
+        <item>Segno meno</item>
+        <item>Punto</item>
+    </string-array>
+    <string name="rule_whitespaces_trim">Trim</string>
+    <string-array name="rule_whitespaces_trim_array">
+        <item>No</item>
+        <item>Inizio</item>
+        <item>Fine</item>
+        <item>Entrambi i lati</item>
+    </string-array>
 
 </resources>

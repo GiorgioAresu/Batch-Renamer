@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/Rule_ItemLabel"
+            android:text="@string/rule_whitespaces_char" />
+
+        <Spinner
+            android:id="@+id/rule_whitespaces_char"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rule_item_height"
+            android:spinnerMode="dropdown"
+            android:entries="@array/rule_whitespaces_char_array" />
+
+        <CheckBox
+            android:id="@+id/rule_whitespaces_duplicates"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/rule_item_height"
+            android:text="@string/rule_whitespaces_duplicates" />
+
+        <TextView
+            style="@style/Rule_ItemLabel"
+            android:text="@string/rule_whitespaces_replace" />
+
+        <Spinner
+            android:id="@+id/rule_whitespaces_replace_with"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rule_item_height"
+            android:spinnerMode="dropdown"
+            android:entries="@array/rule_whitespaces_replace_array" />
+
+        <TextView
+            style="@style/Rule_ItemLabel"
+            android:text="@string/rule_whitespaces_trim" />
+
+        <Spinner
+            android:id="@+id/rule_whitespaces_trim_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rule_item_height"
+            android:spinnerMode="dropdown"
+            android:entries="@array/rule_whitespaces_trim_array" />
+
+        <include layout="@layout/rule_section_applyto" />
+
+    </LinearLayout>
+
+</ScrollView>

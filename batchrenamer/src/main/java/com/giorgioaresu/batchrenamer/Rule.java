@@ -20,25 +20,6 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public abstract class Rule implements Parcelable {
-    public static final Parcelable.Creator<Rule> CREATOR
-            = new Parcelable.Creator<Rule>() {
-        public Rule createFromParcel(Parcel in) {
-            try {
-                Class<?> c = Class.forName(in.readString());
-                Constructor<?> cons = c.getConstructors()[0];
-                Rule rule = (Rule) cons.newInstance(Application.getContext());
-                rule.createFromParcel(in);
-                return rule;
-            } catch (Exception b) {
-                Log.e("batchrenamer", "Exception creating item, skipping");
-                return null;
-            }
-        }
-
-        public Rule[] newArray(int size) {
-            return new Rule[size];
-        }
-    };
     static final String KEY_CONTENT = "Content";
     static final String KEY_TYPE = "Type";
 
@@ -52,12 +33,21 @@ public abstract class Rule implements Parcelable {
         this.viewId = viewId;
     }
 
+    /**
+     * Get the list of actions sorted alphabetically
+     * Format is Map<"Localized string", "ClassName">
+     *
+     * @param context used to retrieve localized strings
+     * @return
+     */
     public static final Map<String, String> getRules(Context context) {
         Map<String, String> rules = new TreeMap<>();
         rules.put(context.getString(R.string.rule_add_title), "Add");
+        rules.put(context.getString(R.string.rule_changecase_title), "ChangeCase");
         rules.put(context.getString(R.string.rule_remove_title), "Remove");
         rules.put(context.getString(R.string.rule_renumber_title), "Renumber");
         rules.put(context.getString(R.string.rule_replace_title), "Replace");
+        rules.put(context.getString(R.string.rule_whitespaces_title), "Whitespaces");
         return rules;
     }
 
@@ -231,17 +221,17 @@ public abstract class Rule implements Parcelable {
      * @return R.string.empty_field_label if string is empty, the string itself otherwise
      */
     protected String checkForEmpty(String string) {
-        return string.isEmpty() ? context.getString(R.string.rule_empty_field_contentdescription) : string;
+        return string.isEmpty() ? context.getString(R.string.rule_generic_emptyfield_contentdescription) : string;
     }
 
     /**
      * Returns the string for a boolean value
      *
      * @param v boolean value
-     * @return android.R.string.yes if v is true, android.R.string.no otherwise
+     * @return string representing the value
      */
     protected String getValueToString(boolean v) {
-        return context.getString(v ? android.R.string.yes : android.R.string.no);
+        return context.getString(v ? R.string.rule_generic_true_contentdescription : R.string.rule_generic_false_contentdescription);
     }
 
     /**
@@ -296,6 +286,26 @@ public abstract class Rule implements Parcelable {
      * @throws JSONException
      */
     protected abstract void deserializeFromJSON(JSONObject jObject) throws JSONException;
+
+    public static final Parcelable.Creator<Rule> CREATOR
+            = new Parcelable.Creator<Rule>() {
+        public Rule createFromParcel(Parcel in) {
+            try {
+                Class<?> c = Class.forName(in.readString());
+                Constructor<?> cons = c.getConstructors()[0];
+                Rule rule = (Rule) cons.newInstance(Application.getContext());
+                rule.createFromParcel(in);
+                return rule;
+            } catch (Exception b) {
+                Log.e("batchrenamer", "Exception creating item, skipping");
+                return null;
+            }
+        }
+
+        public Rule[] newArray(int size) {
+            return new Rule[size];
+        }
+    };
 
     /**
      * Dump rule to a Parcel
@@ -411,19 +421,19 @@ public abstract class Rule implements Parcelable {
         }
 
         public static ApplyTo getValue(int _id) {
-            ApplyTo[] As = ApplyTo.values();
-            for (int i = 0; i < As.length; i++) {
-                if (As[i].compare(_id))
-                    return As[i];
+            ApplyTo[] array = ApplyTo.values();
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].compare(_id))
+                    return array[i];
             }
             // Value not recognized. Just return default value.
             return BOTH;
         }
 
         public static String getLabel(Context context, ApplyTo applyTo) {
-            String[] applyString = context.getResources().getStringArray(R.array.rule_apply_array);
-            int index = Math.min(applyTo.id, applyString.length - 1);
-            return applyString[index];
+            String[] array = context.getResources().getStringArray(R.array.rule_generic_apply_array);
+            int index = Math.min(applyTo.id, array.length - 1);
+            return array[index];
         }
 
         public int getID() {
@@ -450,7 +460,7 @@ public abstract class Rule implements Parcelable {
         public static String errorStringPattern(Context c, RegexStatus status) {
             switch (status) {
                 case PATTERN_SYNTAX_ERROR:
-                    return c.getString(R.string.rule_regex_invalid_syntaxError);
+                    return c.getString(R.string.rule_generic_regex_invalid_syntaxError);
                 default:
                     return null;
             }
@@ -466,7 +476,7 @@ public abstract class Rule implements Parcelable {
         public static String errorStringReplacement(Context c, RegexStatus status) {
             switch (status) {
                 case GROUP_OUT_OF_BOUNDS:
-                    return c.getString(R.string.rule_regex_invalid_outOfBounds);
+                    return c.getString(R.string.rule_generic_regex_invalid_outOfBounds);
                 default:
                     return null;
             }

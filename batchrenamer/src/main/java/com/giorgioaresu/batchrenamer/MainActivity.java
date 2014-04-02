@@ -269,6 +269,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
 
         renameFiles_asyncTask.execute(filePreviewList_fragment.getFiles());
 
+        Toast.makeText(this, R.string.action_start_toast, Toast.LENGTH_LONG).show();
+
         // Prevent user going back to this
         finish();
     }

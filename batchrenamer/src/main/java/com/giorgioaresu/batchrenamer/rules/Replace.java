@@ -17,7 +17,6 @@ import com.giorgioaresu.batchrenamer.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 public class Replace extends Rule {
@@ -125,45 +124,10 @@ public class Replace extends Rule {
     protected String getContentDescription() {
         String str;
         str = context.getString(R.string.rule_replace_pattern) + ": " + checkForEmpty(pattern) + ". "
-                + context.getString(R.string.rule_regex) + ": " + getValueToString(regex) + ". "
+                + context.getString(R.string.rule_generic_regex) + ": " + getValueToString(regex) + ". "
                 + context.getString(R.string.rule_replace_replacement) + ": " + checkForEmpty(replacement) + ". "
-                + context.getString(R.string.rule_apply) + ": " + ApplyTo.getLabel(context, applyTo);
+                + context.getString(R.string.rule_generic_apply) + ": " + ApplyTo.getLabel(context, applyTo);
         return str;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected JSONObject serializeToJSON() throws JSONException {
-        JSONObject jObject = new JSONObject();
-        jObject.put(KEY_PATTERN, pattern);
-        jObject.put(KEY_REGEX, regex);
-        jObject.put(KEY_REPLACEMENT, replacement);
-        jObject.put(KEY_APPLYTO, applyTo);
-        return jObject;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
-        pattern = jObject.getString(KEY_PATTERN);
-        regex = jObject.getBoolean(KEY_REGEX);
-        replacement = jObject.getString(KEY_REPLACEMENT);
-        applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void createFromParcel(Parcel in) {
-        pattern = in.readString();
-        regex = toBoolean(in.readByte());
-        replacement = in.readString();
-        applyTo = ApplyTo.getValue(in.readInt());
     }
 
     @Override
@@ -205,6 +169,41 @@ public class Replace extends Rule {
 
         mPattern.addTextChangedListener(tw);
         mReplacement.addTextChangedListener(tw);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected JSONObject serializeToJSON() throws JSONException {
+        JSONObject jObject = new JSONObject();
+        jObject.put(KEY_PATTERN, pattern);
+        jObject.put(KEY_REGEX, regex);
+        jObject.put(KEY_REPLACEMENT, replacement);
+        jObject.put(KEY_APPLYTO, applyTo);
+        return jObject;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void deserializeFromJSON(JSONObject jObject) throws JSONException {
+        pattern = jObject.getString(KEY_PATTERN);
+        regex = jObject.getBoolean(KEY_REGEX);
+        replacement = jObject.getString(KEY_REPLACEMENT);
+        applyTo = ApplyTo.getValue(jObject.getInt(KEY_APPLYTO));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void createFromParcel(Parcel in) {
+        pattern = in.readString();
+        regex = toBoolean(in.readByte());
+        replacement = in.readString();
+        applyTo = ApplyTo.getValue(in.readInt());
     }
 
     /**

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/Rule_ItemLabel"
+            android:text="@string/rule_changecase_case" />
+
+        <Spinner
+            android:id="@+id/rule_changecase_case_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rule_item_height"
+            android:spinnerMode="dropdown"
+            android:entries="@array/rule_changecase_case_array" />
+
+        <include layout="@layout/rule_section_applyto" />
+
+    </LinearLayout>
+
+</ScrollView>

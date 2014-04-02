@@ -41,7 +41,6 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     private static final String ARG_RULE = "rule";
     private static final String ARG_INDEX = "index";
 
-    private static final int ID_NEW_RULE_ADD = 1;
     private static final long MOVE_DURATION = 250;
     private static final long FADE_DURATION = 250;
     private final SparseIntArray mItemIdTopMap = new SparseIntArray();
@@ -348,7 +347,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
                 RuleAdapter adapter = (RuleAdapter) getListAdapter();
                 adapter.insert(rule, index);
             }
-        }).showUndoBar(false, getString(R.string.rule_remove_message), bundle);
+        }).showUndoBar(false, getString(R.string.rule_generic_remove_message), bundle);
 
         // Delete the item from the adapter
         mAdapter.remove(removedRule);
