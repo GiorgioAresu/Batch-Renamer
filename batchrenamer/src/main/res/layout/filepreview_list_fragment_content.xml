@@ -67,7 +67,7 @@
             android:layout_height="match_parent"
             android:fastScrollEnabled="true"
             android:choiceMode="none"
-            tools:listitem="@layout/filepreview_list" />
+            tools:listitem="@layout/filepreview_list_row" />
 
         <LinearLayout
             android:id="@+id/file_list_loading"
