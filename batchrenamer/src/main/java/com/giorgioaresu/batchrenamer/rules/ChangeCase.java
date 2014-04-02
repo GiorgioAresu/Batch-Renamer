@@ -161,19 +161,19 @@ public class ChangeCase extends Rule {
         }
 
         public static CaseMode getValue(int _id) {
-            CaseMode[] As = CaseMode.values();
-            for (int i = 0; i < As.length; i++) {
-                if (As[i].compare(_id))
-                    return As[i];
+            CaseMode[] array = CaseMode.values();
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].compare(_id))
+                    return array[i];
             }
             // Value not recognized. Just return default value.
             return UPPER;
         }
 
         public static String getLabel(Context context, CaseMode caseMode) {
-            String[] caseString = context.getResources().getStringArray(R.array.rule_changecase_case_array);
-            int index = Math.min(caseMode.getID(), caseString.length - 1);
-            return caseString[index];
+            String[] array = context.getResources().getStringArray(R.array.rule_changecase_case_array);
+            int index = Math.min(caseMode.getID(), array.length - 1);
+            return array[index];
         }
     }
 

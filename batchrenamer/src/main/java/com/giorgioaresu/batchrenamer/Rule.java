@@ -420,19 +420,19 @@ public abstract class Rule implements Parcelable {
         }
 
         public static ApplyTo getValue(int _id) {
-            ApplyTo[] As = ApplyTo.values();
-            for (int i = 0; i < As.length; i++) {
-                if (As[i].compare(_id))
-                    return As[i];
+            ApplyTo[] array = ApplyTo.values();
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].compare(_id))
+                    return array[i];
             }
             // Value not recognized. Just return default value.
             return BOTH;
         }
 
         public static String getLabel(Context context, ApplyTo applyTo) {
-            String[] applyString = context.getResources().getStringArray(R.array.rule_generic_apply_array);
-            int index = Math.min(applyTo.id, applyString.length - 1);
-            return applyString[index];
+            String[] array = context.getResources().getStringArray(R.array.rule_generic_apply_array);
+            int index = Math.min(applyTo.id, array.length - 1);
+            return array[index];
         }
 
         public int getID() {

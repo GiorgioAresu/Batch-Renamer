@@ -260,19 +260,19 @@ public class Renumber extends Rule {
         }
 
         public static PadMode getValue(int _id) {
-            PadMode[] As = PadMode.values();
-            for (int i = 0; i < As.length; i++) {
-                if (As[i].compare(_id))
-                    return As[i];
+            PadMode[] array = PadMode.values();
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].compare(_id))
+                    return array[i];
             }
             // Value not recognized. Just return default value.
             return AUTO;
         }
 
         public static String getLabel(Context context, PadMode padMode) {
-            String[] paddingString = context.getResources().getStringArray(R.array.rule_renumber_padding_array);
-            int index = Math.min(padMode.getID(), paddingString.length - 1);
-            return paddingString[index];
+            String[] array = context.getResources().getStringArray(R.array.rule_renumber_padding_array);
+            int index = Math.min(padMode.getID(), array.length - 1);
+            return array[index];
         }
     }
 }
