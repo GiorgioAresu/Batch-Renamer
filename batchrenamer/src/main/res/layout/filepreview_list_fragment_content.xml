@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="@dimen/card_padding_vertical"
-    android:paddingRight="@dimen/card_padding_horizontal"
     android:paddingBottom="@dimen/card_padding_vertical"
-    android:paddingLeft="@dimen/card_padding_horizontal"
     android:background="@drawable/bg_card">
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/card_padding_horizontal"
+        android:layout_marginLeft="@dimen/card_padding_horizontal"
         android:layout_marginBottom="5dp"
         android:stretchColumns="0,2">
 
@@ -59,14 +59,20 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never" >
 
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingRight="@dimen/card_padding_horizontal"
+            android:paddingLeft="@dimen/card_padding_horizontal"
+            android:cacheColorHint="@android:color/white"
+            android:scrollbarStyle="outsideOverlay"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdgeLength="25dp"
             android:fastScrollEnabled="true"
-            android:choiceMode="none"
             tools:listitem="@layout/filepreview_list_row" />
 
         <LinearLayout
@@ -74,6 +80,8 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingRight="@dimen/card_padding_horizontal"
+            android:paddingLeft="@dimen/card_padding_horizontal"
             android:visibility="gone">
 
             <Space

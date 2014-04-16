@@ -19,6 +19,7 @@
 
             <corners android:radius="2dp" />
 
+            <!-- If you change this, change also CacheColorHint of listviews -->
             <solid android:color="@android:color/white" />
         </shape>
     </item>
