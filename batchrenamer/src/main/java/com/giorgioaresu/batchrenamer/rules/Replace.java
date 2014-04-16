@@ -10,9 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
+import com.giorgioaresu.batchrenamer.Rule;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -13,10 +13,6 @@ import com.giorgioaresu.batchrenamer.Rule;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class Whitespaces extends Rule {
     static final String KEY_SPACE_CHAR = "SpaceChar";
     static final String KEY_REDUCE_DUPLICATES = "ReduceDuplicates";
