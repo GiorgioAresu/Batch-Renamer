@@ -18,7 +18,6 @@ package com.giorgioaresu.batchrenamer;
 
 import android.util.Log;
 
-import eu.chainfire.libsuperuser.BuildConfig;
 
 /**
  * Utility class for logging and debug features that (by default) does nothing when not in debug mode
