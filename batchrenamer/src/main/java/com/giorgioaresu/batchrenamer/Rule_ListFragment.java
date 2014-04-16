@@ -116,16 +116,19 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             Context context = getActivity();
             sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
             mRules = new ArrayList<>();
-            Set<String> rules = sharedPrefs.getStringSet(KEY_PREF_LAST_RULE_SET, new HashSet<String>(0));
-            for (String rule : rules) {
-                try {
-                    JSONObject jObj = new JSONObject(rule);
-                    Rule newRule = Rule.createFromJSON(context, jObj);
-                    if (newRule != null) {
-                        mRules.add(newRule);
+            // Check if we should start with empty list or load old rules
+            if (sharedPrefs.getBoolean("remember_rules", true)) {
+                Set<String> rules = sharedPrefs.getStringSet(KEY_PREF_LAST_RULE_SET, new HashSet<String>(0));
+                for (String rule : rules) {
+                    try {
+                        JSONObject jObj = new JSONObject(rule);
+                        Rule newRule = Rule.createFromJSON(context, jObj);
+                        if (newRule != null) {
+                            mRules.add(newRule);
+                        }
+                    } catch (Exception e) {
+                        Debug.logError(getClass(), "failed to create JSONObject from string \"" + rule + "\"");
                     }
-                } catch (Exception e) {
-                    Debug.logError(getClass(), "failed to create JSONObject from string \"" + rule + "\"");
                 }
             }
         }
