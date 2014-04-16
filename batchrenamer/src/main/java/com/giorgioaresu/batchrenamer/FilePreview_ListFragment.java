@@ -52,6 +52,7 @@ public class FilePreview_ListFragment extends File_ListFragment {
         Parcelable parcelableExtra = intent.getParcelableExtra(Intent.EXTRA_STREAM);
         if (parcelableExtra != null) {
             Uri uri = decodeUri((Uri) parcelableExtra);
+            Debug.log("ParcelableExtra URI " + uri);
             if (uri != null) {
                 add(new File(uri));
             } else {
@@ -78,6 +79,7 @@ public class FilePreview_ListFragment extends File_ListFragment {
             boolean filesSkipped = false;
             for (Uri uri : parcelableArrayListExtra) {
                 uri = decodeUri(uri);
+                Debug.log("ParcelableExtra URI " + uri);
                 if (uri != null) {
                     add(new File(uri));
                 } else {

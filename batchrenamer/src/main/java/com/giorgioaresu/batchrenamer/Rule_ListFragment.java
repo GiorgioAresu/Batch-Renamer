@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -221,7 +220,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             return true;
         } catch (Exception b) {
             Toast.makeText(activity, getString(R.string.action_newRule_error), Toast.LENGTH_SHORT).show();
-            Log.e("batchrenamer", "Exception handling item click, skipping");
+            Debug.logError("Exception handling item click, skipping", b);
             return false;
         }
     }

@@ -85,9 +85,10 @@ public class File implements Parcelable {
                         status = RENAME.getValue(Integer.valueOf(result.get(0)));
                     }
                 } else {
-                    Debug.log("su not available");
+                    Debug.logError("su not available");
                 }
             } catch (Exception e) {
+                Debug.logError("Error obtaining root access", e);
             }
             status = RENAME.FAILED_PERMISSION;
         } else if (!from.exists()) {
