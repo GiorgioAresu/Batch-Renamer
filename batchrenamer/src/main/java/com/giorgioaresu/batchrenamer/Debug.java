@@ -16,8 +16,12 @@
 
 package com.giorgioaresu.batchrenamer;
 
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Utility class for logging and debug features that (by default) does nothing when not in debug mode
@@ -28,6 +32,8 @@ public class Debug {
 
     private static boolean debug = BuildConfig.DEBUG;
 
+    private static boolean debugToFile = true;
+
     /**
      * <p>Enable or disable debug mode</p>
      * <p/>
@@ -37,8 +43,8 @@ public class Debug {
      *
      * @param enabled Enable debug mode ?
      */
-    public static void setDebug(boolean enable) {
-        debug = enable;
+    public static void setDebug(boolean enabled) {
+        debug = enabled;
     }
 
     /**
@@ -79,13 +85,42 @@ public class Debug {
      * @param message       The message to log
      */
     private static void logCommon(int type, String typeIndicator, String message) {
-        if (debug && ((logTypes & type) == type)) {
+        if ((logTypes & type) == type) {
             if (logListener != null) {
                 logListener.onLog(type, typeIndicator, message);
             } else {
-                Log.d(TAG, "[" + TAG + "][" + typeIndicator + "]" + (!message.startsWith("[") && !message.startsWith(" ") ? " " : "") + message);
+                String text = "[" + TAG + "][" + typeIndicator + "]" + (!message.startsWith("[") && !message.startsWith(" ") ? " " : "") + message;
+                if (debug) {
+                    Log.d(TAG, message);
+                }
+                if (debugToFile) {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+                    String timestamp = df.format(new Date());
+                    writeToLogFile(timestamp + " " + message);
+                }
             }
         }
+    }
+
+    private static void writeToLogFile(String what) {
+        // Get the directory for the user's public pictures directory.
+        java.io.File file = new java.io.File(Environment.getExternalStorageDirectory(), "batchrenamer-log.txt");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file, true);
+            outputStream.write((what + "\n").getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /* Checks if external storage is available for read and write */
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -110,8 +145,16 @@ public class Debug {
         logCommon(LOG_ERROR, "E", message);
     }
 
+    public static void logError(String message, Exception e) {
+        logError(message + " (" + e.getMessage() + ")");
+    }
+
     public static void logError(Class c, String message) {
         logError("(" + c.getSimpleName() + ") " + message);
+    }
+
+    public static void logError(Class c, String message, Exception e) {
+        logError("(" + c.getSimpleName() + ") " + message, e);
     }
 
     /**
@@ -124,8 +167,8 @@ public class Debug {
      * @param type    LOG_* constants
      * @param enabled Enable or disable
      */
-    public static void setLogTypeEnabled(int type, boolean enable) {
-        if (enable) {
+    public static void setLogTypeEnabled(int type, boolean enabled) {
+        if (enabled) {
             logTypes |= type;
         } else {
             logTypes &= ~type;
