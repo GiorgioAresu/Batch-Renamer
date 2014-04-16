@@ -183,9 +183,13 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                             .show();
                 }
                 return true;
+            case R.id.action_settings:
+                Intent settings = new Intent(this, SettingsActivity.class);
+                startActivity(settings);
+                return true;
             case R.id.action_about:
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
+                Intent about = new Intent(this, AboutActivity.class);
+                startActivity(about);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

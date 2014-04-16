@@ -10,6 +10,12 @@
         android:icon="@drawable/ic_rule_start_light" />
 
     <item
+        android:id="@+id/action_settings"
+        android:title="@string/title_activity_settings"
+        android:orderInCategory="90"
+        android:showAsAction="never" />
+
+    <item
         android:id="@+id/action_about"
         android:title="@string/title_activity_about"
         android:orderInCategory="100"

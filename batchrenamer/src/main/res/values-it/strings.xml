@@ -35,6 +35,15 @@
     <string name="about_eula_dialog_title">ACCORDO DI LICENZA CON L\'UTENTE FINALE</string>
 
     <!--                      -->
+    <!--  SETTINGS ACTIVITY   -->
+    <!--                      -->
+    <string name="title_activity_settings">Impostazioni</string>
+    <string name="pref_header_general">Generali</string>
+    <string name="pref_title_remember_rules">Ricorda regole</string>
+    <string name="pref_description_remember_rules_checked">All\'avvio dell\'app, carica le regole dell\'ultima volta</string>
+    <string name="pref_description_remember_rules_unchecked">All\'avvio dell\'app, parti con una lista vuota di regole</string>
+
+    <!--                      -->
     <!--  ACTION BAR          -->
     <!--                      -->
     <!-- Text for the item that adds a rule to the list -->
