@@ -40,8 +40,8 @@
     <string name="title_activity_settings">Settings</string>
     <string name="pref_header_general">General</string>
     <string name="pref_title_remember_rules">Remember rules</string>
-    <string name="pref_description_remember_rules_checked">When starting the app, load last time rules</string>
-    <string name="pref_description_remember_rules_unchecked">When starting the app, start with an empty rule list</string>
+    <string name="pref_description_remember_rules_checked">On launch, load rules of the last time</string>
+    <string name="pref_description_remember_rules_unchecked">On launch, start with an empty rule list</string>
     <string name="pref_title_debug_mode">Debug mode</string>
     <string name="pref_description_debug_mode">May slow down the app. Leave disabled unless you know what you\'re doing</string>
 
