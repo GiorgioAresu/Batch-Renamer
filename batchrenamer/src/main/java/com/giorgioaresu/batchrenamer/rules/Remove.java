@@ -127,7 +127,7 @@ public class Remove extends Rule {
         jObject.put(KEY_CHARACTERS, characters);
         jObject.put(KEY_POSITION, position);
         jObject.put(KEY_BACKWARD, backward);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 

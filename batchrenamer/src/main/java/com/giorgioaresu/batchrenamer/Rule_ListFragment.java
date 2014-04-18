@@ -4,9 +4,12 @@ package com.giorgioaresu.batchrenamer;
 import android.animation.Animator;
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -22,12 +25,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.giorgioaresu.batchrenamer.rules.Add;
+import org.json.JSONObject;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A fragment representing a list of Items.
@@ -37,6 +42,7 @@ import java.util.Map;
  * interface.
  */
 public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener, RuleAdapter.ruleAdapter_Callbacks, RuleEdit_Fragment.ruleEditFragment_Callbacks {
+    private static final String KEY_PREF_LAST_RULE_SET = "LastRuleSet";
     private static final String ARG_RULES = "rules";
     private static final String ARG_RULE = "rule";
     private static final String ARG_INDEX = "index";
@@ -44,6 +50,8 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     private static final long MOVE_DURATION = 250;
     private static final long FADE_DURATION = 250;
     private final SparseIntArray mItemIdTopMap = new SparseIntArray();
+
+    private SharedPreferences sharedPrefs;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,6 +78,26 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
         return rules;
     }
 
+    public Set<String> getRulesAsJSONStrings() {
+        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
+        Set<String> rules = new HashSet<>();
+
+        for (int i = 0; i < adapter.getCount(); ++i) {
+            rules.add(((Rule) adapter.getItem(i)).dumpToJSON().toString());
+        }
+        return rules;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Set<String> rules = getRulesAsJSONStrings();
+        if (sharedPrefs == null) {
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        }
+        sharedPrefs.edit().putStringSet(KEY_PREF_LAST_RULE_SET, rules).commit();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,9 +113,20 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             mRules = savedInstanceState.getParcelableArrayList(ARG_RULES);
         } else {
             // Eventually populate rules for the first time
+            Context context = getActivity();
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
             mRules = new ArrayList<>();
-            for (int i = 0; i < 0; i++) {
-                mRules.add(new Add(getActivity()));
+            Set<String> rules = sharedPrefs.getStringSet(KEY_PREF_LAST_RULE_SET, new HashSet<String>(0));
+            for (String rule : rules) {
+                try {
+                    JSONObject jObj = new JSONObject(rule);
+                    Rule newRule = Rule.createFromJSON(context, jObj);
+                    if (newRule != null) {
+                        mRules.add(newRule);
+                    }
+                } catch (Exception e) {
+                    Debug.logError(getClass(), "failed to create JSONObject from string \"" + rule + "\"");
+                }
             }
         }
         setListAdapter(new RuleAdapter(getActivity(), R.layout.rule_list_row, mRules, this));

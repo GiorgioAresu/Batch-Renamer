@@ -180,7 +180,7 @@ public class Replace extends Rule {
         jObject.put(KEY_PATTERN, pattern);
         jObject.put(KEY_REGEX, regex);
         jObject.put(KEY_REPLACEMENT, replacement);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 
