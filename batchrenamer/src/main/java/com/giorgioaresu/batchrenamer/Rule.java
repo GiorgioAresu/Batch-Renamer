@@ -51,26 +51,6 @@ public abstract class Rule implements Parcelable {
         return rules;
     }
 
-    /**
-     * Creates an rule from content described in a JSONObject
-     *
-     * @param context Context used to instantiate the rule
-     * @param jObject JSONObject containing rule description
-     * @return
-     */
-    public static final Rule createFromJSON(Context context, JSONObject jObject) {
-        try {
-            Class<?> c = Class.forName(jObject.getString(KEY_TYPE));
-            Constructor<?> cons = c.getConstructors()[0];
-            Rule rule = (Rule) cons.newInstance(context);
-            rule.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
-            return rule;
-        } catch (Exception e) {
-            Log.e("batchrenamer", "Exception creating item from JSON, skipping");
-            return null;
-        }
-    }
-
     public String getTitle() {
         return title;
     }
@@ -252,6 +232,26 @@ public abstract class Rule implements Parcelable {
      */
     protected boolean toBoolean(byte b) {
         return b != 0;
+    }
+
+    /**
+     * Creates an rule from content described in a JSONObject
+     *
+     * @param context Context used to instantiate the rule
+     * @param jObject JSONObject containing rule description
+     * @return
+     */
+    public static final Rule createFromJSON(Context context, JSONObject jObject) {
+        try {
+            Class<?> c = Class.forName(jObject.getString(KEY_TYPE));
+            Constructor<?> cons = c.getConstructors()[0];
+            Rule rule = (Rule) cons.newInstance(context);
+            rule.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
+            return rule;
+        } catch (Exception e) {
+            Log.e("batchrenamer", "Exception creating item from JSON, skipping");
+            return null;
+        }
     }
 
     /**
