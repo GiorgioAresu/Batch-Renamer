@@ -6,6 +6,12 @@
         android:summary="@string/pref_description_remember_rules_checked"
         android:defaultValue="true" />
 
+    <CheckBoxPreference
+        android:key="debug_mode"
+        android:title="@string/pref_title_debug_mode"
+        android:summary="@string/pref_description_debug_mode"
+        android:defaultValue="false" />
+
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <!--EditTextPreference

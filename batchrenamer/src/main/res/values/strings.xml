@@ -42,6 +42,8 @@
     <string name="pref_title_remember_rules">Remember rules</string>
     <string name="pref_description_remember_rules_checked">When starting the app, load last time rules</string>
     <string name="pref_description_remember_rules_unchecked">When starting the app, start with an empty rule list</string>
+    <string name="pref_title_debug_mode">Debug mode</string>
+    <string name="pref_description_debug_mode">May slow down the app. Leave disabled unless you know what you\'re doing</string>
 
     <!--                      -->
     <!--  ACTION BAR          -->

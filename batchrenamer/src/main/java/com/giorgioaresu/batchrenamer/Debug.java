@@ -27,12 +27,13 @@ import java.util.Date;
  * Utility class for logging and debug features that (by default) does nothing when not in debug mode
  */
 public class Debug {
+    public static final String LOG_FILENAME = "batchrenamer-log.txt";
 
     // ----- DEBUGGING -----
 
     private static boolean debug = BuildConfig.DEBUG;
 
-    private static boolean debugToFile = true;
+    private static boolean debugToFile = false;
 
     /**
      * <p>Enable or disable debug mode</p>
@@ -54,6 +55,31 @@ public class Debug {
      */
     public static boolean getDebug() {
         return debug;
+    }
+
+    /**
+     * <p>Enable or disable debug to file mode</p>
+     * <p/>
+     * <p>By default, debug mode is disabled</p>
+     *
+     * @param enabled Enable debug to file mode ?
+     */
+    public static void setDebugToFile(boolean enabled) {
+        debugToFile = enabled;
+        if (!enabled) {
+            // Remove old file
+            java.io.File file = new java.io.File(Environment.getExternalStorageDirectory(), LOG_FILENAME);
+            file.delete();
+        }
+    }
+
+    /**
+     * <p>Is debug to file mode enabled ?</p>
+     *
+     * @return Debug to file mode enabled
+     */
+    public static boolean getDebugToFile() {
+        return debugToFile;
     }
 
     // ----- LOGGING -----
@@ -104,7 +130,7 @@ public class Debug {
 
     private static void writeToLogFile(String what) {
         // Get the directory for the user's public pictures directory.
-        java.io.File file = new java.io.File(Environment.getExternalStorageDirectory(), "batchrenamer-log.txt");
+        java.io.File file = new java.io.File(Environment.getExternalStorageDirectory(), LOG_FILENAME);
         try {
             FileOutputStream outputStream = new FileOutputStream(file, true);
             outputStream.write((what + "\n").getBytes());
