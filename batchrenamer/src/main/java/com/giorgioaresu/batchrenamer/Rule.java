@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -251,7 +250,7 @@ public abstract class Rule implements Parcelable {
             rule.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
             return rule;
         } catch (Exception e) {
-            Log.e("batchrenamer", "Exception creating item from JSON, skipping");
+            Debug.logError("Exception creating rule from JSON, skipping", e);
             return null;
         }
     }
@@ -268,7 +267,7 @@ public abstract class Rule implements Parcelable {
             jObject.put(KEY_CONTENT, serializeToJSON());
             return jObject;
         } catch (JSONException e) {
-            Log.e("batchrenamer", "Exception dumping item to JSON, skipping");
+            Debug.logError("Exception dumping rule to JSON, skipping", e);
             return null;
         }
     }
@@ -299,7 +298,7 @@ public abstract class Rule implements Parcelable {
                 rule.createFromParcel(in);
                 return rule;
             } catch (Exception b) {
-                Log.e("batchrenamer", "Exception creating item, skipping");
+                Debug.logError("Exception creating item, skipping. Message: ", b);
                 return null;
             }
         }

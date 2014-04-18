@@ -54,6 +54,21 @@ public class SettingsActivity extends PreferenceActivity {
         }
     };
 
+    private static final Preference.OnPreferenceChangeListener debugModeChangeListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object o) {
+            CheckBoxPreference pref = (CheckBoxPreference) preference;
+            // SUMMARIES HAS TO BE INVERTED, because the check is made BEFORE the value
+            // has actually changed, so here we are reading OLD value
+            if (pref.isChecked()) {
+                Debug.setDebugToFile(false);
+            } else {
+                Debug.setDebugToFile(true);
+            }
+            return true;
+        }
+    };
+
 
     @Override
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -85,6 +100,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.pref_general);
 
         findPreference("remember_rules").setOnPreferenceChangeListener(rememberRulesChangeListener);
+        findPreference("debug_mode").setOnPreferenceChangeListener(debugModeChangeListener);
 
         /*// Add 'notifications' preferences, and a corresponding header.
         PreferenceCategory fakeHeader = new PreferenceCategory(this);
@@ -216,6 +232,7 @@ public class SettingsActivity extends PreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             findPreference("remember_rules").setOnPreferenceChangeListener(rememberRulesChangeListener);
+            findPreference("debug_mode").setOnPreferenceChangeListener(debugModeChangeListener);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

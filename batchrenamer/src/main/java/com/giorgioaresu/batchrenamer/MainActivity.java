@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,7 +87,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                         }
                         outputStream.close();
                     } catch (Exception e) {
-                        Log.e("batchrenamer", "Failed to copy script");
+                        Debug.logError("Failed to copy script", e);
                     }
                 }
             };
@@ -125,6 +124,14 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         // Get action and MIME type
         String action = intent.getAction();
         String type = intent.getType();
+
+        if (Debug.isExternalStorageWritable()) {
+            Debug.log("Action " + action);
+            Debug.log("Type " + type);
+        } else {
+            Toast.makeText(this, "Permessi insufficienti per scrivere il file di log", Toast.LENGTH_LONG).show();
+        }
+
         if (Intent.ACTION_SEND.equals(action) && type != null) {
             // Single file shared
             if (!filePreviewList_fragment.handleSendIntent(intent)) {
@@ -252,7 +259,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         RenameFiles_AsyncTask renameFiles_asyncTask = new RenameFiles_AsyncTask(new RenameFiles_AsyncTask.renameFiles_Callbacks() {
             @Override
             public void updateProgressInUI(Integer progress, Integer elements, File.RENAME result) {
-                Debug.log("Progress: " + progress);
+                //Debug.log("Progress: " + progress);
             }
 
             @Override
