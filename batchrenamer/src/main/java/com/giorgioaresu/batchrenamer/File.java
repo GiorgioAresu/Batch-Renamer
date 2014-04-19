@@ -121,7 +121,7 @@ public class File implements Parcelable {
                 if (SuHelper.isSuAvailable()) {
                     String shell = "sh";
                     String scriptPath = MainActivity.scriptFile.getCanonicalPath();
-                    String command = String.format("%1$s \"%2$s\" \"%3$s\" \"%4$s\"",
+                    String command = String.format("%s \"%s\" \"%s\" \"%s\"",
                             shell,
                             scriptPath,
                             from.getCanonicalPath(),
