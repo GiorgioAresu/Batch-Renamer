@@ -107,6 +107,10 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
         elaborateIntent(getIntent());
 
         guiHolder = new UpdatingFilenamesGuiHolder();
+
+        if (ruleList_fragment.getListAdapter().getCount() > 0){
+            startFileNamesUpdate();
+        }
     }
 
     @Override
