@@ -69,6 +69,9 @@
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->
     <string name="empty_rulelist">Empty rule list. Add some rules first</string>
+    <string name="action_favorites">Favorite rules</string>
+    <string name="action_favoritesAdd">Add to favorites</string>
+    <string name="action_favoritesManage">Manage favorites</string>
 
     <!--                      -->
     <!--  FILE SECTION        -->
