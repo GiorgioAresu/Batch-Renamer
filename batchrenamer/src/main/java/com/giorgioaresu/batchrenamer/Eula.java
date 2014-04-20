@@ -32,7 +32,7 @@ public class Eula {
      */
     public static void setAcceptedEula(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        sharedPreferences.edit().putBoolean(KEY_ACCEPTED_EULA, true).commit();
+        sharedPreferences.edit().putBoolean(KEY_ACCEPTED_EULA, true).apply();
     }
 
     /**

@@ -94,7 +94,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
         if (sharedPrefs == null) {
             sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         }
-        sharedPrefs.edit().putStringSet(KEY_PREF_LAST_RULE_SET, rules).commit();
+        sharedPrefs.edit().putStringSet(KEY_PREF_LAST_RULE_SET, rules).apply();
     }
 
     @Override
