@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Constructor;
@@ -258,6 +259,22 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             if (!rule.isValid()) return false;
         }
         return true;
+    }
+
+    /**
+     * Dump all rules to a JSONArray
+     *
+     * @return JSONArray filled with rules
+     */
+    public JSONArray rulesToJSONArray() {
+        JSONArray rules = new JSONArray();
+        RuleAdapter adapter = (RuleAdapter) getListAdapter();
+        int size = getListAdapter().getCount();
+        for (int i = 0; i < size; i++) {
+            Rule rule = adapter.getItem(i);
+            rules.put(rule.dumpToJSON());
+        }
+        return rules;
     }
 
     @Override

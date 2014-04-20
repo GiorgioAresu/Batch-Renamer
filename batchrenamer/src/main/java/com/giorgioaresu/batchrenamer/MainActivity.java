@@ -6,15 +6,22 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
@@ -22,6 +29,7 @@ import java.io.InputStreamReader;
 import java.util.GregorianCalendar;
 
 public class MainActivity extends Activity implements File_ListFragment.FileFragmentInterface {
+    public static final String PREF_KEY_FAVORITES = "favorite_rulelists";
     GregorianCalendar expDate = new GregorianCalendar( 2014, 11, 31 ); // midnight
     GregorianCalendar now = new GregorianCalendar();
 
@@ -194,6 +202,63 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                             .show();
                 }
                 return true;
+            case R.id.action_favoritesAdd:
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                try {
+                    String favs = prefs.getString(PREF_KEY_FAVORITES, null);
+                    final JSONObject favorites = (favs != null) ? new JSONObject(favs) : new JSONObject();
+                    final Context context = this;
+
+                    // Create an EditText view to get user input
+                    final EditText input = new EditText(this);
+
+                    // Ask for a label and a confirm if already present
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context)
+                            .setTitle(R.string.action_favoritesAddLabel)
+                            .setView(input)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(final DialogInterface dialog, int whichButton) {
+                                    final String label = input.getText().toString();
+                                    if (label != "") {
+                                        if (favorites != null && favorites.has(label)) {
+                                            AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context)
+                                                    .setMessage(R.string.action_favoritesAddReplaceLabel)
+                                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int i) {
+                                                            addRulesToFavorites(prefs, favorites, label);
+                                                        }
+                                                    })
+                                                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int i) {
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+                                            replaceDialog.show();
+                                        } else {
+                                            addRulesToFavorites(prefs, favorites, label);
+                                        }
+                                    } else {
+                                        Toast.makeText(context, R.string.action_favoritesAddLabelInvalid, Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                            });
+                    alert.show();
+                } catch (JSONException e) {
+                    Debug.logError("Error adding rule list to favorites", e);
+                }
+                return true;
+            case R.id.action_favoritesManage:
+
+                return true;
             case R.id.action_settings:
                 Intent settings = new Intent(this, SettingsActivity.class);
                 startActivity(settings);
@@ -204,6 +269,17 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void addRulesToFavorites(SharedPreferences prefs, JSONObject favorites, String label) {
+        try {
+            JSONArray rules = ruleList_fragment.rulesToJSONArray();
+            favorites.put(label, rules);
+            prefs.edit().putString(PREF_KEY_FAVORITES, favorites.toString()).apply();
+            Toast.makeText(this, String.format(getString(R.string.action_favoritesAdded), label), Toast.LENGTH_SHORT).show();
+        } catch (JSONException e) {
+            Debug.logError("Error adding rule list to favorites", e);
         }
     }
 

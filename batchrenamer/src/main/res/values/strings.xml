@@ -71,6 +71,10 @@
     <string name="empty_rulelist">Empty rule list. Add some rules first</string>
     <string name="action_favorites">Favorite rules</string>
     <string name="action_favoritesAdd">Add to favorites</string>
+    <string name="action_favoritesAddLabel">Enter a label</string>
+    <string name="action_favoritesAddLabelInvalid">Invalid label</string>
+    <string name="action_favoritesAddReplaceLabel">There\'s already a favorite with the same label, do you want to replace it?</string>
+    <string name="action_favoritesAdded">\"%s\" saved</string>
     <string name="action_favoritesManage">Manage favorites</string>
 
     <!--                      -->

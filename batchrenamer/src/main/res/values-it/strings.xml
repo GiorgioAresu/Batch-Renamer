@@ -71,6 +71,10 @@
     <string name="empty_rulelist">Lista delle regole vuota. Aggiungi qualche regola prima</string>
     <string name="action_favorites">Regole preferite</string>
     <string name="action_favoritesAdd">Aggiungi ai preferiti</string>
+    <string name="action_favoritesAddLabel">Inserisci un\'etichetta</string>
+    <string name="action_favoritesAddLabelInvalid">Etichetta non valida</string>
+    <string name="action_favoritesAddReplaceLabel">C\'è già un preferito con la stessa etichetta. Lo vuoi sostituire?</string>
+    <string name="action_favoritesAdded">\"%s\" salvata</string>
     <string name="action_favoritesManage">Gestisci preferiti</string>
 
     <!--                      -->
