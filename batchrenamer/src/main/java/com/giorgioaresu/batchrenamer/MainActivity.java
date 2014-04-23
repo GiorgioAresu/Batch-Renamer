@@ -203,8 +203,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                 }
                 return true;
             case R.id.action_favoritesAdd:
-                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 try {
+                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     String favs = prefs.getString(PREF_KEY_FAVORITES, null);
                     final JSONObject favorites = (favs != null) ? new JSONObject(favs) : new JSONObject();
                     final Context context = this;
@@ -253,7 +253,41 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                             });
                     alert.show();
                 } catch (JSONException e) {
-                    Debug.logError("Error adding rule list to favorites", e);
+                    Debug.logError(getClass(), "Error adding rule list to favorites", e);
+                }
+                return true;
+            case R.id.action_favoritesLoad:
+                try {
+                    final Context context = this;
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    String favs = prefs.getString(PREF_KEY_FAVORITES, null);
+                    final JSONObject favorites = (favs != null) ? new JSONObject(favs) : new JSONObject();
+                    final CharSequence[] items = new CharSequence[favorites.length()];
+                    JSONArray names = favorites.names();
+                    for (int i=0; i<names.length(); ++i) {
+                        items[i] = names.getString(i);
+                    }
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(context)
+                            .setTitle(R.string.action_favoritesLoad)
+                            .setItems(items, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    RuleAdapter adapter = (RuleAdapter) ruleList_fragment.getListAdapter();
+                                    adapter.clear();
+                                    try {
+                                        JSONArray favorite = favorites.getJSONArray(items[i].toString());
+                                        for (int j=0; j<favorite.length(); ++j) {
+                                            adapter.add(Rule.createFromJSON(context, favorite.getJSONObject(j)));
+                                        }
+                                    } catch (JSONException e) {
+                                        Debug.logError(getClass(), "Error loading favorite", e);
+                                    }
+                                }
+                            });
+                    alert.show();
+                } catch (JSONException e) {
+                    Debug.logError(getClass(), "Error loading rule list from favorites", e);
                 }
                 return true;
             case R.id.action_favoritesManage:
