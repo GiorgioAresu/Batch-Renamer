@@ -5,8 +5,9 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Integer, Void> {
+public class UpdateFileNames_AsyncTask extends AsyncTask<List<File>,Integer,Void> {
     Activity mActivity;
     private updateFileNames_Callbacks mListener;
 
@@ -22,7 +23,7 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
     }
 
     @Override
-    protected Void doInBackground(ArrayList<File>... arrayLists) {
+    protected Void doInBackground(List<File>... arrayLists) {
         Rule_ListFragment ruleList_fragment = mListener.getRuleListFragment();
         File_ListFragment fileList_fragment = mListener.getFileListFragment();
         int counter = 0;

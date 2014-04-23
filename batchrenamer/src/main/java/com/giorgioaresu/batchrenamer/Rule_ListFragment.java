@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -31,6 +32,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,11 +63,15 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     }
 
     public static Rule_ListFragment newInstance(ArrayList<Rule> rules) {
-        Rule_ListFragment fragment = new Rule_ListFragment();
+        ListFragment f = newInstance(new Rule_ListFragment(), rules);
+        return (Rule_ListFragment) f;
+    }
+
+    public static ListFragment newInstance(ListFragment f, ArrayList<Rule> rules) {
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_RULES, rules);
-        fragment.setArguments(args);
-        return fragment;
+        f.setArguments(args);
+        return f;
     }
 
     public ArrayList<Rule> getRules() {
@@ -103,7 +109,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ArrayList<Rule> mRules;
+        List<Rule> mRules;
 
         if (getArguments() != null) {
             // Retrieve rules from arguments
@@ -189,7 +195,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
                         @Override
                         public void onUndo(Parcelable token) {
                             Bundle b = (Bundle) token;
-                            ArrayList<Rule> rules = b.getParcelableArrayList(ARG_RULES);
+                            List<Rule> rules = b.getParcelableArrayList(ARG_RULES);
                             RuleAdapter adapter = (RuleAdapter) getListAdapter();
                             adapter.clear();
                             adapter.addAll(rules);
@@ -254,7 +260,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
      * @return true if all rules are valid, false if at least one is not valid
      */
     public boolean areAllRulesValid() {
-        ArrayList<Rule> rules = getRules();
+        List<Rule> rules = getRules();
         for (Rule rule : rules) {
             if (!rule.isValid()) return false;
         }
@@ -511,6 +517,30 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
                 return true;
             }
         });
+    }
+
+    /**
+     * Rule_ListFragment w/ horizontal padding
+     */
+    public static class withHorizontalPadding extends Rule_ListFragment {
+        public withHorizontalPadding() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View v = super.onCreateView(inflater, container, savedInstanceState);
+            View l = v.findViewById(android.R.id.list);
+            Resources res = getResources();
+            int vPadding = (int) res.getDimension(R.dimen.activity_vertical_margin);
+            int hPadding = (int) res.getDimension(R.dimen.activity_horizontal_margin);
+            l.setPadding(hPadding, vPadding, hPadding, vPadding);
+            return v;
+        }
+
+        public static withHorizontalPadding newInstance(ArrayList<Rule> rules) {
+            ListFragment f = newInstance(new withHorizontalPadding(), rules);
+            return (withHorizontalPadding) f;
+        }
     }
 }
 
