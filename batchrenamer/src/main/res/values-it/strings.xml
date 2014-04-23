@@ -27,6 +27,12 @@
     <!--                      -->
     <string name="title_activity_manage_favorites">Gestione preferiti</string>
     <string name="favorites_loading_error">Errore nel caricamento dei preferiti</string>
+    <string name="action_favoritesManage_operations">Operazioni sui preferiti</string>
+    <string name="action_favoritesManage_operations_new">Nuovo preferito</string>
+    <string name="action_favoritesManage_operations_remove">Elimina preferito</string>
+    <string name="action_favoritesManage_operations_importexport">Importa-Esporta</string>
+    <string name="action_favoritesManage_operations_import">Importa da SD</string>
+    <string name="action_favoritesManage_operations_export">Esporta su SD</string>
 
     <!--                      -->
     <!--  ABOUT ACTIVITY      -->
@@ -81,6 +87,7 @@
     <string name="action_favoritesAddLabelInvalid">Etichetta non valida</string>
     <string name="action_favoritesAddReplaceLabel">C\'è già un preferito con la stessa etichetta. Lo vuoi sostituire?</string>
     <string name="action_favoritesAdded">\"%s\" salvata</string>
+    <string name="action_favoritesLoad">Load favorite</string>
     <string name="action_favoritesManage">Gestisci preferiti</string>
 
     <!--                      -->

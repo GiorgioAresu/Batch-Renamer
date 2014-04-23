@@ -12,11 +12,14 @@
                 android:id="@+id/action_favoritesAdd"
                 android:title="@string/action_favoritesAdd"
                 android:orderInCategory="1" />
-
+            <item
+                android:id="@+id/action_favoritesLoad"
+                android:title="@string/action_favoritesLoad"
+                android:orderInCategory="2" />
             <item
                 android:id="@+id/action_favoritesManage"
                 android:title="@string/action_favoritesManage"
-                android:orderInCategory="2" />
+                android:orderInCategory="3" />
         </menu>
     </item>
 
@@ -25,7 +28,7 @@
         android:title="@string/action_start"
         android:showAsAction="always|withText"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_rule_start_light" />
+        android:icon="@drawable/ic_action_start_light" />
 
     <item
         android:id="@+id/action_settings"

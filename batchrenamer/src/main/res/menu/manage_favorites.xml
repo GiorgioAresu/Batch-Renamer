@@ -1,9 +1,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.giorgioaresu.batchrenamer.ManageFavoritesActivity" >
-    
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+    <group>
+        <item
+            android:id="@+id/action_favoritesManage_operations_new"
+            android:title="@string/action_favoritesManage_operations_new"
+            android:icon="@drawable/ic_action_important_light"
+            android:showAsAction="ifRoom"
+            android:orderInCategory="11" />
+        <item
+            android:id="@+id/action_favoritesManage_operations_remove"
+            android:title="@string/action_favoritesManage_operations_remove"
+            android:icon="@drawable/ic_action_not_important_light"
+            android:showAsAction="ifRoom"
+            android:orderInCategory="12" />
+    </group>
+
+    <item
+        android:title="@string/action_favoritesManage_operations_importexport"
+        android:icon="@drawable/ic_action_import_export_light"
+        android:showAsAction="ifRoom"
+        android:orderInCategory="13" >
+        <menu>
+            <item
+                android:id="@+id/action_favoritesManage_operations_import"
+                android:title="@string/action_favoritesManage_operations_import"
+                android:orderInCategory="1" />
+            <item
+                android:id="@+id/action_favoritesManage_operations_export"
+                android:title="@string/action_favoritesManage_operations_export"
+                android:orderInCategory="2" />
+        </menu>
+    </item>
 </menu>
