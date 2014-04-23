@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -74,7 +74,7 @@ public class FilePreview_ListFragment extends File_ListFragment {
      */
     public boolean handleSendMultipleIntent(Intent intent) {
         clear();
-        ArrayList<Uri> parcelableArrayListExtra = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+        List<Uri> parcelableArrayListExtra = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
         if (parcelableArrayListExtra != null) {
             boolean filesSkipped = false;
             for (Uri uri : parcelableArrayListExtra) {

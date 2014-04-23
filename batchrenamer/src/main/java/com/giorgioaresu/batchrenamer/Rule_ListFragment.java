@@ -30,6 +30,7 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -102,7 +103,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ArrayList<Rule> mRules;
+        List<Rule> mRules;
 
         if (getArguments() != null) {
             // Retrieve rules from arguments
@@ -188,7 +189,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
                         @Override
                         public void onUndo(Parcelable token) {
                             Bundle b = (Bundle) token;
-                            ArrayList<Rule> rules = b.getParcelableArrayList(ARG_RULES);
+                            List<Rule> rules = b.getParcelableArrayList(ARG_RULES);
                             RuleAdapter adapter = (RuleAdapter) getListAdapter();
                             adapter.clear();
                             adapter.addAll(rules);
@@ -253,7 +254,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
      * @return true if all rules are valid, false if at least one is not valid
      */
     public boolean areAllRulesValid() {
-        ArrayList<Rule> rules = getRules();
+        List<Rule> rules = getRules();
         for (Rule rule : rules) {
             if (!rule.isValid()) return false;
         }

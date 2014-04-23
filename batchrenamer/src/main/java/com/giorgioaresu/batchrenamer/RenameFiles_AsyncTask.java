@@ -3,9 +3,9 @@ package com.giorgioaresu.batchrenamer;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, Void> {
+public class RenameFiles_AsyncTask extends AsyncTask<List<File>,Integer,Void> {
     private renameFiles_Callbacks mListener;
 
     private Context context;
@@ -32,7 +32,7 @@ public class RenameFiles_AsyncTask extends AsyncTask<ArrayList<File>, Integer, V
     }
 
     @Override
-    protected Void doInBackground(ArrayList<File>... arrayLists) {
+    protected Void doInBackground(List<File>... arrayLists) {
         int size = arrayLists[0].size();
         // Allow asking the user to give superuser permission even if
         // the previous time it declined the request
