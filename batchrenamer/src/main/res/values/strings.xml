@@ -23,6 +23,12 @@
     <string name="renaming_notification_summary_big">Renamed: <xliff:g id="number" example="5">%1$d</xliff:g> - Failed: <xliff:g id="number" example="1">%2$d</xliff:g></string>
 
     <!--                      -->
+    <!--  FAVORITES ACTIVITY  -->
+    <!--                      -->
+    <string name="title_activity_manage_favorites">Manage favorites</string>
+    <string name="favorites_loading_error">Error loading favorites</string>
+
+    <!--  -->
     <!--  ABOUT ACTIVITY      -->
     <!--                      -->
     <string name="title_activity_about">About</string>

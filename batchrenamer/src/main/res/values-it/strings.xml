@@ -23,6 +23,12 @@
     <string name="renaming_notification_summary_big">Rinominati: <xliff:g id="number" example="5">%1$d</xliff:g> - Falliti: <xliff:g id="number" example="1">%2$d</xliff:g></string>
 
     <!--                      -->
+    <!--  FAVORITES ACTIVITY  -->
+    <!--                      -->
+    <string name="title_activity_manage_favorites">Gestione preferiti</string>
+    <string name="favorites_loading_error">Errore nel caricamento dei preferiti</string>
+
+    <!--                      -->
     <!--  ABOUT ACTIVITY      -->
     <!--                      -->
     <string name="title_activity_about">A proposito di<xliff:g id="ellipsis">\u2026</xliff:g></string>

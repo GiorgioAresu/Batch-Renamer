@@ -257,7 +257,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                 }
                 return true;
             case R.id.action_favoritesManage:
-
+                Intent manageFavs = new Intent(this, ManageFavoritesActivity.class);
+                startActivity(manageFavs);
                 return true;
             case R.id.action_settings:
                 Intent settings = new Intent(this, SettingsActivity.class);
