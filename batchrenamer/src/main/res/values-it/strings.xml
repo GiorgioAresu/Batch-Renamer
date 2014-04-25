@@ -87,7 +87,9 @@
     <string name="action_favoritesAddLabelInvalid">Etichetta non valida</string>
     <string name="action_favoritesAddReplaceLabel">C\'è già un preferito con la stessa etichetta. Lo vuoi sostituire?</string>
     <string name="action_favoritesAdded">\"%s\" salvata</string>
+    <string name="action_favoritesAddError">Errore salvando il preferito</string>
     <string name="action_favoritesLoad">Load favorite</string>
+    <string name="action_favoritesEmpty">Non ci sono preferiti salvati</string>
     <string name="action_favoritesManage">Gestisci preferiti</string>
 
     <!--                      -->

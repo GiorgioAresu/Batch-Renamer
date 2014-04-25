@@ -87,7 +87,9 @@
     <string name="action_favoritesAddLabelInvalid">Invalid label</string>
     <string name="action_favoritesAddReplaceLabel">There\'s already a favorite with the same label, do you want to replace it?</string>
     <string name="action_favoritesAdded">\"%s\" saved</string>
+    <string name="action_favoritesAddError">Error saving favorite</string>
     <string name="action_favoritesLoad">Load favorite</string>
+    <string name="action_favoritesEmpty">There are no favorites saved</string>
     <string name="action_favoritesManage">Manage favorites</string>
 
     <!--                      -->

@@ -53,7 +53,17 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     private static final long FADE_DURATION = 250;
     private final SparseIntArray mItemIdTopMap = new SparseIntArray();
 
-    private SharedPreferences sharedPrefs;
+    private static SharedPreferences sharedPrefs;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private String title;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
