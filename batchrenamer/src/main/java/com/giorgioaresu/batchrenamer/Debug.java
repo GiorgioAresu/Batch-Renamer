@@ -159,6 +159,10 @@ public class Debug {
         logCommon(LOG_GENERAL, "G", message);
     }
 
+    public static void log(Class c, String message) {
+        log("(" + c.getSimpleName() + ") " + message);
+    }
+
     /**
      * <p>Log a "error" message</p>
      * <p/>
