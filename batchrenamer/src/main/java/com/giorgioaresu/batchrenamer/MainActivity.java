@@ -236,7 +236,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String favs = prefs.getString(PREF_KEY_FAVORITES, null);
             final JSONArray favorites = (favs != null) ? new JSONArray(favs) : new JSONArray();
-            final Context context = this;
+            final Context context = getApplicationContext();
 
             // Create an EditText view to get user input
             final EditText input = new EditText(this);
