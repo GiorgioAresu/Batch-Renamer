@@ -2,10 +2,12 @@ package com.giorgioaresu.batchrenamer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,8 +16,10 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,16 +30,26 @@ import org.json.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 public class ManageFavoritesActivity extends Activity {
-    JSONArray favorites;
-    JSONException exception;
-    int userChoiceOnImportingDuplicate;
+    /**
+     * Used as ID for startActivityForResult, when asking for a file
+     * to import favorites from
+     */
+    private static final int CHOOSE_FILE_REQUESTCODE = 1;
+
     static final int REPLACE = 2;
     static final int SKIP = 1;
     static final int RENAME = 0;
     static final int INVALID = -1;
+
+    JSONArray favorites;
+    JSONException exception;
+    int userChoiceOnImportingDuplicate;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -86,6 +100,12 @@ public class ManageFavoritesActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.manage_favorites, menu);
+        if (favorites.length() == 0) {
+            menu.findItem(R.id.action_favoritesManage_operations_rename).setVisible(false);
+            menu.findItem(R.id.action_favoritesManage_operations_remove).setVisible(false);
+            menu.findItem(R.id.action_favoritesManage_operations_export).setVisible(false);
+            menu.findItem(R.id.action_favoritesManage_operations_exportAll).setVisible(false);
+        }
         return true;
     }
 
@@ -107,48 +127,52 @@ public class ManageFavoritesActivity extends Activity {
                 removeFavorite(index);
                 return true;
             case R.id.action_favoritesManage_operations_import:
-                // TODO: Ask for a file
-                String filename = Application.EXTERNAL_FOLDER + "- ALL -" + ".json";
-                java.io.File file = new java.io.File(Environment.getExternalStorageDirectory(), filename);
-                String readJSON = loadJSONFromFile(file);
-                if (readJSON == null) {
-                    Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
-                } else {
-                    // Try reading it as a single rule
-                    try {
-                        JSONObject object = new JSONObject(readJSON);
-                        exception = null;
-                        putCheckingDuplicates(favorites, object, false);
-                        if (exception!=null) throw exception;
-                        Toast.makeText(this, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
-                        return true;
-                    } catch (JSONException e) {
-                        Debug.logError(getClass(), "Error reading file content as JSONObject", e);
-                    }
-
-                    // Try reading it as a set of rules
-                    try {
-                        JSONArray array = new JSONArray(readJSON);
-                        exception = null;
-                        userChoiceOnImportingDuplicate = INVALID;
-                        for (int i=0; i<array.length(); ++i) {
-                            putCheckingDuplicates(favorites, array.getJSONObject(i), true);
-                            if (exception!=null) {
-                                // Notify adapter of changes made till now and throw exception
-                                mSectionsPagerAdapter.notifyDataSetChanged();
-                                throw exception;
+                final Context context = getApplicationContext();
+                //openFile("application/octet-stream");
+                java.io.File mPath = new java.io.File(Environment.getExternalStorageDirectory(), Application.EXTERNAL_FOLDER);
+                FileDialog fileDialog = new FileDialog(this, mPath, ".json");
+                fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
+                    public void fileSelected(java.io.File file) {
+                        String readJSON = loadJSONFromFile(file);
+                        if (readJSON == null) {
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Try reading it as a single rule
+                            try {
+                                JSONObject object = new JSONObject(readJSON);
+                                exception = null;
+                                putCheckingDuplicates(favorites, object, false);
+                                if (exception!=null) throw exception;
+                                Toast.makeText(context, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                Debug.logError(getClass(), "Error reading file content as JSONObject", e);
                             }
-                        }
-                        mSectionsPagerAdapter.notifyDataSetChanged();
-                        Toast.makeText(this, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
-                        return true;
-                    } catch (JSONException e) {
-                        Debug.logError(getClass(), "Error reading file content as JSONArray", e);
-                    }
 
-                    // Both failed, warn user
-                    Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
-                }
+                            // Try reading it as a set of rules
+                            try {
+                                JSONArray array = new JSONArray(readJSON);
+                                exception = null;
+                                userChoiceOnImportingDuplicate = INVALID;
+                                for (int i=0; i<array.length(); ++i) {
+                                    putCheckingDuplicates(favorites, array.getJSONObject(i), true);
+                                    if (exception!=null) {
+                                        // Notify adapter of changes made till now and throw exception
+                                        mSectionsPagerAdapter.notifyDataSetChanged();
+                                        throw exception;
+                                    }
+                                }
+                                mSectionsPagerAdapter.notifyDataSetChanged();
+                                Toast.makeText(context, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                Debug.logError(getClass(), "Error reading file content as JSONArray", e);
+                            }
+
+                            // Both failed, warn user
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                fileDialog.showDialog();
                 return true;
             case R.id.action_favoritesManage_operations_export:
                 exportFavorite(index);
@@ -173,7 +197,8 @@ public class ManageFavoritesActivity extends Activity {
         final EditText input = new EditText(this);
 
         // Ask for a label and a confirm if already present
-        AlertDialog.Builder alert = new AlertDialog.Builder(context)
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        alert
                 .setTitle(R.string.action_favoritesAddLabel)
                 .setView(input)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -183,7 +208,8 @@ public class ManageFavoritesActivity extends Activity {
                         if (label != "") {
                             try {
                                 if (favorites != null && JSONUtil.has(favorites, MainActivity.FAVORITE_KEY_TITLE, label)) {
-                                    AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context)
+                                    AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context);
+                                    replaceDialog
                                             .setMessage(R.string.action_favoritesAddReplaceLabel)
                                             .setIcon(android.R.drawable.ic_dialog_alert)
                                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -287,19 +313,15 @@ public class ManageFavoritesActivity extends Activity {
      * @param index index of the element to be removed
      */
     private void removeFavorite(int index) {
-        String title = mSectionsPagerAdapter.getPageTitle(mViewPager.getCurrentItem()).toString();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             showUndobarForRemovedFavorite(index);
             favorites.remove(index);
             mSectionsPagerAdapter.notifyDataSetChanged();
-            Toast.makeText(this, String.format("%s removed", title), Toast.LENGTH_SHORT).show();
         } else {
             try {
                 showUndobarForRemovedFavorite(index);
                 favorites = JSONUtil.remove(favorites, index);
                 mSectionsPagerAdapter.notifyDataSetChanged();
-                Toast.makeText(this, String.format("%s removed", title), Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 Debug.logError(getClass(), "Error removing favorite", e);
                 Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show();
@@ -536,7 +558,7 @@ public class ManageFavoritesActivity extends Activity {
                 JSONObject item = favorites.getJSONObject(position);
                 name = item.getString(MainActivity.FAVORITE_KEY_TITLE);
                 JSONArray jRules = item.getJSONArray(MainActivity.FAVORITE_KEY_RULES);
-                for (int i=0; i<jRules.length(); ++i) {
+                for (int i = 0; i < jRules.length(); ++i) {
                     rules.add(Rule.createFromJSON(c, jRules.getJSONObject(i)));
                 }
             } catch (JSONException e) {
@@ -563,6 +585,183 @@ public class ManageFavoritesActivity extends Activity {
                 Toast.makeText(c, R.string.favorites_loading_error, Toast.LENGTH_SHORT).show();
             }
             return null;
+        }
+    }
+
+    private void checkForEmptyLayout() {
+        if (favorites.length()==0) {
+            findViewById(R.id.empty).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.empty).setVisibility(View.GONE);
+        }
+    }
+
+    public static class FileDialog {
+        private static final String PARENT_DIR = "..";
+        private final String TAG = getClass().getName();
+        private String[] fileList;
+        private java.io.File currentPath;
+        public interface FileSelectedListener {
+            void fileSelected(java.io.File file);
+        }
+        public interface DirectorySelectedListener {
+            void directorySelected(java.io.File directory);
+        }
+        private ListenerList<FileSelectedListener> fileListenerList = new ListenerList<FileDialog.FileSelectedListener>();
+        private ListenerList<DirectorySelectedListener> dirListenerList = new ListenerList<FileDialog.DirectorySelectedListener>();
+        private final Activity activity;
+        private boolean selectDirectoryOption;
+        private String fileEndsWith;
+
+        /**
+         * @param activity
+         * @param initialPath
+         * @param fileEndsWith
+         */
+        public FileDialog(Activity activity, java.io.File initialPath, String fileEndsWith) {
+            this.activity = activity;
+            if (!initialPath.exists()) initialPath = Environment.getExternalStorageDirectory();
+            setFileEndsWith(fileEndsWith);
+            loadFileList(initialPath);
+        }
+
+        /**
+         * @return file dialog
+         */
+        public Dialog createFileDialog() {
+            Dialog dialog = null;
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+
+            builder.setTitle(currentPath.getPath());
+            if (selectDirectoryOption) {
+                builder.setPositiveButton("Select directory", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, currentPath.getPath());
+                        fireDirectorySelectedEvent(currentPath);
+                    }
+                });
+            }
+
+            builder.setItems(fileList, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    String fileChosen = fileList[which];
+                    java.io.File chosenFile = getChosenFile(fileChosen);
+                    if (chosenFile.isDirectory()) {
+                        loadFileList(chosenFile);
+                        dialog.cancel();
+                        dialog.dismiss();
+                        showDialog();
+                    } else fireFileSelectedEvent(chosenFile);
+                }
+            });
+
+            dialog = builder.show();
+            return dialog;
+        }
+
+
+        public void addFileListener(FileSelectedListener listener) {
+            fileListenerList.add(listener);
+        }
+
+        public void removeFileListener(FileSelectedListener listener) {
+            fileListenerList.remove(listener);
+        }
+
+        public void setSelectDirectoryOption(boolean selectDirectoryOption) {
+            this.selectDirectoryOption = selectDirectoryOption;
+        }
+
+        public void addDirectoryListener(DirectorySelectedListener listener) {
+            dirListenerList.add(listener);
+        }
+
+        public void removeDirectoryListener(DirectorySelectedListener listener) {
+            dirListenerList.remove(listener);
+        }
+
+        /**
+         * Show file dialog
+         */
+        public void showDialog() {
+            createFileDialog().show();
+        }
+
+        private void fireFileSelectedEvent(final java.io.File file) {
+            fileListenerList.fireEvent(new ListenerList.FireHandler<FileSelectedListener>() {
+                public void fireEvent(FileSelectedListener listener) {
+                    listener.fileSelected(file);
+                }
+            });
+        }
+
+        private void fireDirectorySelectedEvent(final java.io.File directory) {
+            dirListenerList.fireEvent(new ListenerList.FireHandler<DirectorySelectedListener>() {
+                public void fireEvent(DirectorySelectedListener listener) {
+                    listener.directorySelected(directory);
+                }
+            });
+        }
+
+        private void loadFileList(java.io.File path) {
+            this.currentPath = path;
+            List<String> r = new ArrayList<String>();
+            if (path.exists()) {
+                FilenameFilter filter = new FilenameFilter() {
+                    public boolean accept(java.io.File dir, String filename) {
+                        java.io.File sel = new java.io.File(dir, filename);
+                        if (!sel.canRead()) return false;
+                        if (selectDirectoryOption) return sel.isDirectory();
+                        else {
+                            boolean endsWith = fileEndsWith != null ? filename.toLowerCase().endsWith(fileEndsWith) : true;
+                            return endsWith || sel.isDirectory();
+                        }
+                    }
+                };
+                String[] fileList1 = path.list(filter);
+                for (String file : fileList1) {
+                    r.add(file);
+                }
+                Collections.sort(r, String.CASE_INSENSITIVE_ORDER);
+                if (path.getParentFile() != null) r.add(0, PARENT_DIR);
+            }
+            fileList = r.toArray(new String[]{});
+        }
+
+        private java.io.File getChosenFile(String fileChosen) {
+            if (fileChosen.equals(PARENT_DIR)) return currentPath.getParentFile();
+            else return new java.io.File(currentPath, fileChosen);
+        }
+
+        public void setFileEndsWith(String fileEndsWith) {
+            this.fileEndsWith = fileEndsWith != null ? fileEndsWith.toLowerCase() : fileEndsWith;
+        }
+    }
+
+    static class ListenerList<L> {
+        private List<L> listenerList = new ArrayList<L>();
+
+        public interface FireHandler<L> {
+            void fireEvent(L listener);
+        }
+
+        public void add(L listener) {
+            listenerList.add(listener);
+        }
+
+        public void fireEvent(FireHandler<L> fireHandler) {
+            List<L> copy = new ArrayList<L>(listenerList);
+            for (L l : copy) {
+                fireHandler.fireEvent(l);
+            }
+        }
+
+        public void remove(L listener) {
+            listenerList.remove(listener);
+        }
+
+        public List<L> getListenerList() {
+            return listenerList;
         }
     }
 }

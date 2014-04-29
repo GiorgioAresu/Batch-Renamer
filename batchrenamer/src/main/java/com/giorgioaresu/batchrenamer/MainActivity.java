@@ -239,10 +239,11 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             final Context context = getApplicationContext();
 
             // Create an EditText view to get user input
-            final EditText input = new EditText(this);
+            final EditText input = new EditText(context);
 
             // Ask for a label and a confirm if already present
-            AlertDialog.Builder alert = new AlertDialog.Builder(context)
+            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+            alert
                     .setTitle(R.string.action_favoritesAddLabel)
                     .setView(input)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -252,7 +253,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                             if (label != "") {
                                 try {
                                     if (favorites != null && JSONUtil.has(favorites, FAVORITE_KEY_TITLE, label)) {
-                                        AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context)
+                                        AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context);
+                                        replaceDialog
                                                 .setMessage(R.string.action_favoritesAddReplaceLabel)
                                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -323,8 +325,9 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             for (int i=0; i<favorites.length(); ++i) {
                 items[i] = favorites.getJSONObject(i).getString(FAVORITE_KEY_TITLE);;
             }
-            if (items.length >= 0) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context)
+            if (items.length > 0) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert
                         .setTitle(R.string.action_favoritesLoad)
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
