@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
@@ -88,6 +89,9 @@ public class Remove extends Rule {
         try {
             EditText mRemoveCharacters = (EditText) view.findViewById(R.id.rule_remove_characters);
             mRemoveCharacters.setText(String.valueOf(characters));
+
+            TextView mPositionHeader = (TextView) view.findViewById(R.id.rule_position_header);
+            mPositionHeader.setText(R.string.rule_generic_positionAlt);
 
             EditText mPosition = (EditText) view.findViewById(R.id.rule_position);
             mPosition.setText(String.valueOf(position));

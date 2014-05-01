@@ -129,6 +129,7 @@
     <string name="rule_generic_regex_invalid_syntaxError">Errore di sintassi</string>
     <string name="rule_generic_regex_invalid_outOfBounds">Indice fuori dagli intervalli</string>
     <string name="rule_generic_position">Posizione</string>
+    <string name="rule_generic_positionAlt">Dalla posizione</string>
     <string name="rule_generic_position_backward">Dalla fine</string>
     <string name="rule_generic_apply">Applica a</string>
     <string-array name="rule_generic_apply_array">

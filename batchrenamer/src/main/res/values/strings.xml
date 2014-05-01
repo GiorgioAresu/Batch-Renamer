@@ -129,6 +129,7 @@
     <string name="rule_generic_regex_invalid_syntaxError">Syntax error</string>
     <string name="rule_generic_regex_invalid_outOfBounds">Index out of bounds</string>
     <string name="rule_generic_position">Position</string>
+    <string name="rule_generic_positionAlt">From position</string>
     <string name="rule_generic_position_backward">Backward</string>
     <string name="rule_generic_apply">Apply to</string>
     <string-array name="rule_generic_apply_array">
