@@ -11,6 +11,7 @@
     <string name="done">Fatto</string>
     <string name="expired_message">Stai usando una vecchia versione dell\'app, aggiornare adesso?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
+    <string name="tapOnFileHint">Se non riesci a visualizzare l\'anteprima completa di un file, selezionalo</string>
 
     <!--                      -->
     <!--  NOTIFICATION        -->

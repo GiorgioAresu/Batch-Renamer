@@ -11,6 +11,7 @@
     <string name="done">Done</string>
     <string name="expired_message">You\'re using an old version of the app, update now?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
+    <string name="tapOnFileHint">If you can\'t see the full preview, tap on a file name to see it</string>
 
     <!--                      -->
     <!--  NOTIFICATION        -->

@@ -102,6 +102,10 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                 }
             };
             runnable.run();
+
+            if (getResources().getBoolean(R.bool.small_screen)) {
+                Toast.makeText(this, R.string.tapOnFileHint, Toast.LENGTH_LONG).show();
+            }
         }
 
         FragmentManager mFragmentManager = getFragmentManager();
