@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -185,8 +184,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                     Toast.makeText(this, getString(R.string.empty_rulelist), Toast.LENGTH_LONG).show();
                 } else {
                     // Show alert to confirm rename
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(R.string.action_start_alert_message)
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                            .setMessage(R.string.action_start_alert_message)
                             .setTitle(R.string.action_start_alert_title)
                             .setPositiveButton(R.string.action_start_alert_positive, new DialogInterface.OnClickListener() {
                                 @Override
@@ -200,9 +199,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
-                            })
-                            .create()
-                            .show();
+                            });
+                    builder.show();
                 }
                 return true;
             case R.id.action_favoritesAdd:
@@ -232,18 +230,17 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
      * Save the current rule list to favorites, asking for a name
      */
     private void addToFavorites() {
+        final Context context = this;
         try {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             String favs = prefs.getString(PREF_KEY_FAVORITES, null);
             final JSONArray favorites = (favs != null) ? new JSONArray(favs) : new JSONArray();
-            final Context context = getApplicationContext();
 
             // Create an EditText view to get user input
             final EditText input = new EditText(context);
 
             // Ask for a label and a confirm if already present
-            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-            alert
+            AlertDialog.Builder alert = new AlertDialog.Builder(context)
                     .setTitle(R.string.action_favoritesAddLabel)
                     .setView(input)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -253,8 +250,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                             if (label != "") {
                                 try {
                                     if (favorites != null && JSONUtil.has(favorites, FAVORITE_KEY_TITLE, label)) {
-                                        AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context);
-                                        replaceDialog
+                                        AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context)
                                                 .setMessage(R.string.action_favoritesAddReplaceLabel)
                                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -289,7 +285,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             alert.show();
         } catch (JSONException e) {
             Debug.logError(getClass(), "Error adding rule list to favorites", e);
-            Toast.makeText(getApplicationContext(), R.string.action_favoritesAddError, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.action_favoritesAddError, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -316,8 +312,8 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
      * Ask the user to choose a favorite and load it
      */
     private void loadFavorite() {
+        final Context context = this;
         try {
-            final Context context = this;
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             String favs = prefs.getString(PREF_KEY_FAVORITES, null);
             final JSONArray favorites = (favs != null) ? new JSONArray(favs) : new JSONArray();
@@ -326,8 +322,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                 items[i] = favorites.getJSONObject(i).getString(FAVORITE_KEY_TITLE);;
             }
             if (items.length > 0) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                alert
+                AlertDialog.Builder alert = new AlertDialog.Builder(context)
                         .setTitle(R.string.action_favoritesLoad)
                         .setItems(items, new DialogInterface.OnClickListener() {
                             @Override
@@ -346,11 +341,11 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
                         });
                 alert.show();
             } else {
-                Toast.makeText(getApplicationContext(), R.string.action_favoritesEmpty, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.action_favoritesEmpty, Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             Debug.logError(getClass(), "Error loading rule list from favorites", e);
-            Toast.makeText(this, R.string.favorites_loading_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.favorites_loading_error, Toast.LENGTH_SHORT).show();
         }
     }
 

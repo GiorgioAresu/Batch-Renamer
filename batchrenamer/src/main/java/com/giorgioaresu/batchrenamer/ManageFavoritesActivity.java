@@ -7,8 +7,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.DataSetObserver;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,7 +20,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,25 +32,12 @@ import org.json.JSONObject;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
 public class ManageFavoritesActivity extends Activity {
-    /**
-     * Used as ID for startActivityForResult, when asking for a file
-     * to import favorites from
-     */
-    private static final int CHOOSE_FILE_REQUESTCODE = 1;
-
-    static final int REPLACE = 2;
-    static final int SKIP = 1;
-    static final int RENAME = 0;
-    static final int INVALID = -1;
 
     JSONArray favorites;
-    JSONException exception;
-    int userChoiceOnImportingDuplicate;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -127,52 +115,8 @@ public class ManageFavoritesActivity extends Activity {
                 removeFavorite(index);
                 return true;
             case R.id.action_favoritesManage_operations_import:
-                final Context context = getApplicationContext();
-                //openFile("application/octet-stream");
-                java.io.File mPath = new java.io.File(Environment.getExternalStorageDirectory(), Application.EXTERNAL_FOLDER);
-                FileDialog fileDialog = new FileDialog(this, mPath, ".json");
-                fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
-                    public void fileSelected(java.io.File file) {
-                        String readJSON = loadJSONFromFile(file);
-                        if (readJSON == null) {
-                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Try reading it as a single rule
-                            try {
-                                JSONObject object = new JSONObject(readJSON);
-                                exception = null;
-                                putCheckingDuplicates(favorites, object, false);
-                                if (exception!=null) throw exception;
-                                Toast.makeText(context, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                Debug.logError(getClass(), "Error reading file content as JSONObject", e);
-                            }
-
-                            // Try reading it as a set of rules
-                            try {
-                                JSONArray array = new JSONArray(readJSON);
-                                exception = null;
-                                userChoiceOnImportingDuplicate = INVALID;
-                                for (int i=0; i<array.length(); ++i) {
-                                    putCheckingDuplicates(favorites, array.getJSONObject(i), true);
-                                    if (exception!=null) {
-                                        // Notify adapter of changes made till now and throw exception
-                                        mSectionsPagerAdapter.notifyDataSetChanged();
-                                        throw exception;
-                                    }
-                                }
-                                mSectionsPagerAdapter.notifyDataSetChanged();
-                                Toast.makeText(context, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                Debug.logError(getClass(), "Error reading file content as JSONArray", e);
-                            }
-
-                            // Both failed, warn user
-                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-                fileDialog.showDialog();
+                ImportAsync importAsync = new ImportAsync();
+                importAsync.execute();
                 return true;
             case R.id.action_favoritesManage_operations_export:
                 exportFavorite(index);
@@ -194,11 +138,10 @@ public class ManageFavoritesActivity extends Activity {
         final Context context = this;
 
         // Create an EditText view to get user input
-        final EditText input = new EditText(this);
+        final EditText input = new EditText(context);
 
         // Ask for a label and a confirm if already present
-        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert
+        AlertDialog.Builder alert = new AlertDialog.Builder(context)
                 .setTitle(R.string.action_favoritesAddLabel)
                 .setView(input)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -208,8 +151,7 @@ public class ManageFavoritesActivity extends Activity {
                         if (label != "") {
                             try {
                                 if (favorites != null && JSONUtil.has(favorites, MainActivity.FAVORITE_KEY_TITLE, label)) {
-                                    AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context);
-                                    replaceDialog
+                                    AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context)
                                             .setMessage(R.string.action_favoritesAddReplaceLabel)
                                             .setIcon(android.R.drawable.ic_dialog_alert)
                                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -264,11 +206,11 @@ public class ManageFavoritesActivity extends Activity {
                                 renameFavoriteHelper(label, obj);
                             } else {
                                 Debug.logError(getClass(), "Error getting favorite to rename, object is null");
-                                Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             Debug.logError(getClass(), "Error getting favorite to rename", e);
-                            Toast.makeText(getApplicationContext(), R.string.error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -335,10 +277,9 @@ public class ManageFavoritesActivity extends Activity {
      * @param index index of the element being removed
      */
     private void showUndobarForRemovedFavorite(final int index) {
-        // TODO WHAT HAPPENS WHEN REMOVE ALL FAVORITES?
+        final Context context = this;
         try {
             JSONObject objectBeingRemoved = favorites.getJSONObject(index);
-            final Context context = getApplicationContext();
             Bundle bundle = new Bundle();
             bundle.putString("FAVORITE", objectBeingRemoved.toString());
             bundle.putInt("INDEX", index);
@@ -358,7 +299,7 @@ public class ManageFavoritesActivity extends Activity {
             }).showUndoBar(false, String.format(getString(R.string.action_favoritesManage_operations_removeDone), objectBeingRemoved.getString(MainActivity.FAVORITE_KEY_TITLE)), bundle);
         } catch (JSONException e) {
             Debug.logError(getClass(), "Error showing undobar", e);
-            Toast.makeText(this, R.string.done, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.done, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -421,121 +362,6 @@ public class ManageFavoritesActivity extends Activity {
     }
 
     /**
-     * Put object in array asking user what to do in case of duplicate names. If any
-     * exception occurs during dialogs you'll find it in exception
-     *
-     * @param array array to add object to
-     * @param object object to be added to array
-     * @param b if true and userChoiceOnImportingDuplicate != INVALID, that choice
-     *          will be repeated.
-     *          if true and userChoiceOnImportingDuplicate = INVALID the dialog will
-     *          show "don't ask again" option in case of found duplicates
-     *          if false the dialog won't show the "don't task again" option
-     */
-    private void putCheckingDuplicates(final JSONArray array, final JSONObject object, boolean b) throws JSONException {
-        final String favName =  object.getString(MainActivity.FAVORITE_KEY_TITLE);
-        final int indexOfDuplicate = JSONUtil.indexOf(array, MainActivity.FAVORITE_KEY_TITLE, favName);
-
-        if (indexOfDuplicate == JSONUtil.POSITION_INVALID) {
-            array.put(object);
-        } else {
-            if (b && userChoiceOnImportingDuplicate != INVALID) {
-                switch (userChoiceOnImportingDuplicate) {
-                    case REPLACE:
-                        JSONUtil.replace(array, indexOfDuplicate, object);
-                        mSectionsPagerAdapter.notifyDataSetChanged();
-                        break;
-                    case RENAME:
-                        String newName;
-                        int counter = 2;
-                        do {
-                            newName = String.format("%s (%d)", favName, counter++);
-                        } while (JSONUtil.has(favorites, MainActivity.FAVORITE_KEY_TITLE, newName));
-                        object.put(MainActivity.FAVORITE_KEY_TITLE, newName);
-                        favorites.put(object);
-                        mSectionsPagerAdapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        // Skip, do nothing
-                }
-            } else {
-                final CheckBox dontAsk = new CheckBox(this);
-
-                // Ask for a label and a confirm if already present
-                AlertDialog.Builder alert = new AlertDialog.Builder(this)
-                        .setMessage(String.format(getString(R.string.action_favoritesManage_operations_importDuplicate_message), favName))
-                        .setPositiveButton(R.string.action_favoritesManage_operations_importDuplicate_replace, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, int whichButton) {
-                                try {
-                                    JSONUtil.replace(array, indexOfDuplicate, object);
-                                    mSectionsPagerAdapter.notifyDataSetChanged();
-                                    if (dontAsk.isChecked()) {
-                                        userChoiceOnImportingDuplicate = REPLACE;
-                                    }
-                                } catch (JSONException e) {
-                                    Debug.logError(getClass(), "Error replacing element in favorites", e);
-                                    exception = e;
-                                }
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNeutralButton(R.string.action_favoritesManage_operations_importDuplicate_rename, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int i) {
-                                try {
-                                    String newName;
-                                    int counter = 2;
-                                    do {
-                                        newName = String.format("%s (%d)", favName, counter++);
-                                    } while (JSONUtil.has(favorites, MainActivity.FAVORITE_KEY_TITLE, newName));
-                                    object.put(MainActivity.FAVORITE_KEY_TITLE, newName);
-                                    favorites.put(object);
-                                    mSectionsPagerAdapter.notifyDataSetChanged();
-                                } catch (JSONException e) {
-                                    Debug.logError(getClass(), "Error renaming element in favorites", e);
-                                    exception = e;
-                                }
-                                if (dontAsk.isChecked()) {
-                                    userChoiceOnImportingDuplicate = RENAME;
-                                }
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton(R.string.action_favoritesManage_operations_importDuplicate_skip, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                if (dontAsk.isChecked()) {
-                                    userChoiceOnImportingDuplicate = SKIP;
-                                }
-                                dialog.dismiss();
-                            }
-                        });
-                if (b) {
-                    dontAsk.setText(R.string.action_favoritesManage_operations_importDuplicate_rememberChoice);
-                    alert.setView(dontAsk);
-                }
-                alert.show();
-            }
-        }
-    }
-
-    public String loadJSONFromFile(java.io.File file) {
-        String json = null;
-        try {
-            InputStream is = new FileInputStream(file);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            Debug.logError(getClass(), "Error reading JSON from file", ex);
-            return null;
-        }
-        return json;
-    }
-
-    /**
      * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
@@ -565,7 +391,7 @@ public class ManageFavoritesActivity extends Activity {
                 Debug.logError(getClass(), "Error getting favorites", e);
                 Toast.makeText(c, R.string.favorites_loading_error, Toast.LENGTH_SHORT).show();
             }
-            Rule_ListFragment.withHorizontalPadding fragment = Rule_ListFragment.withHorizontalPadding.newInstance(rules);
+            final Rule_ListFragment.withHorizontalPadding fragment = Rule_ListFragment.withHorizontalPadding.newInstance(rules);
             fragment.setTitle(name);
             return fragment;
         }
@@ -588,11 +414,333 @@ public class ManageFavoritesActivity extends Activity {
         }
     }
 
-    private void checkForEmptyLayout() {
-        if (favorites.length()==0) {
-            findViewById(R.id.empty).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.empty).setVisibility(View.GONE);
+    private class ImportAsync extends AsyncTask<Void, Void, Integer> {
+        static final int RESULT_OK = 1;
+        static final int RESULT_CANCELED = 0;
+        static final int RESULT_ERROR = -1;
+
+        static final int MODE_REPLACE = 2;
+        static final int MODE_SKIP = 1;
+        static final int MODE_RENAME = 0;
+        static final int MODE_INVALID = -1;
+
+        Object syncToken = new Object();
+
+        Activity context = ManageFavoritesActivity.this;
+        String readJSON;
+        JSONArray imported;
+        boolean[] selectedItems;
+        boolean dialogCanceled = false;
+        int mode = MODE_INVALID;
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return importFavs();
+        }
+
+        @Override
+        protected void onPostExecute(Integer res) {
+            super.onPostExecute(res);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+            if (res == RESULT_OK) {
+                Toast.makeText(context, R.string.action_favoritesManage_operations_importDone, Toast.LENGTH_SHORT).show();
+            } else if (res == RESULT_ERROR) {
+                Toast.makeText(context, R.string.error, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        public int importFavs()
+        {
+            // Get a file
+            runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    java.io.File mPath = new java.io.File(Environment.getExternalStorageDirectory(), Application.EXTERNAL_FOLDER);
+                    FileDialog fileDialog = new FileDialog(context, mPath, ".json");
+                    fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
+                        public void fileSelected(java.io.File file) {
+                            readJSON = loadJSONFromFile(file);
+                            doNotify();
+                        }
+                    });
+                    fileDialog.showDialog();
+                }
+            });
+            if (doWait()) return RESULT_ERROR;
+            boolean multiple = false;
+            // Try to read the it
+            if (readJSON == null) {
+                return RESULT_ERROR;
+            } else {
+                // Try reading it as a single rule or as a set of rules
+                if (!tryReadSingleFav(readJSON) && !(multiple = tryReadingMultipleFavs(readJSON))) {
+                    // Both failed, warn user
+                    Debug.logError(getClass(), "Invalid file, can't read as object or array");
+                    return RESULT_ERROR;
+                }
+            }
+
+            if (multiple) {
+                // Ask which favorite to import
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialogCanceled = false;
+                        // Prepare list of favorites (by default all selected)
+                        int count = imported.length();
+                        String[] favoriteNames = new String[count];
+                        selectedItems = new boolean[count];
+
+                        for (int i = 0; i < count; i++) {
+                            try {
+                                favoriteNames[i] = imported.getJSONObject(i).getString(MainActivity.FAVORITE_KEY_TITLE);
+                            } catch (JSONException e) {
+                                Debug.logError(getClass(), "Error reading names", e);
+                            }
+                            selectedItems[i] = true;
+                        }
+
+                        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context)
+                                .setTitle(R.string.action_favoritesManage_operations_importChoose)
+                                .setMultiChoiceItems(favoriteNames, selectedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                                    }
+                                })
+                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int id) {
+                                        doNotify();
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialogCanceled = true;
+                                        dialog.cancel();
+                                        doNotify();
+                                    }
+                                });
+                        alertBuilder.show();
+                    }
+                });
+                if (doWait()) return RESULT_ERROR;
+                if (dialogCanceled) return RESULT_CANCELED;
+            } else {
+                selectedItems = new boolean[]{ true };
+            }
+
+            // Merge favorites
+            return putCheckingDuplicates(favorites, imported, selectedItems);
+        }
+
+        private boolean doWait() {
+            synchronized (syncToken) {
+                try {
+                    syncToken.wait();
+                } catch (InterruptedException e) {
+                    Debug.logError(getClass(), "Interrupted", e);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void doNotify() {
+            synchronized (syncToken) {
+                syncToken.notify();
+            }
+        }
+
+        /**
+         * Try to read a single favorite from a string
+         * @param json String representing a JSONObject
+         * @return true if read correctly, false otherwise
+         */
+        private boolean tryReadSingleFav(String json) {
+            try {
+                JSONObject object = new JSONObject(json);
+                imported = new JSONArray();
+                imported.put(object);
+                return true;
+            } catch (JSONException e) {
+                Debug.logError(getClass(), "Error reading file content as JSONObject", e);
+                return false;
+            }
+        }
+
+
+        /**
+         * Try to read multiple favorites from a string
+         * @param json String representing a JSONArray
+         * @return true if read correctly, false otherwise
+         */
+        private boolean tryReadingMultipleFavs(String json) {
+            try {
+                imported = new JSONArray(json);
+                return true;
+            } catch (JSONException e) {
+                Debug.logError(getClass(), "Error reading file content as JSONArray", e);
+                return false;
+            }
+        }
+
+        /**
+         * Recursively put JSONArray elements (only the ones with true in selectedItems' corresponding
+         * position) into another JSONArray, eventually asking user what to do in case of
+         * duplicates
+         *
+         * @param dest JSONArray to add objects to
+         * @param source JSONArray with elements to be put in dest
+         * @param selectedItems array of flags to enable/disable source item selection
+         * @return RESULT_OK, RESULT_CANCELED or RESULT_ERROR
+         */
+        private int putCheckingDuplicates(JSONArray dest, JSONArray source, boolean[] selectedItems) {
+            return putCheckingDuplicatesRec(dest, source, selectedItems, MODE_INVALID, 0);
+        }
+
+        /**
+         *
+         * @param dest
+         * @param source
+         * @param selectedItems
+         * @param mMode how to prompt user for duplicates:
+         *             MODE_INVALID: Ask user what to do. If source contains more than one
+         *             element then user will be able to choose not to be asked anymore
+         *             MODE_REPLACE: Replace old element in dest with new element in source
+         *             MODE_SKIP: Skip source element, leaving dest untouched
+         *             MODE_RENAME: Allow to rename dest adding suffix " (x)"
+         * @param index
+         * @return RESULT_OK, RESULT_CANCELED or RESULT_ERROR
+         */
+        private int putCheckingDuplicatesRec(JSONArray dest, JSONArray source, boolean[] selectedItems, int mMode, int index) {
+            if (index >= source.length()) return RESULT_OK;
+
+            if (selectedItems[index]) {
+                // Element was selected, go on
+                try {
+                    final JSONObject item = source.getJSONObject(index);
+                    final String itemName =  item.getString(MainActivity.FAVORITE_KEY_TITLE);
+
+                    // Check if there's a favorite with the same name
+                    final int duplicateIndex = JSONUtil.indexOf(dest, MainActivity.FAVORITE_KEY_TITLE, itemName);
+
+                    if (duplicateIndex == JSONUtil.POSITION_INVALID) {
+                        // No name collision
+                        dest.put(item);
+                        return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                    } else {
+                        // Collision
+                        switch (mMode) {
+                            case MODE_REPLACE:
+                                importReplace(dest, item, duplicateIndex);
+                                return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                            case MODE_SKIP:
+                                return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                            case MODE_RENAME:
+                                importRename(dest, item, itemName);
+                                return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                            default:
+                                // mMode = MODE_INVALID
+                                final int sourceCount = source.length();
+                                final CheckBox dontAsk = new CheckBox(context);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(context)
+                                                .setMessage(String.format(getString(R.string.action_favoritesManage_operations_importDuplicate_message), itemName))
+                                                .setPositiveButton(R.string.action_favoritesManage_operations_importDuplicate_replace, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(final DialogInterface dialog, int whichButton) {
+                                                        mode = MODE_REPLACE;
+                                                        doNotify();
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .setNeutralButton(R.string.action_favoritesManage_operations_importDuplicate_rename, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int i) {
+                                                        mode = MODE_RENAME;
+                                                        doNotify();
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .setNegativeButton(R.string.action_favoritesManage_operations_importDuplicate_skip, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        mode = MODE_SKIP;
+                                                        doNotify();
+                                                        dialog.dismiss();
+                                                    }
+                                                });
+                                        if (sourceCount > 1) {
+                                            dontAsk.setText(R.string.action_favoritesManage_operations_importDuplicate_rememberChoice);
+                                            alert.setView(dontAsk);
+                                        }
+                                        alert.show();
+                                    }});
+                                if (doWait()) return RESULT_ERROR;
+
+                                if (dontAsk.isChecked()) {
+                                    // Remember choice
+                                    mMode = mode;
+                                }
+
+                                switch (mode) {
+                                    case MODE_REPLACE:
+                                        importReplace(dest, item, duplicateIndex);
+                                        return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                                    case MODE_SKIP:
+                                        return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                                    default:
+                                        // mMode = MODE_RENAME
+                                        importRename(dest, item, itemName);
+                                        return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                                }
+                        }
+                    }
+                } catch (JSONException e) {
+                    Debug.logError(getClass(), "Error adding item to favorites", e);
+                    putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+                    return RESULT_ERROR;
+                }
+            } else {
+                // Element was not selected, just skip it
+                return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
+            }
+        }
+
+        private void importRename(JSONArray dest, JSONObject item, String itemName) throws JSONException {
+            // Find a name that doesn't collide
+            String newName;
+            int counter = 2;
+            do {
+                newName = String.format("%s (%d)", itemName, counter++);
+            } while (JSONUtil.has(dest, MainActivity.FAVORITE_KEY_TITLE, newName));
+            // newName doesn't collide, so replace the name with it and put into dest
+            item.put(MainActivity.FAVORITE_KEY_TITLE, newName);
+            dest.put(item);
+        }
+
+        private void importReplace(JSONArray dest, JSONObject item, int duplicateIndex) throws JSONException {
+            JSONUtil.replace(dest, duplicateIndex, item);
+        }
+
+        private String loadJSONFromFile(java.io.File file) {
+            String json = null;
+            try {
+                InputStream is = new FileInputStream(file);
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                json = new String(buffer, "UTF-8");
+            } catch (IOException ex) {
+                Debug.logError(getClass(), "Error reading JSON from file", ex);
+                return null;
+            }
+            return json;
         }
     }
 
@@ -630,9 +778,8 @@ public class ManageFavoritesActivity extends Activity {
          */
         public Dialog createFileDialog() {
             Dialog dialog = null;
-            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-            builder.setTitle(currentPath.getPath());
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                    .setTitle(currentPath.getPath());
             if (selectDirectoryOption) {
                 builder.setPositiveButton("Select directory", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

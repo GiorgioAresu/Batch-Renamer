@@ -36,6 +36,7 @@
     <string name="action_favoritesManage_operations_removeDone">Preferito \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" eliminato</string>
     <string name="action_favoritesManage_operations_importexport">Importa-Esporta</string>
     <string name="action_favoritesManage_operations_import">Importa da SD</string>
+    <string name="action_favoritesManage_operations_importChoose">Importa preferiti da file</string>
     <string name="action_favoritesManage_operations_importDuplicate_message">Esiste già un preferito chiamato \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\"</string>
     <string name="action_favoritesManage_operations_importDuplicate_replace">Sostituisci</string>
     <string name="action_favoritesManage_operations_importDuplicate_skip">Salta</string>
