@@ -101,7 +101,7 @@
     <string name="action_favoritesAddReplaceLabel">C\'è già un preferito con la stessa etichetta. Lo vuoi sostituire?</string>
     <string name="action_favoritesAdded">\"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" salvata</string>
     <string name="action_favoritesAddError">Errore salvando il preferito</string>
-    <string name="action_favoritesLoad">Load favorite</string>
+    <string name="action_favoritesLoad">Carica preferito</string>
     <string name="action_favoritesEmpty">Non ci sono preferiti salvati</string>
     <string name="action_favoritesManage">Gestisci preferiti</string>
 

@@ -8,7 +8,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.database.DataSetObserver;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -35,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class ManageFavoritesActivity extends Activity {
+public class ManageFavoritesActivity extends Activity implements Rule_ListFragment.ForFavorites.updateFavorites {
 
     JSONArray favorites;
 
@@ -73,7 +71,6 @@ public class ManageFavoritesActivity extends Activity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
     }
 
     @Override
@@ -241,7 +238,7 @@ public class ManageFavoritesActivity extends Activity {
             if (index == JSONUtil.POSITION_INVALID) {
                 favorites.put(favorite);
             } else {
-                JSONUtil.replace(favorites, index, favorite);
+                favorites.put(index, favorite);
             }
             mSectionsPagerAdapter.notifyDataSetChanged();
             Toast.makeText(this, String.format(getString(R.string.action_favoritesAdded), label), Toast.LENGTH_SHORT).show();
@@ -361,6 +358,24 @@ public class ManageFavoritesActivity extends Activity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void update(Rule_ListFragment.ForFavorites f) {
+        String title = f.getTitle();
+        JSONArray rules = f.rulesToJSONArray();
+        JSONObject fav = new JSONObject();
+        try {
+            fav.put(MainActivity.FAVORITE_KEY_TITLE, title);
+            fav.put(MainActivity.FAVORITE_KEY_RULES, rules);
+            int index = JSONUtil.indexOf(favorites, MainActivity.FAVORITE_KEY_TITLE, title);
+            favorites.put(index, fav);
+            Debug.log(getClass(), "Updated favorite \"" + title + "\"");
+        } catch (JSONException e) {
+            Debug.logError(getClass(), "Error saving favorite", e);
+            Toast.makeText(this, "Error saving favorite, please contact developer", Toast.LENGTH_SHORT).show();
+        }
+        mSectionsPagerAdapter.notifyDataSetChanged();
+    }
+
     /**
      * A {@link FragmentStatePagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -391,7 +406,7 @@ public class ManageFavoritesActivity extends Activity {
                 Debug.logError(getClass(), "Error getting favorites", e);
                 Toast.makeText(c, R.string.favorites_loading_error, Toast.LENGTH_SHORT).show();
             }
-            final Rule_ListFragment.withHorizontalPadding fragment = Rule_ListFragment.withHorizontalPadding.newInstance(rules);
+            final Rule_ListFragment.ForFavorites fragment = Rule_ListFragment.ForFavorites.newInstance(rules, ManageFavoritesActivity.this);
             fragment.setTitle(name);
             return fragment;
         }
@@ -427,11 +442,11 @@ public class ManageFavoritesActivity extends Activity {
         Object syncToken = new Object();
 
         Activity context = ManageFavoritesActivity.this;
-        String readJSON;
-        JSONArray imported;
-        boolean[] selectedItems;
-        boolean dialogCanceled = false;
-        int mode = MODE_INVALID;
+        transient String readJSON;
+        transient JSONArray imported;
+        transient boolean[] selectedItems;
+        transient boolean dialogCanceled = false;
+        transient int mode = MODE_INVALID;
 
         @Override
         protected Integer doInBackground(Void... voids) {
@@ -635,7 +650,7 @@ public class ManageFavoritesActivity extends Activity {
                         // Collision
                         switch (mMode) {
                             case MODE_REPLACE:
-                                importReplace(dest, item, duplicateIndex);
+                                dest.put(duplicateIndex, item);
                                 return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
                             case MODE_SKIP:
                                 return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
@@ -689,7 +704,7 @@ public class ManageFavoritesActivity extends Activity {
 
                                 switch (mode) {
                                     case MODE_REPLACE:
-                                        importReplace(dest, item, duplicateIndex);
+                                        dest.put(duplicateIndex, item);
                                         return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
                                     case MODE_SKIP:
                                         return putCheckingDuplicatesRec(dest, source, selectedItems, mMode, index+1);
@@ -721,10 +736,6 @@ public class ManageFavoritesActivity extends Activity {
             // newName doesn't collide, so replace the name with it and put into dest
             item.put(MainActivity.FAVORITE_KEY_TITLE, newName);
             dest.put(item);
-        }
-
-        private void importReplace(JSONArray dest, JSONObject item, int duplicateIndex) throws JSONException {
-            JSONUtil.replace(dest, duplicateIndex, item);
         }
 
         private String loadJSONFromFile(java.io.File file) {
