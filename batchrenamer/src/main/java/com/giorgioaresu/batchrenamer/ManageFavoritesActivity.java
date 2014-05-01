@@ -147,7 +147,8 @@ public class ManageFavoritesActivity extends Activity implements Rule_ListFragme
                         final String label = input.getText().toString();
                         if (label != "") {
                             try {
-                                if (favorites != null && JSONUtil.has(favorites, MainActivity.FAVORITE_KEY_TITLE, label)) {
+                                final int duplicateIndex = JSONUtil.indexOf(favorites, MainActivity.FAVORITE_KEY_TITLE, label);
+                                if (favorites != null && duplicateIndex != JSONUtil.POSITION_INVALID) {
                                     AlertDialog.Builder replaceDialog = new AlertDialog.Builder(context)
                                             .setMessage(R.string.action_favoritesAddReplaceLabel)
                                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -157,6 +158,17 @@ public class ManageFavoritesActivity extends Activity implements Rule_ListFragme
                                                     if (index == -1) {
                                                         addFav(label);
                                                     } else {
+                                                        // Remove old one (duplicate) before renaming
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                                            favorites.remove(index);
+                                                        } else {
+                                                            try {
+                                                                showUndobarForRemovedFavorite(index);
+                                                                favorites = JSONUtil.remove(favorites, duplicateIndex);
+                                                            } catch (JSONException e) {
+                                                                Debug.logError(getClass(), "Error removing old duplicate", e);
+                                                            }
+                                                        }
                                                         renameFav(label, index);
                                                     }
                                                 }
