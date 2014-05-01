@@ -1,7 +1,5 @@
 package com.giorgioaresu.batchrenamer;
 
-import android.os.Build;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,25 +37,5 @@ public class JSONUtil {
             }
         }
         return res;
-    }
-
-    public static JSONArray removeObject(JSONArray array, Object obj) throws JSONException {
-        JSONArray res = new JSONArray();
-        for (int i=0; i<array.length(); i++) {
-            Object o = array.get(i);
-            if (!o.equals(obj)) {
-                res.put(o);
-            }
-        }
-        return res;
-    }
-
-    public static void replace(JSONArray array, int index, Object obj) throws JSONException {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            array.remove(index);
-        } else {
-            remove(array, index);
-        }
-        array.put(index, obj);
     }
 }

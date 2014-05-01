@@ -299,7 +299,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
             if (index == JSONUtil.POSITION_INVALID) {
                 favorites.put(obj);
             } else {
-                JSONUtil.replace(favorites, index, obj);
+                favorites.put(index, obj);
             }
             prefs.edit().putString(PREF_KEY_FAVORITES, favorites.toString()).apply();
             Toast.makeText(this, String.format(getString(R.string.action_favoritesAdded), label), Toast.LENGTH_SHORT).show();
