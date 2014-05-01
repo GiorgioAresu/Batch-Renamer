@@ -6,20 +6,20 @@
         android:title="@string/action_favoritesManage_operations_rename"
         android:icon="@drawable/ic_action_edit_light"
         android:showAsAction="ifRoom"
-        android:orderInCategory="11" />
+        android:orderInCategory="10" />
 
-    <group>
+    <group
+        android:showAsAction="ifRoom"
+        android:orderInCategory="11">
         <item
             android:id="@+id/action_favoritesManage_operations_new"
             android:title="@string/action_favoritesManage_operations_new"
             android:icon="@drawable/ic_action_important_light"
-            android:showAsAction="ifRoom"
             android:orderInCategory="12" />
         <item
             android:id="@+id/action_favoritesManage_operations_remove"
             android:title="@string/action_favoritesManage_operations_remove"
             android:icon="@drawable/ic_action_not_important_light"
-            android:showAsAction="ifRoom"
             android:orderInCategory="13" />
     </group>
 
