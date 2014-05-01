@@ -4,7 +4,9 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import eu.chainfire.libsuperuser.Shell;
 
@@ -13,6 +15,11 @@ public class File implements Parcelable {
     String oldName;
     String newName;
     RENAME status;
+
+    /**
+     * Map used to deal with conflicting file names
+     */
+    static Map<String, Integer> files;
 
     public enum RENAME {
         SUCCESSFUL(0),
@@ -56,9 +63,47 @@ public class File implements Parcelable {
     public File(Uri uri) {
         fileUri = uri;
         oldName = fileUri.getLastPathSegment();
-        // TODO: Double-check if it's safe or it's better to do something more complex (maybe there are rules already loaded that doesn't fire an update?)
         newName = oldName;
         status = RENAME.SUCCESSFUL;
+    }
+
+    /**
+     * Initialize for conflict free filenames
+     */
+    public static void prepareForConflictFreeName() {
+        files = new HashMap<String, Integer>();
+    }
+
+    /**
+     * Compute filename safe for conflicts
+     *
+     * @param name proposed name of file
+     * @return name for file with suffix if needed
+     */
+    public static String conflictFreeName(String name) {
+        Integer a = files.get(name.toLowerCase());
+        String newName = name;
+        if (a == null) {
+            a = 1;
+        } else {
+            // Find the last dot in the name
+            int lastIndexOfDot = name.lastIndexOf('.');
+
+            String fName, fExt;
+
+            if (lastIndexOfDot == -1) {
+                fName = name;
+                fExt = null;
+            } else {
+                // We have a filename composed of name + extension, so we need
+                // to discern them
+                fName = name.substring(0, lastIndexOfDot);
+                fExt = "." + name.substring(lastIndexOfDot + 1);
+            }
+            newName = String.format("%s (%d)%s", fName, a, (fExt != null) ? fExt : "");
+        }
+        files.put(name.toLowerCase(), ++a);
+        return newName;
     }
 
     public RENAME rename() {
@@ -75,7 +120,7 @@ public class File implements Parcelable {
                 if (SuHelper.isSuAvailable()) {
                     String shell = "sh";
                     String scriptPath = MainActivity.scriptFile.getCanonicalPath();
-                    String command = String.format("%1$s \"%2$s\" \"%3$s\" \"%4$s\"",
+                    String command = String.format("%s \"%s\" \"%s\" \"%s\"",
                             shell,
                             scriptPath,
                             from.getCanonicalPath(),
@@ -85,9 +130,10 @@ public class File implements Parcelable {
                         status = RENAME.getValue(Integer.valueOf(result.get(0)));
                     }
                 } else {
-                    Debug.log("su not available");
+                    Debug.logError("su not available");
                 }
             } catch (Exception e) {
+                Debug.logError("Error obtaining root access", e);
             }
             status = RENAME.FAILED_PERMISSION;
         } else if (!from.exists()) {

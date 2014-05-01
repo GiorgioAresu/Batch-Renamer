@@ -5,8 +5,9 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Integer, Void> {
+public class UpdateFileNames_AsyncTask extends AsyncTask<List<File>,Integer,Void> {
     Activity mActivity;
     private updateFileNames_Callbacks mListener;
 
@@ -22,7 +23,7 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
     }
 
     @Override
-    protected Void doInBackground(ArrayList<File>... arrayLists) {
+    protected Void doInBackground(List<File>... arrayLists) {
         Rule_ListFragment ruleList_fragment = mListener.getRuleListFragment();
         File_ListFragment fileList_fragment = mListener.getFileListFragment();
         int counter = 0;
@@ -40,10 +41,16 @@ public class UpdateFileNames_AsyncTask extends AsyncTask<ArrayList<File>, Intege
                 });
             }
 
+            File.prepareForConflictFreeName();
+
             for (int i=0; i<arrayLists[0].size(); i++) {
                 File file = arrayLists[0].get(i);
-                file.newName = ruleList_fragment.getNewName(file.oldName, i, fileList_fragment.getListAdapter().getCount());
-
+                // Get new name from result
+                String ruleResult = ruleList_fragment.getNewName(file.oldName, i, fileList_fragment.getListAdapter().getCount());
+                Debug.log(ruleResult);
+                // Get conflict-free name
+                file.newName = File.conflictFreeName(ruleResult);
+                Debug.log(file.newName);
                 // Check progress
                 newPerc = (int) (++counter * 100f / arrayLists[0].size());
                 if (newPerc > oldPerc) {

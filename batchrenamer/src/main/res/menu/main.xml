@@ -3,11 +3,38 @@
     tools:context="com.giorgioaresu.batchrenamer.MainActivity">
 
     <item
+        android:icon="@drawable/ic_action_half_important_light"
+        android:orderInCategory="10"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_favorites" >
+        <menu>
+            <item
+                android:id="@+id/action_favoritesAdd"
+                android:title="@string/action_favoritesAdd"
+                android:orderInCategory="1" />
+            <item
+                android:id="@+id/action_favoritesLoad"
+                android:title="@string/action_favoritesLoad"
+                android:orderInCategory="2" />
+            <item
+                android:id="@+id/action_favoritesManage"
+                android:title="@string/action_favoritesManage"
+                android:orderInCategory="3" />
+        </menu>
+    </item>
+
+    <item
         android:id="@+id/action_start"
         android:title="@string/action_start"
-        android:showAsAction="ifRoom|withText"
-        android:orderInCategory="3"
-        android:icon="@drawable/ic_rule_start_light" />
+        android:showAsAction="always|withText"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_start_light" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/title_activity_settings"
+        android:orderInCategory="90"
+        android:showAsAction="never" />
 
     <item
         android:id="@+id/action_about"

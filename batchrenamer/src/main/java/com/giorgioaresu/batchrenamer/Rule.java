@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -49,26 +48,6 @@ public abstract class Rule implements Parcelable {
         rules.put(context.getString(R.string.rule_replace_title), "Replace");
         rules.put(context.getString(R.string.rule_whitespaces_title), "Whitespaces");
         return rules;
-    }
-
-    /**
-     * Creates an rule from content described in a JSONObject
-     *
-     * @param context Context used to instantiate the rule
-     * @param jObject JSONObject containing rule description
-     * @return
-     */
-    public static final Rule createFromJSON(Context context, JSONObject jObject) {
-        try {
-            Class<?> c = Class.forName(jObject.getString(KEY_TYPE));
-            Constructor<?> cons = c.getConstructors()[0];
-            Rule rule = (Rule) cons.newInstance(context);
-            rule.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
-            return rule;
-        } catch (Exception e) {
-            Log.e("batchrenamer", "Exception creating item from JSON, skipping");
-            return null;
-        }
     }
 
     public String getTitle() {
@@ -255,6 +234,28 @@ public abstract class Rule implements Parcelable {
     }
 
     /**
+     * Creates an rule from content described in a JSONObject
+     *
+     * @param context Context used to instantiate the rule
+     * @param jObject JSONObject containing rule description
+     * @return
+     */
+    public static final Rule createFromJSON(Context context, JSONObject jObject) {
+        try {
+            String rulesPackageName = context.getPackageName().replace(".debug","") + ".rules.";
+            String className = rulesPackageName + jObject.getString(KEY_TYPE);
+            Class<?> c = Class.forName(className);
+            Constructor<?> cons = c.getConstructors()[0];
+            Rule rule = (Rule) cons.newInstance(context);
+            rule.deserializeFromJSON(jObject.getJSONObject(KEY_CONTENT));
+            return rule;
+        } catch (Exception e) {
+            Debug.logError("Exception creating rule from JSON, skipping", e);
+            return null;
+        }
+    }
+
+    /**
      * Dump rule to a JSONObject
      *
      * @return the JSONObject created
@@ -262,11 +263,11 @@ public abstract class Rule implements Parcelable {
     public final JSONObject dumpToJSON() {
         JSONObject jObject = new JSONObject();
         try {
+            jObject.put(KEY_TYPE, getClass().getSimpleName());
             jObject.put(KEY_CONTENT, serializeToJSON());
-            jObject.put(KEY_TYPE, getClass().getName());
             return jObject;
         } catch (JSONException e) {
-            Log.e("batchrenamer", "Exception dumping item to JSON, skipping");
+            Debug.logError("Exception dumping rule to JSON, skipping", e);
             return null;
         }
     }
@@ -297,7 +298,7 @@ public abstract class Rule implements Parcelable {
                 rule.createFromParcel(in);
                 return rule;
             } catch (Exception b) {
-                Log.e("batchrenamer", "Exception creating item, skipping");
+                Debug.logError("Exception creating item, skipping. Message: ", b);
                 return null;
             }
         }

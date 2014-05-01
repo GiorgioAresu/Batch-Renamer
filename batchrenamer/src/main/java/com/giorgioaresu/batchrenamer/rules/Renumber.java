@@ -8,9 +8,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
+import com.giorgioaresu.batchrenamer.Rule;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -190,11 +190,11 @@ public class Renumber extends Rule {
         JSONObject jObject = new JSONObject();
         jObject.put(KEY_START, start);
         jObject.put(KEY_STEP, step);
-        jObject.put(KEY_PADMODE, padMode);
+        jObject.put(KEY_PADMODE, padMode.getID());
         jObject.put(KEY_PADDING, padding);
         jObject.put(KEY_POSITION, position);
         jObject.put(KEY_BACKWARD, backward);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 

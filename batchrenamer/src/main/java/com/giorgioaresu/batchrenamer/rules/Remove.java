@@ -6,10 +6,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
+import com.giorgioaresu.batchrenamer.Rule;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,6 +90,9 @@ public class Remove extends Rule {
             EditText mRemoveCharacters = (EditText) view.findViewById(R.id.rule_remove_characters);
             mRemoveCharacters.setText(String.valueOf(characters));
 
+            TextView mPositionHeader = (TextView) view.findViewById(R.id.rule_position_header);
+            mPositionHeader.setText(R.string.rule_generic_positionAlt);
+
             EditText mPosition = (EditText) view.findViewById(R.id.rule_position);
             mPosition.setText(String.valueOf(position));
 
@@ -127,7 +131,7 @@ public class Remove extends Rule {
         jObject.put(KEY_CHARACTERS, characters);
         jObject.put(KEY_POSITION, position);
         jObject.put(KEY_BACKWARD, backward);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 

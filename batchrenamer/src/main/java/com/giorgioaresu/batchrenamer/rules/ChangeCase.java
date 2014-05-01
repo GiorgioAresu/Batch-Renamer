@@ -107,8 +107,8 @@ public class ChangeCase extends Rule {
     @Override
     protected JSONObject serializeToJSON() throws JSONException {
         JSONObject jObject = new JSONObject();
-        jObject.put(KEY_CASEMODE, caseMode);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_CASEMODE, caseMode.getID());
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 

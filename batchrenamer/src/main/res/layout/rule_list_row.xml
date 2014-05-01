@@ -29,7 +29,7 @@
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/rule_generic_remove"
-            android:src="@drawable/ic_rule_remove_light"
+            android:src="@drawable/ic_action_remove_light"
             android:scaleType="fitCenter" />
 
     </LinearLayout>

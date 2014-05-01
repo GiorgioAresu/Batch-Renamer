@@ -4,10 +4,13 @@ package com.giorgioaresu.batchrenamer;
 import android.animation.Animator;
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
+import android.preference.PreferenceManager;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,12 +25,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.giorgioaresu.batchrenamer.rules.Add;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A fragment representing a list of Items.
@@ -37,6 +44,7 @@ import java.util.Map;
  * interface.
  */
 public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuItemClickListener, RuleAdapter.ruleAdapter_Callbacks, RuleEdit_Fragment.ruleEditFragment_Callbacks {
+    private static final String KEY_PREF_LAST_RULE_SET = "LastRuleSet";
     private static final String ARG_RULES = "rules";
     private static final String ARG_RULE = "rule";
     private static final String ARG_INDEX = "index";
@@ -44,6 +52,18 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     private static final long MOVE_DURATION = 250;
     private static final long FADE_DURATION = 250;
     private final SparseIntArray mItemIdTopMap = new SparseIntArray();
+
+    private static SharedPreferences sharedPrefs;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private String title;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -53,11 +73,15 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     }
 
     public static Rule_ListFragment newInstance(ArrayList<Rule> rules) {
-        Rule_ListFragment fragment = new Rule_ListFragment();
+        ListFragment f = newInstance(new Rule_ListFragment(), rules);
+        return (Rule_ListFragment) f;
+    }
+
+    public static ListFragment newInstance(ListFragment f, ArrayList<Rule> rules) {
         Bundle args = new Bundle();
         args.putParcelableArrayList(ARG_RULES, rules);
-        fragment.setArguments(args);
-        return fragment;
+        f.setArguments(args);
+        return f;
     }
 
     public ArrayList<Rule> getRules() {
@@ -70,12 +94,32 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
         return rules;
     }
 
+    public Set<String> getRulesAsJSONStrings() {
+        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
+        Set<String> rules = new HashSet<>();
+
+        for (int i = 0; i < adapter.getCount(); ++i) {
+            rules.add(((Rule) adapter.getItem(i)).dumpToJSON().toString());
+        }
+        return rules;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Set<String> rules = getRulesAsJSONStrings();
+        if (sharedPrefs == null) {
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        }
+        sharedPrefs.edit().putStringSet(KEY_PREF_LAST_RULE_SET, rules).apply();
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        ArrayList<Rule> mRules;
+        List<Rule> mRules;
 
         if (getArguments() != null) {
             // Retrieve rules from arguments
@@ -85,9 +129,23 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             mRules = savedInstanceState.getParcelableArrayList(ARG_RULES);
         } else {
             // Eventually populate rules for the first time
+            Context context = getActivity();
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
             mRules = new ArrayList<>();
-            for (int i = 0; i < 0; i++) {
-                mRules.add(new Add(getActivity()));
+            // Check if we should start with empty list or load old rules
+            if (sharedPrefs.getBoolean("remember_rules", true)) {
+                Set<String> rules = sharedPrefs.getStringSet(KEY_PREF_LAST_RULE_SET, new HashSet<String>(0));
+                for (String rule : rules) {
+                    try {
+                        JSONObject jObj = new JSONObject(rule);
+                        Rule newRule = Rule.createFromJSON(context, jObj);
+                        if (newRule != null) {
+                            mRules.add(newRule);
+                        }
+                    } catch (Exception e) {
+                        Debug.logError(getClass(), "failed to create JSONObject from string \"" + rule + "\"");
+                    }
+                }
             }
         }
         setListAdapter(new RuleAdapter(getActivity(), R.layout.rule_list_row, mRules, this));
@@ -147,7 +205,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
                         @Override
                         public void onUndo(Parcelable token) {
                             Bundle b = (Bundle) token;
-                            ArrayList<Rule> rules = b.getParcelableArrayList(ARG_RULES);
+                            List<Rule> rules = b.getParcelableArrayList(ARG_RULES);
                             RuleAdapter adapter = (RuleAdapter) getListAdapter();
                             adapter.clear();
                             adapter.addAll(rules);
@@ -179,7 +237,7 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             return true;
         } catch (Exception b) {
             Toast.makeText(activity, getString(R.string.action_newRule_error), Toast.LENGTH_SHORT).show();
-            Log.e("batchrenamer", "Exception handling item click, skipping");
+            Debug.logError("Exception handling item click, skipping", b);
             return false;
         }
     }
@@ -212,18 +270,33 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
      * @return true if all rules are valid, false if at least one is not valid
      */
     public boolean areAllRulesValid() {
-        ArrayList<Rule> rules = getRules();
+        List<Rule> rules = getRules();
         for (Rule rule : rules) {
             if (!rule.isValid()) return false;
         }
         return true;
     }
 
+    /**
+     * Dump all rules to a JSONArray
+     *
+     * @return JSONArray filled with rules
+     */
+    public JSONArray rulesToJSONArray() {
+        JSONArray rules = new JSONArray();
+        RuleAdapter adapter = (RuleAdapter) getListAdapter();
+        int size = getListAdapter().getCount();
+        for (int i = 0; i < size; i++) {
+            Rule rule = adapter.getItem(i);
+            rules.put(rule.dumpToJSON());
+        }
+        return rules;
+    }
+
     @Override
     public void notifyRuleDataSetChanged() {
         RuleAdapter ruleAdapter = (RuleAdapter) getListAdapter();
         ruleAdapter.notifyDataSetChanged();
-
     }
 
     /**
@@ -453,6 +526,64 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
                 return true;
             }
         });
+    }
+
+    /**
+     * Rule_ListFragment w/ horizontal padding
+     */
+    public static class WithHorizontalPadding extends Rule_ListFragment {
+        public WithHorizontalPadding() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View v = super.onCreateView(inflater, container, savedInstanceState);
+            View l = v.findViewById(android.R.id.list);
+            Resources res = getResources();
+            int vPadding = (int) res.getDimension(R.dimen.activity_vertical_margin);
+            int hPadding = (int) res.getDimension(R.dimen.activity_horizontal_margin);
+            l.setPadding(hPadding, vPadding, hPadding, vPadding);
+            return v;
+        }
+
+        public static WithHorizontalPadding newInstance(ArrayList<Rule> rules) {
+            ListFragment f = newInstance(new WithHorizontalPadding(), rules);
+            return (WithHorizontalPadding) f;
+        }
+    }
+
+    public static class ForFavorites extends WithHorizontalPadding {
+        public ForFavorites() {
+        }
+
+        private updateFavorites mListener;
+
+        public static ForFavorites newInstance(ArrayList<Rule> rules) {
+            ListFragment f = newInstance(new ForFavorites(), rules);
+            return (ForFavorites) f;
+        }
+
+        public static ForFavorites newInstance(ArrayList<Rule> rules, updateFavorites listener) {
+            ForFavorites f = newInstance(rules);
+            f.setListener(listener);
+            return f;
+        }
+
+        @Override
+        public void notifyRuleDataSetChanged() {
+            super.notifyRuleDataSetChanged();
+            if (mListener != null) {
+                mListener.update(this);
+            }
+        }
+
+        public void setListener(updateFavorites listener) {
+            mListener = listener;
+        }
+
+        public interface updateFavorites {
+            public void update(ForFavorites fragment);
+        }
     }
 }
 

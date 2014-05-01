@@ -13,10 +13,6 @@ import com.giorgioaresu.batchrenamer.Rule;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class Whitespaces extends Rule {
     static final String KEY_SPACE_CHAR = "SpaceChar";
     static final String KEY_REDUCE_DUPLICATES = "ReduceDuplicates";
@@ -179,11 +175,11 @@ public class Whitespaces extends Rule {
     @Override
     protected JSONObject serializeToJSON() throws JSONException {
         JSONObject jObject = new JSONObject();
-        jObject.put(KEY_SPACE_CHAR, spaceChar);
+        jObject.put(KEY_SPACE_CHAR, spaceChar.getID());
         jObject.put(KEY_REDUCE_DUPLICATES, reduceDuplicates);
-        jObject.put(KEY_REPLACE_WITH, replaceWith);
-        jObject.put(KEY_TRIM, trim);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_REPLACE_WITH, replaceWith.getID());
+        jObject.put(KEY_TRIM, trim.getID());
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 

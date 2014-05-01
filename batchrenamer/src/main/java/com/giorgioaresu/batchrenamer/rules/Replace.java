@@ -10,9 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.giorgioaresu.batchrenamer.Rule;
 import com.giorgioaresu.batchrenamer.Debug;
 import com.giorgioaresu.batchrenamer.R;
+import com.giorgioaresu.batchrenamer.Rule;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -180,7 +180,7 @@ public class Replace extends Rule {
         jObject.put(KEY_PATTERN, pattern);
         jObject.put(KEY_REGEX, regex);
         jObject.put(KEY_REPLACEMENT, replacement);
-        jObject.put(KEY_APPLYTO, applyTo);
+        jObject.put(KEY_APPLYTO, applyTo.getID());
         return jObject;
     }
 
