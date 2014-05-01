@@ -7,6 +7,8 @@
     <string name="undo">Undo</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="error">Error</string>
+    <string name="done">Done</string>
     <string name="expired_message">You\'re using an old version of the app, update now?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
@@ -23,6 +25,29 @@
     <string name="renaming_notification_summary_big">Renamed: <xliff:g id="number" example="5">%1$d</xliff:g> - Failed: <xliff:g id="number" example="1">%2$d</xliff:g></string>
 
     <!--                      -->
+    <!--  FAVORITES ACTIVITY  -->
+    <!--                      -->
+    <string name="title_activity_manage_favorites">Manage favorites</string>
+    <string name="favorites_loading_error">Error loading favorites</string>
+    <string name="action_favoritesManage_operations">Operations on favorites</string>
+    <string name="action_favoritesManage_operations_rename">Rename favorite</string>
+    <string name="action_favoritesManage_operations_new">New favorite</string>
+    <string name="action_favoritesManage_operations_remove">Delete favorite</string>
+    <string name="action_favoritesManage_operations_removeDone">Favorite \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" deleted</string>
+    <string name="action_favoritesManage_operations_importexport">Import-Export</string>
+    <string name="action_favoritesManage_operations_import">Import from SD</string>
+    <string name="action_favoritesManage_operations_importChoose">Import favorites from file</string>
+    <string name="action_favoritesManage_operations_importDuplicate_message">A favorite named \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" already exists</string>
+    <string name="action_favoritesManage_operations_importDuplicate_replace">Replace</string>
+    <string name="action_favoritesManage_operations_importDuplicate_skip">Skip</string>
+    <string name="action_favoritesManage_operations_importDuplicate_rename">Rename</string>
+    <string name="action_favoritesManage_operations_importDuplicate_rememberChoice">Remember choice</string>
+    <string name="action_favoritesManage_operations_importDone">Import completed</string>
+    <string name="action_favoritesManage_operations_export">Export to SD</string>
+    <string name="action_favoritesManage_operations_exportAll">Export all to SD</string>
+    <string name="action_favoritesManage_operations_exportDone">Exported to: \"<xliff:g id="filename" example="batch renamer/file.json">%s</xliff:g>\"</string>
+
+    <!--  -->
     <!--  ABOUT ACTIVITY      -->
     <!--                      -->
     <string name="title_activity_about">About</string>
@@ -69,6 +94,16 @@
     <string name="empty_filelist">Empty file list. Add some files first</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->
     <string name="empty_rulelist">Empty rule list. Add some rules first</string>
+    <string name="action_favorites">Favorite rules</string>
+    <string name="action_favoritesAdd">Add to favorites</string>
+    <string name="action_favoritesAddLabel">Enter a label</string>
+    <string name="action_favoritesAddLabelInvalid">Invalid label</string>
+    <string name="action_favoritesAddReplaceLabel">There\'s already a favorite with the same label, do you want to replace it?</string>
+    <string name="action_favoritesAdded">\"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" saved</string>
+    <string name="action_favoritesAddError">Error saving favorite</string>
+    <string name="action_favoritesLoad">Load favorite</string>
+    <string name="action_favoritesEmpty">There are no favorites saved</string>
+    <string name="action_favoritesManage">Manage favorites</string>
 
     <!--                      -->
     <!--  FILE SECTION        -->

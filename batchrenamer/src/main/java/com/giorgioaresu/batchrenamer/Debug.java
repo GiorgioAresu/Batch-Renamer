@@ -27,7 +27,7 @@ import java.util.Date;
  * Utility class for logging and debug features that (by default) does nothing when not in debug mode
  */
 public class Debug {
-    public static final String LOG_FILENAME = "batchrenamer-log.txt";
+    public static final String LOG_FILENAME = Application.EXTERNAL_FOLDER + "log.txt";
 
     // ----- DEBUGGING -----
 
@@ -129,7 +129,6 @@ public class Debug {
     }
 
     private static void writeToLogFile(String what) {
-        // Get the directory for the user's public pictures directory.
         java.io.File file = new java.io.File(Environment.getExternalStorageDirectory(), LOG_FILENAME);
         try {
             FileOutputStream outputStream = new FileOutputStream(file, true);
@@ -158,6 +157,10 @@ public class Debug {
      */
     public static void log(String message) {
         logCommon(LOG_GENERAL, "G", message);
+    }
+
+    public static void log(Class c, String message) {
+        log("(" + c.getSimpleName() + ") " + message);
     }
 
     /**

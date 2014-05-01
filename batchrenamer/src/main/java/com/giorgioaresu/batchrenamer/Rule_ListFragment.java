@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Constructor;
@@ -52,7 +53,17 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     private static final long FADE_DURATION = 250;
     private final SparseIntArray mItemIdTopMap = new SparseIntArray();
 
-    private SharedPreferences sharedPrefs;
+    private static SharedPreferences sharedPrefs;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    private String title;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -266,11 +277,26 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
         return true;
     }
 
+    /**
+     * Dump all rules to a JSONArray
+     *
+     * @return JSONArray filled with rules
+     */
+    public JSONArray rulesToJSONArray() {
+        JSONArray rules = new JSONArray();
+        RuleAdapter adapter = (RuleAdapter) getListAdapter();
+        int size = getListAdapter().getCount();
+        for (int i = 0; i < size; i++) {
+            Rule rule = adapter.getItem(i);
+            rules.put(rule.dumpToJSON());
+        }
+        return rules;
+    }
+
     @Override
     public void notifyRuleDataSetChanged() {
         RuleAdapter ruleAdapter = (RuleAdapter) getListAdapter();
         ruleAdapter.notifyDataSetChanged();
-
     }
 
     /**
@@ -505,8 +531,8 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
     /**
      * Rule_ListFragment w/ horizontal padding
      */
-    public static class withHorizontalPadding extends Rule_ListFragment {
-        public withHorizontalPadding() {
+    public static class WithHorizontalPadding extends Rule_ListFragment {
+        public WithHorizontalPadding() {
         }
 
         @Override
@@ -520,9 +546,43 @@ public class Rule_ListFragment extends ListFragment implements MenuItem.OnMenuIt
             return v;
         }
 
-        public static withHorizontalPadding newInstance(ArrayList<Rule> rules) {
-            ListFragment f = newInstance(new withHorizontalPadding(), rules);
-            return (withHorizontalPadding) f;
+        public static WithHorizontalPadding newInstance(ArrayList<Rule> rules) {
+            ListFragment f = newInstance(new WithHorizontalPadding(), rules);
+            return (WithHorizontalPadding) f;
+        }
+    }
+
+    public static class ForFavorites extends WithHorizontalPadding {
+        public ForFavorites() {
+        }
+
+        private updateFavorites mListener;
+
+        public static ForFavorites newInstance(ArrayList<Rule> rules) {
+            ListFragment f = newInstance(new ForFavorites(), rules);
+            return (ForFavorites) f;
+        }
+
+        public static ForFavorites newInstance(ArrayList<Rule> rules, updateFavorites listener) {
+            ForFavorites f = newInstance(rules);
+            f.setListener(listener);
+            return f;
+        }
+
+        @Override
+        public void notifyRuleDataSetChanged() {
+            super.notifyRuleDataSetChanged();
+            if (mListener != null) {
+                mListener.update(this);
+            }
+        }
+
+        public void setListener(updateFavorites listener) {
+            mListener = listener;
+        }
+
+        public interface updateFavorites {
+            public void update(ForFavorites fragment);
         }
     }
 }

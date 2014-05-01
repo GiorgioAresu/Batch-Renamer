@@ -7,6 +7,8 @@
     <string name="undo">Annulla</string>
     <string name="accept">Accetta</string>
     <string name="decline">Rifiuta</string>
+    <string name="error">Errore</string>>
+    <string name="done">Fatto</string>
     <string name="expired_message">Stai usando una vecchia versione dell\'app, aggiornare adesso?</string>
     <string name="title_activity_rename_status">RenameStatusActivity</string>
 
@@ -21,6 +23,29 @@
     <string name="renaming_notification_ticker_started">Ridenominazione iniziata</string>
     <string name="renaming_notification_ticker_completed">Ridenominazione completata</string>
     <string name="renaming_notification_summary_big">Rinominati: <xliff:g id="number" example="5">%1$d</xliff:g> - Falliti: <xliff:g id="number" example="1">%2$d</xliff:g></string>
+
+    <!--                      -->
+    <!--  FAVORITES ACTIVITY  -->
+    <!--                      -->
+    <string name="title_activity_manage_favorites">Gestione preferiti</string>
+    <string name="favorites_loading_error">Errore nel caricamento dei preferiti</string>
+    <string name="action_favoritesManage_operations">Operazioni sui preferiti</string>
+    <string name="action_favoritesManage_operations_rename">Rinomina preferito</string>
+    <string name="action_favoritesManage_operations_new">Nuovo preferito</string>
+    <string name="action_favoritesManage_operations_remove">Elimina preferito</string>
+    <string name="action_favoritesManage_operations_removeDone">Preferito \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" eliminato</string>
+    <string name="action_favoritesManage_operations_importexport">Importa-Esporta</string>
+    <string name="action_favoritesManage_operations_import">Importa da SD</string>
+    <string name="action_favoritesManage_operations_importChoose">Importa preferiti da file</string>
+    <string name="action_favoritesManage_operations_importDuplicate_message">Esiste già un preferito chiamato \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\"</string>
+    <string name="action_favoritesManage_operations_importDuplicate_replace">Sostituisci</string>
+    <string name="action_favoritesManage_operations_importDuplicate_skip">Salta</string>
+    <string name="action_favoritesManage_operations_importDuplicate_rename">Rinomina</string>
+    <string name="action_favoritesManage_operations_importDuplicate_rememberChoice">Ricorda scelta</string>
+    <string name="action_favoritesManage_operations_importDone">Importazione completata</string>
+    <string name="action_favoritesManage_operations_export">Esporta su SD</string>
+    <string name="action_favoritesManage_operations_exportAll">Esporta tutti su SD</string>
+    <string name="action_favoritesManage_operations_exportDone">Esportato in: \"<xliff:g id="filename" example="batch renamer/file.json">%s</xliff:g>\"</string>
 
     <!--                      -->
     <!--  ABOUT ACTIVITY      -->
@@ -69,6 +94,16 @@
     <string name="empty_filelist">Lista dei file vuota. Aggiungi qualche file prima</string>
     <!-- Toast message showed when trying to start the rename with NO rules -->
     <string name="empty_rulelist">Lista delle regole vuota. Aggiungi qualche regola prima</string>
+    <string name="action_favorites">Regole preferite</string>
+    <string name="action_favoritesAdd">Aggiungi ai preferiti</string>
+    <string name="action_favoritesAddLabel">Inserisci un\'etichetta</string>
+    <string name="action_favoritesAddLabelInvalid">Etichetta non valida</string>
+    <string name="action_favoritesAddReplaceLabel">C\'è già un preferito con la stessa etichetta. Lo vuoi sostituire?</string>
+    <string name="action_favoritesAdded">\"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" salvata</string>
+    <string name="action_favoritesAddError">Errore salvando il preferito</string>
+    <string name="action_favoritesLoad">Carica preferito</string>
+    <string name="action_favoritesEmpty">Non ci sono preferiti salvati</string>
+    <string name="action_favoritesManage">Gestisci preferiti</string>
 
     <!--                      -->
     <!--  FILE SECTION        -->
