@@ -48,22 +48,27 @@ public class FilePreview_ListFragment extends File_ListFragment {
      * @return true if file has been handled successfully, false otherwise
      */
     public boolean handleSendIntent(Intent intent) {
-        clear();
-        Parcelable parcelableExtra = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-        if (parcelableExtra != null) {
-            Uri uri = decodeUri((Uri) parcelableExtra);
-            Debug.log("ParcelableExtra URI " + uri);
-            if (uri != null) {
-                add(new File(uri));
-            } else {
-                // Unsupported Uri scheme
-                Toast.makeText(getActivity(), "Failed to get file path", Toast.LENGTH_LONG).show();
+        try {
+            clear();
+            Parcelable parcelableExtra = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (parcelableExtra != null) {
+                Uri uri = decodeUri((Uri) parcelableExtra);
+                Debug.log("ParcelableExtra URI " + uri);
+                if (uri != null) {
+                    add(new File(uri));
+                } else {
+                    // Unsupported Uri scheme
+                    Toast.makeText(getActivity(), "Failed to get file path", Toast.LENGTH_LONG).show();
+                }
+                return true;
             }
-            return true;
-        }
 
-        // Unsupported stream
-        return false;
+            // Unsupported stream
+            return false;
+        } catch (Exception e) {
+            Debug.logError(getClass(), "Exception handling SEND intent", e);
+            return false;
+        }
     }
 
     /**
@@ -73,28 +78,33 @@ public class FilePreview_ListFragment extends File_ListFragment {
      * @return true if files have been handled successfully, false otherwise
      */
     public boolean handleSendMultipleIntent(Intent intent) {
-        clear();
-        List<Uri> parcelableArrayListExtra = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-        if (parcelableArrayListExtra != null) {
-            boolean filesSkipped = false;
-            for (Uri uri : parcelableArrayListExtra) {
-                uri = decodeUri(uri);
-                Debug.log("ParcelableExtra URI " + uri);
-                if (uri != null) {
-                    add(new File(uri));
-                } else {
-                    filesSkipped = true;
+        try {
+            clear();
+            List<Uri> parcelableArrayListExtra = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+            if (parcelableArrayListExtra != null) {
+                boolean filesSkipped = false;
+                for (Uri uri : parcelableArrayListExtra) {
+                    uri = decodeUri(uri);
+                    Debug.log("ParcelableExtra URI " + uri);
+                    if (uri != null) {
+                        add(new File(uri));
+                    } else {
+                        filesSkipped = true;
+                    }
                 }
+                if (filesSkipped) {
+                    // Unsupported Uri scheme
+                    Toast.makeText(getActivity(), "Failed to get some file path", Toast.LENGTH_LONG).show();
+                }
+                return true;
             }
-            if (filesSkipped) {
-                // Unsupported Uri scheme
-                Toast.makeText(getActivity(), "Failed to get some file path", Toast.LENGTH_LONG).show();
-            }
-            return true;
-        }
 
-        // Unsupported stream
-        return false;
+            // Unsupported stream
+            return false;
+        } catch (Exception e) {
+            Debug.logError(getClass(), "Exception handling SEND_MULTIPLE intent", e);
+            return false;
+        }
     }
 
     /**
