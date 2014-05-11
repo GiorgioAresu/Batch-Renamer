@@ -1,8 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light">
-        <!-- Customize your theme here. -->
+    <style name="Light" parent="android:Theme.Holo.Light" >
+        <item name="ic_action_new">@drawable/ic_action_new_light</item>
+        <item name="ic_action_edit">@drawable/ic_action_edit_light</item>
+        <item name="ic_action_remove">@drawable/ic_action_remove_light</item>
+        <item name="ic_action_start">@drawable/ic_action_start_light</item>
+        <item name="ic_action_important">@drawable/ic_action_important_light</item>
+        <item name="ic_action_half_important">@drawable/ic_action_half_important_light</item>
+        <item name="ic_action_not_important">@drawable/ic_action_not_important_light</item>
+        <item name="ic_action_import_export">@drawable/ic_action_import_export_light</item>
+        <item name="ic_remove">@drawable/ic_action_remove_light</item>
+        <item name="theme_background">#e5e5e5</item>
+        <item name="section_header_title_color">@android:color/white</item>
+        <item name="section_header_background_color">@android:color/holo_blue_light</item>
+        <item name="card_background">@drawable/bg_card</item>
     </style>
 
     <!-- File list -->

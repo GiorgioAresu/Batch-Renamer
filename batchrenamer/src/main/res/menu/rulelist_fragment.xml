@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_newRule"
-        android:icon="@drawable/ic_action_new_light"
+        android:icon="?attr/ic_action_new"
         android:orderInCategory="1"
         android:showAsAction="ifRoom"
         android:title="@string/action_newRule">
@@ -17,7 +17,7 @@
 
     <item
         android:id="@+id/action_clearRules"
-        android:icon="@drawable/ic_action_remove_light"
+        android:icon="?attr/ic_action_remove"
         android:orderInCategory="2"
         android:showAsAction="ifRoom"
         android:title="@string/action_clearRules" />

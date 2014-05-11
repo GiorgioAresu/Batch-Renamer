@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Drawables">
+        <attr name="ic_action_new" format="integer" />
+        <attr name="ic_action_edit" format="integer" />
+        <attr name="ic_action_remove" format="integer" />
+        <attr name="ic_action_start" format="integer" />
+        <attr name="ic_action_important" format="integer" />
+        <attr name="ic_action_half_important" format="integer" />
+        <attr name="ic_action_not_important" format="integer" />
+        <attr name="ic_action_import_export" format="integer" />
+        <attr name="ic_remove" format="integer" />
+        <attr name="section_header_title_color" format="color|reference" />
+        <attr name="section_header_background_color" format="color|reference" />
+        <attr name="theme_background" format="color|reference" />
+        <attr name="card_background" format="integer" />
+    </declare-styleable>
+</resources>
