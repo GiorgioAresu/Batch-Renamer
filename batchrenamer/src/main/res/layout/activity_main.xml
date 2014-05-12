@@ -9,36 +9,21 @@
         android:layout_height="match_parent"
         android:background="?attr/theme_background">
 
-        <LinearLayout
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin">
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-            <fragment
-                android:id="@+id/file_fragment"
-                android:name="com.giorgioaresu.batchrenamer.FilePreview_ListFragment"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                tools:layout="@layout/file_list_fragment_content" />
-
-            <Space
-                android:layout_width="@dimen/space_between_fragments"
-                android:layout_height="match_parent" />
-
-            <fragment
-                android:id="@+id/rule_fragment"
-                android:name="com.giorgioaresu.batchrenamer.Rule_ListFragment"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                tools:layout="@layout/rule_list_fragment_content" />
-
-        </LinearLayout>
+            <android.support.v4.view.PagerTitleStrip android:id="@+id/pager_title_strip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="?attr/section_header_background_color"
+                android:textColor="?attr/section_header_title_color"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp" />
+        </android.support.v4.view.ViewPager>
 
     </LinearLayout>
 
