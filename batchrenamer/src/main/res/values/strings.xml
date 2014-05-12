@@ -109,6 +109,7 @@
     <!--                      -->
     <!--  FILE SECTION        -->
     <!--                      -->
+    <string name="file_section_title">Files</string>
     <string name="filelist_header_current">Current name</string>
     <string name="filelist_header_preview">Preview</string>
     <string name="filelist_header_preview_updating">Preview (updating)</string>
@@ -116,6 +117,7 @@
     <!--                      -->
     <!--  GENERIC RULE STRINGS-->
     <!--                      -->
+    <string name="rule_section_title">Rules</string>
     <string name="rule_generic_remove">Remove rule</string>
     <string name="rule_generic_remove_message">Rule removed</string>
     <!-- Toast showed when some rule returned the invalid status -->
