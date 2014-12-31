@@ -32,7 +32,7 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
     public static final String PREF_KEY_FAVORITES = "favorite_rulelists";
     public static final String FAVORITE_KEY_TITLE = "title";
     public static final String FAVORITE_KEY_RULES = "rules";
-    GregorianCalendar expDate = new GregorianCalendar( 2014, 11, 31 ); // midnight
+    GregorianCalendar expDate = new GregorianCalendar( 2015, 12, 31 ); // midnight
     GregorianCalendar now = new GregorianCalendar();
 
     public static java.io.File scriptFile;
