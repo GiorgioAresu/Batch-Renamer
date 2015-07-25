@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    
+    <!-- APPLICATION -->
+    <string name="undo">Annuler</string>
+    <string name="accept">Accepter</string>
+    <string name="decline">Refuser</string>
+    <string name="expired_message">Vous utilisez une ancienne version de l\'appli. Souhaitez vous la mettre à jour ? </string>
+    
+    <!-- NOTIFICATION -->
+    <string name="renaming_notification_title">Renommer fichier </string>
+    <string name="renaming_notification_text_completed">Opération terminée</string>
+    <string name="renaming_notification_text_completed_failed">Operation terminée (<xliff:g id="number" example="5">%1$d</xliff:g> erreur) </string>
+    <string name="renaming_notification_text_indeterminate">Initialisation</string>
+    <string name="renaming_notification_text_template">Fichier <xliff:g id="number" example="5">%1$d</xliff:g> of <xliff:g id="number" example="8">%2$d</xliff:g>.</string>
+    <string name="renaming_notification_ticker_started">Renommage démarré </string>
+    <string name="renaming_notification_ticker_completed">Renommage terminé </string>
+    <string name="renaming_notification_summary_big">Renommé : <xliff:g id="number" example="5">%1$d</xliff:g> - Erreur sur: <xliff:g id="number" example="1">%2$d</xliff:g> </string>
+    
+    <!-- ABOUT ACTIVITY -->
+    <string name="title_activity_about">A propos </string>
+    <string name="about_header_info">Info</string>
+    <string name="about_author_title">Auteur</string>
+    <string name="about_version_title">Version</string>
+    <string name="about_header_legal">Informations légales </string>
+    <string name="about_eula_title">Contrat de Licence Utilisateur Final (CLUF)</string>
+    <string name="about_eula_summary">Voir accord de licence </string>
+    <string name="about_eula_dialog_title">Accord de licence </string>
+    
+    <!-- ACTION BAR          
+                          
+     Text for the item that adds a rule to the list -->
+    <string name="action_newRule">Nouvelle règle </string>
+    <string name="action_newRule_error">Une erreur s\'est produite. Veuillez contacter le développeur, SAP. </string>
+    
+    <!-- Text for the item that removes ALL rules from the list -->
+    <string name="action_clearRules">Effacer toutes les règles. </string>
+    <string name="action_clearRules_message">Règles effacées </string>
+    
+    <!-- Toast message showed when clearing the EMPTY rule list -->
+    <string name="action_clearRules_emptymessage">Pas de règles effacées </string>
+    <string name="action_start">Renommer </string>
+    <string name="action_start_alert_title">Renommer les fichiers ? </string>
+    <string name="action_start_alert_message">L\'action ne peut être annulée ! </string>
+    <string name="action_start_alert_positive">Renommer </string>
+    <string name="action_start_alert_negative">Annuler </string>
+    
+    <!-- Toast showed when starting rename, at least until the progress activity is completed -->
+    <string name="action_start_toast">Renommage<xliff:g id="ellipsis">\u2026</xliff:g> Voi notification pour les détails </string>
+    <string name="empty_filelist">Liste vide. Ajoutez des fichiers d\'abord. </string>
+    
+    <!-- Toast message showed when trying to start the rename with NO rules -->
+    <string name="empty_rulelist">Liste de règles vide. Ajouter les règles d\'abord. </string>
+    <string name="filelist_header_current">Nom actuel</string>
+    <string name="filelist_header_preview">Prévisualisation </string>
+    <string name="filelist_header_preview_updating"> Prévisualisation (MAJ) </string>
+    
+    <!-- GENERIC RULE STRINGS -->
+    <string name="rule_generic_remove">Effacer les règles.. </string>
+    <string name="rule_generic_remove_message">Règles effacées </string>
+    
+    <!-- Toast showed when some rule returned the invalid status -->
+    <string name="rule_generic_invalidrules">Certaines règles ne sont pas valides. Vérifiez les d\'abord. </string>
+    <string name="rule_generic_row_contentdescription">Prévisualisation de la règle. Cliquez pour éditer. </string>
+    <string name="rule_generic_emptyfield_contentdescription">Champs vide</string>
+    <string name="rule_generic_true_contentdescription">Oui</string>
+    <string name="rule_generic_false_contentdescription">Non</string>
+    <string name="rule_generic_regex">Regex</string>
+    <string name="rule_generic_regex_invalid_syntaxError">Erreur de syntaxe </string>
+    <string name="rule_generic_regex_invalid_outOfBounds">Index hors limite </string>
+    <string name="rule_generic_position">Position </string>
+    <string name="rule_generic_position_backward">Retour </string>
+    <string name="rule_generic_apply">Appliquer à </string>
+    
+    <!-- RULE TITLES -->
+    <string name="rule_add_title">Ajouter </string>
+    <string name="rule_changecase_title">Changer de casse</string>
+    <string name="rule_renumber_title">Renuméroter </string>
+    <string name="rule_remove_title">Effacer</string>
+    <string name="rule_replace_title">Remplacer </string>
+    <string name="rule_whitespaces_title">Espaces </string>
+    
+    <!-- RULE: ADD -->
+    <string name="rule_add_text">Texte</string>
+    <string name="rule_changecase_case">Remplacer par </string>
+    
+    <!-- RULE: RENUMBER -->
+    <string name="rule_renumber_start">Début </string>
+    <string name="rule_renumber_step">Etape</string>
+    <string name="rule_renumber_padding">Remplissage </string>
+    
+    <!-- RULE: REMOVE -->
+    <string name="rule_remove_characters">Nb de caractères </string>
+    <string name="rule_replace_pattern">Cible </string>
+    <string name="rule_replace_replacement">Remplacer par </string>
+    
+    <!-- RULE: WHITESPACES -->
+    <string name="rule_whitespaces_char">Caractère espace </string>
+    <string name="rule_whitespaces_duplicates">Supprimer les doublons </string>
+    <string name="rule_whitespaces_replace">Remplacer caractère </string>
+    
+    <!-- Please use the same as rule_whitespaces_char_array adding a "DO NOT REPLACE"-like string in first position -->
+    <string name="rule_whitespaces_trim">Ajuster</string>
+    <string name="title_activity_settings">Réglages </string>
+    <string name="pref_header_general">Général </string>
+    <string name="pref_title_remember_rules">Se souvenir des règles </string>
+    <string name="pref_description_remember_rules_checked">Au démarrage, charger les dernières regles</string>
+    <string name="pref_description_remember_rules_unchecked">Démarrage avec règles vierges</string>
+    <string name="pref_title_debug_mode">Mode Debug</string>
+    <string name="pref_description_debug_mode">Peux ralentir l\'appli. Ne valider qu\'en connaissance de cause </string>
+    <string name="error">Erreur </string>
+    <string name="done">Effectué </string>
+    <string name="tapOnFileHint">Pour voir la prévisualisation complète, cliquez sur le nom</string>
+    
+    <!-- FAVORITES ACTIVITY -->
+    <string name="title_activity_manage_favorites">Gérer les favoris</string>
+    <string name="favorites_loading_error">Erreur de chargement des favoris </string>
+    <string name="action_favoritesManage_operations">Operations sur les favoris </string>
+    <string name="action_favoritesManage_operations_rename">Renommer le favori </string>
+    <string name="action_favoritesManage_operations_new">Nouveau favori </string>
+    <string name="action_favoritesManage_operations_remove">Effacer le favori </string>
+    <string name="action_favoritesManage_operations_removeDone">Favori \"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" effacé </string>
+    <string name="action_favoritesManage_operations_importexport">Import-Export</string>
+    <string name="action_favoritesManage_operations_import">Importer depuis la carte SD</string>
+    <string name="action_favoritesManage_operations_importChoose">Importer favoris depuis un fichier </string>
+    <string name="action_favoritesManage_operations_importDuplicate_message">Un favori de nom\"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" existe déjà </string>
+    <string name="action_favoritesManage_operations_importDuplicate_replace">Remplacer</string>
+    <string name="action_favoritesManage_operations_importDuplicate_skip">Passer</string>
+    <string name="action_favoritesManage_operations_importDuplicate_rename">Renommer </string>
+    <string name="action_favoritesManage_operations_importDuplicate_rememberChoice">Se souvenir du choix</string>
+    <string name="action_favoritesManage_operations_importDone">Import effectué </string>
+    <string name="action_favoritesManage_operations_export">Exporter sur carte SD</string>
+    <string name="action_favoritesManage_operations_exportAll">Exporter tout sur carte SD</string>
+    <string name="action_favoritesManage_operations_exportDone">Exporté vers: \"<xliff:g id="filename" example="batch renamer/file.json">%s</xliff:g>\" </string>
+    <string name="action_favorites">Règles favorites</string>
+    <string name="action_favoritesAdd">Ajouter aux favoris </string>
+    <string name="action_favoritesAddLabel">Entrer un nom</string>
+    <string name="action_favoritesAddLabelInvalid">Nom invalide </string>
+    <string name="action_favoritesAddReplaceLabel">Un favori de ce nom existe déjà, le remplacer ? </string>
+    <string name="action_favoritesAdded">\"<xliff:g id="favorite_name" example="yyyymmdd to yy-mm-dd">%s</xliff:g>\" sauvegardé </string>
+    <string name="action_favoritesAddError">Erreur de sauvegarde des favoris </string>
+    <string name="action_favoritesLoad">Charger favoris </string>
+    <string name="action_favoritesEmpty">Pas de favoris sauvegardés </string>
+    <string name="action_favoritesManage">Gérer les favoris </string>
+    <string name="rule_generic_positionAlt">De la position </string>
+</resources>
