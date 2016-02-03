@@ -32,8 +32,6 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
     public static final String PREF_KEY_FAVORITES = "favorite_rulelists";
     public static final String FAVORITE_KEY_TITLE = "title";
     public static final String FAVORITE_KEY_RULES = "rules";
-    GregorianCalendar expDate = new GregorianCalendar( 2015, 12, 31 ); // midnight
-    GregorianCalendar now = new GregorianCalendar();
 
     public static java.io.File scriptFile;
 
@@ -48,31 +46,6 @@ public class MainActivity extends Activity implements File_ListFragment.FileFrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Check if expired
-        if (now.after(expDate)) {
-            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert)
-                    .setMessage(R.string.expired_message)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            final String appPackageName = getPackageName();
-                            try {
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                            } catch (android.content.ActivityNotFoundException anfe) {
-                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
-                            }
-                            finish();
-                        }
-                    })
-                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })
-                    .show();
-        }
 
         if (!Eula.hasAcceptedEula(this)) {
             eula.show(false, this);
