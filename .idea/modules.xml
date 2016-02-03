@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Batch-Renamer.iml" filepath="$PROJECT_DIR$/Batch-Renamer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/BatchRenamer.iml" filepath="$PROJECT_DIR$/BatchRenamer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/batch-renamer.iml" filepath="$PROJECT_DIR$/batch-renamer.iml" />
       <module fileurl="file://$PROJECT_DIR$/batchrenamer/batchrenamer.iml" filepath="$PROJECT_DIR$/batchrenamer/batchrenamer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs/libs.iml" filepath="$PROJECT_DIR$/libs/libs.iml" />
       <module fileurl="file://$PROJECT_DIR$/libs/libsuperuser/libsuperuser.iml" filepath="$PROJECT_DIR$/libs/libsuperuser/libsuperuser.iml" />
     </modules>
   </component>
 </project>
-
