@@ -3,7 +3,7 @@
     tools:context="com.giorgioaresu.batchrenamer.MainActivity">
 
     <item
-        android:icon="@drawable/ic_action_half_important_light"
+        android:icon="?attr/ic_action_half_important"
         android:orderInCategory="10"
         android:showAsAction="ifRoom"
         android:title="@string/action_favorites" >
@@ -28,7 +28,7 @@
         android:title="@string/action_start"
         android:showAsAction="always|withText"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_action_start_light" />
+        android:icon="?attr/ic_action_start" />
 
     <item
         android:id="@+id/action_settings"

@@ -5,7 +5,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="horizontal"
-    android:background="#e5e5e5"
+    android:background="?attr/theme_background"
     tools:context="com.giorgioaresu.batchrenamer.RenameStatusActivity">
 
     <TextView
